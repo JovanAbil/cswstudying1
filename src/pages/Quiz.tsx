@@ -7,7 +7,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
-import { unit1aQuestions } from '@/data/unit1a-questions';
+import { unit1aQuestions } from '@/data/polynomial-questions';
 import { bio1Questions } from '@/data/bio1-questions';
 import { Question, QuizAttempt } from '@/types/quiz';
 import { toast } from 'sonner';
