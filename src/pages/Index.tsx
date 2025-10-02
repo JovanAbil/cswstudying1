@@ -35,7 +35,7 @@ const Index = () => {
             Practice Hub
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Master AP Precalculus and Biology with interactive practice tests and daily exercises
+            Master Classes with interactive practice tests and daily exercises!
           </p>
         </div>
 
