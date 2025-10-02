@@ -2,7 +2,7 @@ import { Question } from '@/types/quiz';
 
 export const biochemistryQuestions: Question[] = [
   {
-    id: 'bio1-1',
+    id: 'biochemistry-1',
     type: 'multiple-choice',
     question: 'Which two types of particles are present in equal numbers in an atom, but not in an ion?',
     options: [
@@ -15,7 +15,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'In a neutral atom, the number of protons equals the number of electrons. In an ion, electrons are gained or lost, making the numbers unequal.'
   },
   {
-    id: 'bio1-2',
+    id: 'biochemistry-2',
     type: 'multiple-choice',
     question: 'Which of the following is responsible for the cohesive property of water?',
     options: [
@@ -28,7 +28,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Cohesion in water results from hydrogen bonds forming between the partially negative oxygen atom of one water molecule and the partially positive hydrogen atom of another.'
   },
   {
-    id: 'bio1-3',
+    id: 'biochemistry-3',
     type: 'multiple-choice',
     question: 'Fluorine (F) is a strongly electronegative element with seven valence electrons. Compared to the less electronegative sodium (Na), which has one valence electron, fluorine...',
     options: [
@@ -41,7 +41,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Fluorine is highly electronegative and needs only one electron to complete its valence shell. It readily gains an electron to form a negatively charged anion (F⁻).'
   },
   {
-    id: 'bio1-4',
+    id: 'biochemistry-4',
     type: 'multiple-choice',
     question: 'An algae population in a Midwest lake has increased dramatically. Researchers hypothesize this is due to phosphorus from fertilizers. What is the best way to test this hypothesis?',
     options: [
@@ -54,7 +54,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'A controlled experiment with multiple tanks and varying phosphorus concentrations allows researchers to isolate the variable and establish causation.'
   },
   {
-    id: 'bio1-5',
+    id: 'biochemistry-5',
     type: 'multiple-choice',
     question: 'The synthesis of protein or carbohydrate polymers always produces which of the following as a byproduct?',
     options: [
@@ -67,7 +67,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Dehydration synthesis (condensation reaction) joins monomers to form polymers by removing a water molecule (H₂O) as a byproduct.'
   },
   {
-    id: 'bio1-6',
+    id: 'biochemistry-6',
     type: 'multiple-choice',
     question: 'Several different amino acids join together to form a protein. How do any two types of amino acids differ from one another?',
     options: [
@@ -80,7 +80,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'All amino acids have the same basic structure (amino group, carboxyl group, hydrogen, and central carbon). They differ only in their R group (side chain).'
   },
   {
-    id: 'bio1-7',
+    id: 'biochemistry-7',
     type: 'multiple-choice',
     question: 'In a chemical reaction, which event ALWAYS occurs as the reaction proceeds?',
     options: [
@@ -93,7 +93,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'All chemical reactions involve breaking and/or forming chemical bonds through electron rearrangement. Energy may be released or absorbed, but electron rearrangement always occurs.'
   },
   {
-    id: 'bio1-8',
+    id: 'biochemistry-8',
     type: 'multiple-choice',
     question: 'What is the effect of an enzyme on the energy of a chemical reaction?',
     options: [
@@ -106,7 +106,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Enzymes act as biological catalysts that lower the activation energy required for a reaction to proceed, without changing the overall energy change of the reaction.'
   },
   {
-    id: 'bio1-9',
+    id: 'biochemistry-9',
     type: 'multiple-choice',
     question: 'Which of these molecular structures could be found in a lipid, but not a carbohydrate, protein, or nucleic acid?',
     options: [
@@ -119,7 +119,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Lipids contain long hydrocarbon chains (only C and H atoms) called fatty acid tails. This structure is unique to lipids and not found in the other macromolecules.'
   },
   {
-    id: 'bio1-10',
+    id: 'biochemistry-10',
     type: 'multiple-choice',
     question: 'Which type of macromolecule has the function of storing and transmitting hereditary or genetic information?',
     options: [
@@ -132,7 +132,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Nucleic acids (DNA and RNA) store and transmit genetic information through sequences of nucleotides.'
   },
   {
-    id: 'bio1-11',
+    id: 'biochemistry-11',
     type: 'multiple-choice',
     question: 'Which part of a phospholipid is hydrophobic?',
     options: [
@@ -145,7 +145,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'The fatty acid chains (tails) are nonpolar and hydrophobic (water-repelling). The phosphate head is polar and hydrophilic (water-attracting).'
   },
   {
-    id: 'bio1-12',
+    id: 'biochemistry-12',
     type: 'multiple-choice',
     question: 'What event changes an atom into an ion?',
     options: [
@@ -158,7 +158,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'An ion forms when an atom gains or loses electrons, resulting in a net positive (cation) or negative (anion) charge.'
   },
   {
-    id: 'bio1-13',
+    id: 'biochemistry-13',
     type: 'multiple-choice',
     question: 'Which of the following is NOT an example of a macromolecule?',
     options: [
@@ -171,7 +171,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Sodium chloride (NaCl) is a simple ionic compound, not a macromolecule. Macromolecules are large organic molecules like proteins, carbohydrates, lipids, and nucleic acids.'
   },
   {
-    id: 'bio1-14',
+    id: 'biochemistry-14',
     type: 'multiple-choice',
     question: 'What functional groups will be joined together if two amino acid molecules combine to form a single molecule?',
     options: [
@@ -184,7 +184,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Amino acids join through a dehydration synthesis reaction between the amino group (-NH₂) of one amino acid and the carboxyl group (-COOH) of another, forming a peptide bond.'
   },
   {
-    id: 'bio1-15',
+    id: 'biochemistry-15',
     type: 'multiple-choice',
     question: 'Two amino acids unite by forming a(n)?',
     options: [
@@ -197,7 +197,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'A peptide bond is a covalent bond that forms between the amino group of one amino acid and the carboxyl group of another during protein synthesis.'
   },
   {
-    id: 'bio1-16',
+    id: 'biochemistry-16',
     type: 'multiple-choice',
     question: 'The union of many amino acids forms a macromolecule called a?',
     options: [
@@ -210,7 +210,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Proteins are macromolecules made up of chains of amino acids linked by peptide bonds. They perform a wide variety of functions in cells.'
   },
   {
-    id: 'bio1-17',
+    id: 'biochemistry-17',
     type: 'multiple-choice',
     question: 'Water and oil don\'t mix, so water alone doesn\'t wash away oily dirt effectively. Soap can mix with both water and oil, allowing dirt to be washed away. Which statement provides the most logical chemical explanation?',
     options: [
@@ -223,7 +223,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Soap molecules are amphipathic, with polar (charged/hydrophilic) heads that interact with water and nonpolar (neutral/hydrophobic) tails that interact with oils and grease.'
   },
   {
-    id: 'bio1-18',
+    id: 'biochemistry-18',
     type: 'multiple-choice',
     question: 'A feather experiment shows that wax coating prevents water from soaking through paper. The results are MOST USEFUL for explaining which function of lipids in organisms?',
     options: [
@@ -236,7 +236,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'The waxy coating (a type of lipid) repels water, demonstrating how lipids form waterproof barriers in nature, such as on feathers, leaves, and fruits.'
   },
   {
-    id: 'bio1-19',
+    id: 'biochemistry-19',
     type: 'multiple-choice',
     question: 'The wax-coated feather experiment results MOST STRONGLY support which conclusion about the polarity of lipid molecules?',
     options: [
@@ -249,7 +249,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Lipids are nonpolar molecules. Water molecules are polar. "Like dissolves like" - polar and nonpolar substances don\'t mix, which is why lipids repel water.'
   },
   {
-    id: 'bio1-20',
+    id: 'biochemistry-20',
     type: 'multiple-choice',
     question: 'A phospholipid is composed of?',
     options: [
@@ -262,7 +262,7 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'A phospholipid has a glycerol backbone attached to two fatty acid tails and one phosphate group head, making it amphipathic (both hydrophobic and hydrophilic).'
   },
   {
-    id: 'bio1-21',
+    id: 'biochemistry-21',
     type: 'multiple-choice',
     question: 'Several scientific hypotheses attempt to explain how life originated on Earth. Which best describes the common theme across these hypotheses?',
     options: [
@@ -275,28 +275,28 @@ export const biochemistryQuestions: Question[] = [
     explanation: 'Most origin-of-life theories propose that early life needed energy sources and mechanisms to concentrate organic molecules, allowing increasingly complex chemical reactions to occur.'
   },
   {
-    id: 'bio1-22',
+    id: 'biochemistry-22',
     type: 'free-response',
     question: 'Enzymes play a crucial role in facilitating chemical reactions within living organisms. One such enzyme, lactase, is responsible for breaking down lactose, a sugar found in dairy products. What type of macromolecule is lactase?',
     correctAnswer: 'Protein',
     explanation: 'All enzymes are proteins. They are biological catalysts that speed up chemical reactions in living organisms.'
   },
   {
-    id: 'bio1-23',
+    id: 'biochemistry-23',
     type: 'free-response',
     question: 'A CSW student is given three test tubes containing insulin (a protein hormone), lactose (a disaccharide), and RNA. Test 1 shows tubes 1 and 2 are positive for nitrogen, but only tube 2 is positive for sulfur. Test 2 shows tube 1 contains a high percentage of phosphate. What is in tube 1?',
     correctAnswer: 'RNA',
     explanation: 'Tube 1 contains RNA. It has nitrogen (present in nucleic acids) and phosphate (in the sugar-phosphate backbone), but no sulfur. Tube 2 (with nitrogen and sulfur) is insulin (protein). Tube 3 is lactose (carbohydrate, no N or P).'
   },
   {
-    id: 'bio1-24',
+    id: 'biochemistry-24',
     type: 'free-response',
     question: 'Based on the test results (tubes 1 and 2 positive for nitrogen, only tube 2 positive for sulfur, tube 1 has high phosphate), what is in tube 2?',
     correctAnswer: 'Insulin',
     explanation: 'Tube 2 contains insulin (protein). Proteins contain nitrogen in amino groups, and some amino acids (like cysteine and methionine) contain sulfur. Insulin does not contain phosphate.'
   },
   {
-    id: 'bio1-25',
+    id: 'biochemistry-25',
     type: 'free-response',
     question: 'Based on the test results (tubes 1 and 2 positive for nitrogen, only tube 2 positive for sulfur, tube 1 has high phosphate), what is in tube 3?',
     correctAnswer: 'Lactose',
