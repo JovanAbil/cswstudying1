@@ -8,12 +8,13 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
 import { unit1aQuestions } from '@/data/unit1a-questions';
+import { bio1Questions } from '@/data/bio1-questions';
 import { Question, QuizAttempt } from '@/types/quiz';
 import { toast } from 'sonner';
 import QuestionTable from '@/components/QuestionTable';
 
 const Quiz = () => {
-  const { unitId, quizType } = useParams();
+  const { subject, unitId, quizType } = useParams();
   const navigate = useNavigate();
   
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -24,11 +25,17 @@ const Quiz = () => {
   const [showGrading, setShowGrading] = useState(false);
 
   useEffect(() => {
-    // Get questions based on unit and type
-    const questionCount = quizType === 'daily' ? 10 : 30;
-    const allQuestions = unitId === '1a' ? unit1aQuestions : [];
+    // Get questions based on subject, unit and type
+    const questionCount = quizType === 'daily' ? 10 : (subject === 'biology' ? 25 : 30);
     
-    // Shuffle and select questions
+    let allQuestions: Question[] = [];
+    if (subject === 'precalc' && unitId === '1a') {
+      allQuestions = unit1aQuestions;
+    } else if (subject === 'biology' && unitId === 'bio1') {
+      allQuestions = bio1Questions;
+    }
+    
+    // Shuffle and select questions (randomize order)
     const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
     const selected = shuffled.slice(0, Math.min(questionCount, shuffled.length));
     
@@ -39,7 +46,7 @@ const Quiz = () => {
       isCorrect: null,
       selfGraded: q.type === 'free-response'
     })));
-  }, [unitId, quizType]);
+  }, [subject, unitId, quizType]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];
@@ -89,7 +96,8 @@ const Quiz = () => {
       navigate('/results', { 
         state: { 
           score, 
-          total, 
+          total,
+          subject,
           unitId, 
           quizType,
           attempts: attempts.map((a, i) => ({
@@ -114,7 +122,7 @@ const Quiz = () => {
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Button
           variant="ghost"
-          onClick={() => navigate(`/unit/${unitId}`)}
+          onClick={() => navigate(`/unit/${subject}/${unitId}`)}
           className="mb-6"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />

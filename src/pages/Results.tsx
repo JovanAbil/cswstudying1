@@ -15,7 +15,7 @@ interface ExtendedAttempt extends QuizAttempt {
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { score, total, unitId, quizType, attempts } = location.state || {};
+  const { score, total, subject, unitId, quizType, attempts } = location.state || {};
 
   useEffect(() => {
     if (!location.state) {

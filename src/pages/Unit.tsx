@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { ArrowLeft, BookOpen, FileText } from 'lucide-react';
 
 const Unit = () => {
-  const { unitId } = useParams();
+  const { subject, unitId } = useParams();
   const navigate = useNavigate();
 
   return (
@@ -29,7 +29,7 @@ const Unit = () => {
 
           <div className="grid gap-6">
             <Card className="p-8 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 hover:border-primary"
-                  onClick={() => navigate(`/unit/${unitId}/quiz/daily`)}>
+                  onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/daily`)}>
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-secondary/20 rounded-lg">
                   <BookOpen className="h-8 w-8 text-secondary" />
@@ -48,7 +48,7 @@ const Unit = () => {
             </Card>
 
             <Card className="p-8 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 hover:border-accent"
-                  onClick={() => navigate(`/unit/${unitId}/quiz/full`)}>
+                  onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/full`)}>
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-accent/20 rounded-lg">
                   <FileText className="h-8 w-8 text-accent" />
@@ -60,7 +60,7 @@ const Unit = () => {
                   </p>
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <span>⏱️ ~45 minutes</span>
-                    <span>📝 30 questions</span>
+                    <span>📝 {subject === 'biology' ? '25' : '30'} questions</span>
                   </div>
                 </div>
               </div>
