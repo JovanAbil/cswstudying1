@@ -21,7 +21,7 @@ const Unit = () => {
 
         <div className="max-w-2xl mx-auto">
           <h1 className="text-4xl font-bold text-center mb-3 text-primary">
-            Unit {unitId?.toUpperCase()}
+            {unitId?.toUpperCase()}
           </h1>
           <p className="text-center text-muted-foreground mb-12">
             Choose your practice mode
