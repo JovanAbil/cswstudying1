@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
 import { unit1aQuestions } from '@/data/polynomial-questions';
-import { bio1Questions } from '@/data/bio1-questions';
+import { bio1Questions } from '@/data/biochemistry-questions';
 import { Question, QuizAttempt } from '@/types/quiz';
 import { toast } from 'sonner';
 import QuestionTable from '@/components/QuestionTable';
