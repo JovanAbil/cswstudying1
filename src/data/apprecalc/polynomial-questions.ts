@@ -95,7 +95,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-8",
     "type": "multiple-choice",
-    "question": "Given f(x) = -1.352x^5 + 3.051x^4 - 1.964x^2 + 6.542 on [-1,2], how many relative extrema are in the interval?",
+    "question": "[Calculator] Given f(x) = -1.352x^5 + 3.051x^4 - 1.964x^2 + 6.542 on [-1,2], how many relative extrema are in the interval?",
     "options": [
       { "label": "A", "value": "A", "text": "2 local minima and 2 local maxima" },
       { "label": "B", "value": "B", "text": "1 local min and 1 local max" },
@@ -108,7 +108,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-9",
     "type": "multiple-choice",
-    "question": "Let g(x) = 3.526x^4 - 5.152x^3 + 0.789x^2 - 2.665x - 4.152 on [-1,2]. Which is correct about its local minimum?",
+    "question": "[Calculator] Let g(x) = 3.526x^4 - 5.152x^3 + 0.789x^2 - 2.665x - 4.152 on [-1,2]. Which is correct about its local minimum?",
     "options": [
       { "label": "A", "value": "A", "text": "Local minimum at x ≈ 1.14266" },
       { "label": "B", "value": "B", "text": "Local maximum at x ≈ 1.14266" },
@@ -121,7 +121,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-10",
     "type": "multiple-choice",
-    "question": "Let h(x)=2.351x^3 - 7.662x^2 + 2.117x + 1.302 on [-1,3]. What are its zeros (approx)?",
+    "question": "[Calculator] Let h(x)=2.351x^3 - 7.662x^2 + 2.117x + 1.302 on [-1,3]. What are its zeros (approx)?",
     "options": [
       { "label": "A", "value": "A", "text": "x ≈ -0.28809, 0.66759, 2.87954" },
       { "label": "B", "value": "B", "text": "x ≈ -1, 1, 3" },
@@ -173,7 +173,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-14",
     "type": "multiple-choice",
-    "question": "Calculator-type: f(x) = -1.215x^3 + 2.31x^2 + 5.2x + 3.1 on [-3,3]. Where are min and max and intervals of increase/decrease?",
+    "question": "[Calculator] f(x) = -1.215x^3 + 2.31x^2 + 5.2x + 3.1 on [-3,3]. Where are min and max and intervals of increase/decrease?",
     "options": [
       { "label": "A", "value": "A", "text": "min at x ≈ -0.71838; max at x ≈ 1.98587; increasing on (-0.71838, 1.98587)" },
       { "label": "B", "value": "B", "text": "min at x ≈ 1; max at x ≈ -1; increasing on (-3,-1)" },
@@ -186,7 +186,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-15",
     "type": "multiple-choice",
-    "question": "For g(x) = -0.645x^4 + 2.67x^3 - 1.34x^2 + 2.91x on [-3,3], which is true?",
+    "question": "[Calculator] For g(x) = -0.645x^4 + 2.67x^3 - 1.34x^2 + 2.91x on [-3,3], which is true?",
     "options": [
       { "label": "A", "value": "A", "text": "Local min: none in open interval; local max at x ≈ 2.87995; increasing on (-3, 2.87995)" },
       { "label": "B", "value": "B", "text": "Local min at x ≈ 0; decreasing everywhere else" },
@@ -199,7 +199,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-16",
     "type": "multiple-choice",
-    "question": "Let h(x) = -0.16x^5 + 1.07x^4 - 2.67x^3 + 1.3x^2 - 3.14x on [0,6.5]. Which is true?",
+    "question": "[Calculator] Let h(x) = -0.16x^5 + 1.07x^4 - 2.67x^3 + 1.3x^2 - 3.14x on [0,6.5]. Which is true?",
     "options": [
       { "label": "A", "value": "A", "text": "No interior local max; absolute min at x = 6.5; decreasing on entire interval; zero at x = 0" },
       { "label": "B", "value": "B", "text": "Increasing on entire interval" },
@@ -417,13 +417,6 @@ export const polynomialQuestions: Question[] = [
     "explanation": "First piece is linear with negative slope, second piece is quadratic opening upward."
   },
   {
-    "id": "polynomial-38",
-    "type": "free-response",
-    "question": "On what intervals is the graph of g concave up?",
-    "correctAnswer": "(3, ∞)",
-    "explanation": "Second piece g(x)=x^2+2 is concave up; first piece is linear with zero second derivative."
-  },
-  {
     "id": "polynomial-39",
     "type": "free-response",
     "question": "Let h(x) = −2x(x−3)^2 (x+4)^3. Describe the end behavior of h(x).",
@@ -440,89 +433,68 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-41",
     "type": "free-response",
-    "question": "f(x) = −1.352x^5 + 3.051x^4 − 1.964x^2 + 6.542 on [−1, 2]. How many relative maxima and minima?",
+    "question": "[Calculator] f(x) = −1.352x^5 + 3.051x^4 − 1.964x^2 + 6.542 on [−1, 2]. How many relative maxima and minima?",
     "correctAnswer": "Two relative maxima and one relative minimum (based on derivative sign changes in interval).",
     "explanation": "Examination of derivative shows three critical points with alternating slope sign."
   },
   {
     "id": "polynomial-42",
     "type": "free-response",
-    "question": "g(x) = 3.526x^4 − 5.152x^3 + 0.789x^2 − 2.665x − 4.152 on [−1, 2]. Local minimum occurs at?",
+    "question": "[Calculator] g(x) = 3.526x^4 − 5.152x^3 + 0.789x^2 − 2.665x − 4.152 on [−1, 2]. Local minimum occurs at?",
     "correctAnswer": "At approximately x = 1.1 (numerical computation).",
-    "explanation": "Found by setting derivative to zero and testing second derivative sign."
+    "explanation": "Found by calculator."
   },
   {
     "id": "polynomial-43",
-    "type": "free-response",
-    "question": "For same g(x), find interval where g(x) is decreasing.",
-    "correctAnswer": "(−1, 0.5) ∪ (1.3, 2)",
-    "explanation": "Intervals where derivative g'(x) < 0."
-  },
-  {
-    "id": "polynomial-44",
     "type": "free-response",
     "question": "Let h(x) = 2.351x^3 − 7.662x^2 + 2.117x + 1.302 on [−1, 3]. Find all zeros.",
     "correctAnswer": "Approximately x ≈ −0.45, x ≈ 0.82, x ≈ 3.05",
     "explanation": "Numerically approximated using factoring/root-finding."
   },
   {
-    "id": "polynomial-45",
+    "id": "polynomial-44",
     "type": "free-response",
     "question": "Let h(x) = {3x^2+1 for x<4; 4x−9 for x≥4}. Find the average rate of change over [0,5].",
     "correctAnswer": "Average rate = (h(5) − h(0)) / 5 = (11 − 1)/5 = 2",
     "explanation": "h(0)=1 (first piece), h(5)=11 (second piece), slope =2."
   },
   {
-    "id": "polynomial-46",
+    "id": "polynomial-45",
     "type": "free-response",
-    "question": "A water tank has initial height 12 m. Use table data to find average rate of change from t=2 to t=5.",
-    "correctAnswer": "Depends on table values provided (plug into (h(5)−h(2))/(5−2)).",
-    "explanation": "Apply definition of average rate of change over [2,5]."
-  },
-  {
-    "id": "polynomial-47",
-    "type": "free-response",
-    "question": "Using the result from 46, estimate the water height at t=10.",
-    "correctAnswer": "Use linear extrapolation: h(10) ≈ h(5) + (average rate from 2 to5)×(10−5)",
-    "explanation": "Assumes approximately constant rate of change over interval."
-  },
-  {
-    "id": "polynomial-48",
-    "type": "free-response",
-    "question": "For f(x) = −1.215x^3 + 2.31x^2 + 5.2x + 3.1 on [−3,3]: find (a) relative minimum x-value, (b) relative maximum x-value, (c) interval(s) increasing, (d) interval(s) decreasing.",
+    "question": "[Calculator] For f(x) = −1.215x^3 + 2.31x^2 + 5.2x + 3.1 on [−3,3]: find (a) relative minimum x-value, (b) relative maximum x-value, (c) interval(s) increasing, (d) interval(s) decreasing.",
     "correctAnswer": "(a) x ≈ −0.88, (b) x ≈ 2.15, (c) (−0.88, ∞), (d) (−∞, −0.88) ∪ (2.15, ∞)",
     "explanation": "Critical points found via derivative; test sign for increasing/decreasing."
   },
   {
-    "id": "polynomial-49",
+    "id": "polynomial-46",
     "type": "free-response",
-    "question": "For g(x) = −0.645x^4 + 2.67x^3 − 1.34x^2 + 2.91x on [−3,3]: find (a) local minimum, (b) local maximum, (c) interval(s) increasing, (d) interval(s) decreasing, (e) zeros.",
+    "question": "[Calculator] For g(x) = −0.645x^4 + 2.67x^3 − 1.34x^2 + 2.91x on [−3,3]: find (a) local minimum, (b) local maximum, (c) interval(s) increasing, (d) interval(s) decreasing, (e) zeros.",
     "correctAnswer": "(a) local min near x ≈ −1.2, (b) local max near x ≈ 1.5, (c) increasing on (−1.2, 1.5), (d) decreasing on (−3, −1.2) ∪ (1.5, 3), (e) zeros approximately x ≈ −2.5, 0, 1.7",
     "explanation": "Solved via derivative sign test and numerical root finding."
   },
   {
-    "id": "polynomial-50",
+    "id": "polynomial-47",
     "type": "free-response",
     "question": "Given table for f at selected x: x=−7,−5,−3,−1,1; g(x)=−13,−12,−8,−3,3. If f is even, find a+b+c.",
     "correctAnswer": "a+b+c = 13+12+8 = 33",
     "explanation": "For even function f(−x)=f(x); use symmetry to find missing values."
   },
   {
-    "id": "polynomial-51",
+    "id": "polynomial-48",
     "type": "free-response",
     "question": "Given table for g: x=−6,−4,−3,−2,2,b,6; f(x)=−4,−5,5,1,a,5,c. Determine possible parity and concavity statements.",
     "correctAnswer": "Likely neither purely even nor odd; concavity changes where second differences change sign.",
     "explanation": "Check symmetry of data and analyze discrete second differences."
   },
   {
-    "id": "polynomial-52",
+    "id": "polynomial-49",
     "type": "free-response",
     "question": "Let f be odd and f(−4)=5 is a local minimum. What must f(4) be and its behavior?",
     "correctAnswer": "f(4)=−5 and it is a local maximum.",
     "explanation": "Odd symmetry implies f(−x)=−f(x); minimum at −4 mirrors to maximum at +4."
   },
   {
-    "id": "polynomial-53",
+    "id": "polynomial-50",
     "type": "multiple-choice",
     "question": "Data: x=1,3,5,7,9 and f(x)=−2,−1,3,10,20. Which statement best fits the data: linear or quadratic?",
     "options": [
@@ -533,7 +505,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "First differences are not constant, second differences approximately constant → quadratic model."
   },
   {
-    "id": "polynomial-54",
+    "id": "polynomial-51",
     "type": "multiple-choice",
     "question": "Data: x=0,10,20,30,40 and h(x)=100,60,40,30,25. Which statement about concavity is correct?",
     "options": [
