@@ -259,7 +259,7 @@ export const rationalQuestions: Question[] = [
     "id": "rational-",
     "type": "free-response",
     "question": "Create a rational function with zeros at x = -1 and x = 2, vertical asymptote at x = 5, and a horizontal asymptote of y=3/4",
-    "correctAnswer": "Answers may vary; f(x) = 3x(x+1)(x-2)/4x^2(x-5)",
+    "correctAnswer": "Answers may vary; f(x) = 3(x+1)(x-2)/4(x-5)^2",
     "explanation": "N/A"
   },
 ];
