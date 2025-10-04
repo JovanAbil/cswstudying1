@@ -113,6 +113,21 @@ const Quiz = () => {
   const currentAttempt = attempts[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        if (!isSubmitted) {
+          handleSubmit();
+        } else if (currentQuestion.type === 'multiple-choice' || currentAttempt.isCorrect !== null) {
+          handleNext();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [isSubmitted, currentAnswer, currentQuestion, currentAttempt, currentIndex]);
+
   const handleSubmit = () => {
     if (!currentAnswer.trim()) {
       toast.error('Please provide an answer');
