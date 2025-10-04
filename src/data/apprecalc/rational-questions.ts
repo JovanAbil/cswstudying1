@@ -17,4 +17,11 @@ export const rationalQuestions: Question[] = [
     "correctAnswer": "As the x-values increase without bound, the y-values decrease without bound",
     "explanation": "The image shows the horizontal asymptote to be a negative linear which is treated like a regular function."
   },
+    {
+    "id": "rational-3",
+    "type": "free-response",
+    "question": "f(x) = 3x^2-1/2x^2+5x+7 What is the horizontal asymptote",
+    "correctAnswer": "3/2",
+    "explanation": "3x^2/2x^2"
+  },
 ];
