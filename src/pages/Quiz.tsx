@@ -228,7 +228,7 @@ const Quiz = () => {
               <img 
                 src={currentQuestion.image} 
                 alt="Question diagram" 
-                className="max-w-full h-auto rounded-lg border-2 border-border"
+                className="max-w-2xl max-h-96 w-auto h-auto object-contain rounded-lg border-2 border-border"
               />
             </div>
           )}

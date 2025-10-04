@@ -105,6 +105,16 @@ const Results = () => {
                         </div>
                       )}
                       
+                      {question.image && (
+                        <div className="mb-3 flex justify-center">
+                          <img 
+                            src={question.image} 
+                            alt="Question diagram" 
+                            className="max-w-2xl max-h-96 w-auto h-auto object-contain rounded-lg border-2 border-border"
+                          />
+                        </div>
+                      )}
+                      
                       <MathText tag="p" className="text-sm mb-3">{question.question}</MathText>
 
                       {question.type === 'multiple-choice' ? (
