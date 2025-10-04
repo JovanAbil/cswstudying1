@@ -207,6 +207,16 @@ const Quiz = () => {
             <QuestionTable data={currentQuestion.table} />
           )}
           
+          {currentQuestion.image && (
+            <div className="mb-6 flex justify-center">
+              <img 
+                src={currentQuestion.image} 
+                alt="Question diagram" 
+                className="max-w-full h-auto rounded-lg border-2 border-border"
+              />
+            </div>
+          )}
+          
           <h3 className="text-xl font-semibold mb-6 leading-relaxed">
             {currentQuestion.question}
           </h3>

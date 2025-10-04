@@ -11,6 +11,7 @@ export interface MultipleChoiceQuestion {
   correctAnswer: string;
   explanation?: string;
   table?: TableData;
+  image?: string;
 }
 
 export interface FreeResponseQuestion {
@@ -20,6 +21,7 @@ export interface FreeResponseQuestion {
   correctAnswer: string;
   explanation?: string;
   table?: TableData;
+  image?: string;
 }
 
 export type Question = MultipleChoiceQuestion | FreeResponseQuestion;
