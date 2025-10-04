@@ -48,9 +48,9 @@ const Index = () => {
     { id: 'unit6', name: 'Unit 6' },
     { id: 'unit7', name: 'Unit 7' },
     { id: 'unit8', name: 'Unit 8' },
-    { id: 'unit8', name: 'Unit 9' },
-    { id: 'unit8', name: 'Unit 10' },
-    { id: 'unit8', name: 'Unit 11' },
+    { id: 'unit9', name: 'Unit 9' },
+    { id: 'unit10', name: 'Unit 10' },
+    { id: 'unit11', name: 'Unit 11' },
   ];
 
   return (
