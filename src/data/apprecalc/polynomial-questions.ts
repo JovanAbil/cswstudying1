@@ -616,4 +616,18 @@ export const polynomialQuestions: Question[] = [
     "correctAnswer": "C",
     "explanation": "N/A"
   },
+  {
+    "id": "polynomial-61",
+    "type": "multiple-choice",
+    "question": "Selected values of the polynomial g are shown in the table above. Which of the following claim and explanation statements could be true about g?",
+    "image": "/images/apprecalc/polynomial11.png",
+    "options": [
+      { "label": "A", "value": "A", "text": "The graph of g could be concave up because the average rates of change over consecutive equal-length input-value intervals are positive", },
+      { "label": "B", "value": "B", "text": "The graph of g could be concave up because the average rates of change over consecutive equal-length input-value intervals are increasing", },
+      { "label": "C", "value": "C", "text": "The graph of g could be concave down because the average rates of change over consecutive equal-length input-value intervals are negative", },
+      { "label": "D", "value": "D", "text": "The graph of g could be concave down because the average rates of change over consecutive equal-length input-value intervals are decreasing", }
+    ],
+    "correctAnswer": "D",
+    "explanation": "N/A"
+  },
 ];
