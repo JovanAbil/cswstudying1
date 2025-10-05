@@ -171,7 +171,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Provided numeric results: min ≈ -0.71838, max ≈ 1.98587. Increasing on (-0.71838,1.98587), decreasing elsewhere on [-3,3]."
   },
   {
-    "id": "polynomial-17",
+    "id": "polynomial-14",
     "type": "multiple-choice",
     "question": "Given polynomial 5(x-3)^4 (x+2)(x-1). What are zeros and multiplicities?",
     "options": [
@@ -184,7 +184,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "From factors: (x-3)^4 → zero at 3 multiplicity 4; (x+2) → -2 mult 1; (x-1) → 1 mult 1."
   },
   {
-    "id": "polynomial-18",
+    "id": "polynomial-15",
     "type": "multiple-choice",
     "question": "Given -2x(x+3)(x-2)^3. What are zeros and multiplicities?",
     "options": [
@@ -197,7 +197,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Zeros from factors: x → 0 mult1; x+3 → -3 mult1; (x-2)^3 → 2 mult3."
   },
   {
-    "id": "polynomial-19",
+    "id": "polynomial-16",
     "type": "multiple-choice",
     "question": "Given x^2 (x+2)^3 (x-6)^2. What are zeros and multiplicities?",
     "options": [
@@ -210,7 +210,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Direct reading of factors: multiplicities 2,3,2 respectively."
   },
   {
-    "id": "polynomial-21",
+    "id": "polynomial-17",
     "type": "multiple-choice",
     "question": "Even/odd/non-real zeros: f(x) = (x^2)(x^2+4)(x-3)^3 (x-1). How many distinct real zeros and how many non-real?",
     "options": [
@@ -223,7 +223,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Real zeros: x=0 (from x^2), x=3, x=1 → three distinct real zeros. x^2+4 produces two non-real zeros ±2i."
   },
   {
-    "id": "polynomial-22",
+    "id": "polynomial-18",
     "type": "multiple-choice",
     "question": "Let k(x) = (x^2 - 9)(x+3)^2 (x^2 + 6x + 9). Identify zeros and multiplicities and end behavior.",
     "options": [
@@ -236,7 +236,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Factorization gives (x-3)(x+3)(x+3)^2 (x+3)^2 = (x-3)(x+3)^5 so zeros: 3 mult1, -3 mult5. Total degree even; leading coeff negative in original context → both ends → -∞ (matches provided answer)."
   },
   {
-    "id": "polynomial-23",
+    "id": "polynomial-19",
     "type": "multiple-choice",
     "question": "End-behavior: For polynomial k(x)=4x + 3x^2 + 6x^3 - 7x^4 + 6, what is the end-behavior?",
     "options": [
@@ -249,7 +249,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Leading term -7x^4 (even degree, negative lead) ⇒ both ends → -∞."
   },
   {
-    "id": "polynomial-24",
+    "id": "polynomial-20",
     "type": "multiple-choice",
     "question": "Table modeling: x:1,3,5,7,9 → f:-2,-1,3,10,20. Which model best fits?",
     "options": [
@@ -262,7 +262,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Second differences are constant (check: first diffs: 1,4,7,10 → second diffs: 3,3,3), so quadratic model is best."
   },
   {
-    "id": "polynomial-25",
+    "id": "polynomial-21",
     "type": "multiple-choice",
     "question": "Let f(x) = x^2 (x^2 + 4)(x − 3)^3 (x − 1). How many distinct real zeros does f have?",
     "options": [
@@ -275,7 +275,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Zeros come from factors x^2 → x=0, (x−3)^3 → x=3, (x−1) → x=1. (x^2+4) has no real roots. Total of 3 distinct real zeros."
   },
   {
-    "id": "polynomial-26",
+    "id": "polynomial-22",
     "type": "multiple-choice",
     "question": "Let k(x) = (x^2 − 9)(x + 3)^2 (x^2 + 6x + 9). Which statement about zeros and multiplicities is correct?",
     "options": [
@@ -288,133 +288,133 @@ export const polynomialQuestions: Question[] = [
     "explanation": "(x^2−9) = (x−3)(x+3), (x+3)^2, and (x^2+6x+9) = (x+3)^2. Total multiplicity at x = −3 is 1 + 2 + 2 = 5. Zero at x = 3 has multiplicity 1."
   },
   {
-    "id": "polynomial-27",
+    "id": "polynomial-23",
     "type": "free-response",
     "question": "f(x) = 5(x−3)^4 (x+2)(x−1). Find the zeros and their multiplicities.",
     "correctAnswer": "x = 3 (multiplicity 4), x = −2 (multiplicity 1), x = 1 (multiplicity 1)",
     "explanation": "Each factor’s exponent gives its multiplicity."
   },
   {
-    "id": "polynomial-28",
+    "id": "polynomial-24",
     "type": "free-response",
     "question": "g(x) = −2x(x+3)(x−2)^3. Find the zeros and their multiplicities.",
     "correctAnswer": "x = 0 (multiplicity 1), x = −3 (multiplicity 1), x = 2 (multiplicity 3)",
     "explanation": "Linear factors give multiplicity 1; cubic factor gives multiplicity 3."
   },
   {
-    "id": "polynomial-29",
+    "id": "polynomial-25",
     "type": "free-response",
     "question": "y = x^2 (x+2)^3 (x−6)^2. Find the zeros and their multiplicities.",
     "correctAnswer": "x = 0 (multiplicity 2), x = −2 (multiplicity 3), x = 6 (multiplicity 2)",
     "explanation": "Multiplicity is read directly from each factor’s exponent."
   },
   {
-    "id": "polynomial-31",
+    "id": "polynomial-26",
     "type": "free-response",
     "question": "Solve x^3 + 2x^2 − 11x + 12 ≥ 0. Write the solution in interval notation.",
     "correctAnswer": "[-4, -3] ∪ [1, 3]",
     "explanation": "Factorization: (x+4)(x+1)(x−3); test intervals for ≥0 sign."
   },
   {
-    "id": "polynomial-32",
+    "id": "polynomial-27",
     "type": "free-response",
     "question": "Solve 3x^3 − 12x^2 − 21x + 30 < 0. Write the solution in interval notation.",
     "correctAnswer": "(-∞, -2) ∪ (1, 5)",
     "explanation": "Factor 3(x+2)(x−1)(x−5); analyze sign chart for <0."
   },
   {
-    "id": "polynomial-33",
+    "id": "polynomial-28",
     "type": "free-response",
     "question": "Solve 8(x−5)^2 (x+2)(x−3) ≤ 0. Write the solution in interval notation.",
     "correctAnswer": "[-2, 3]",
     "explanation": "Multiplicity 2 at x=5 does not change sign; negative intervals determined between −2 and 3."
   },
   {
-    "id": "polynomial-35",
+    "id": "polynomial-29",
     "type": "free-response",
     "question": "On what intervals is f(x) = 2x^3 − x + 1 increasing?",
     "correctAnswer": "(-∞, −1/√6) ∪ (1/√6, ∞)",
     "explanation": "f'(x) = 6x^2 − 1; set f'(x) > 0 → |x| > 1/√6."
   },
   {
-    "id": "polynomial-36",
+    "id": "polynomial-30",
     "type": "free-response",
     "question": "On what intervals is the graph of f(x) = 2x^3 − x + 1 concave down?",
     "correctAnswer": "(-∞, 0)",
     "explanation": "f''(x) = 12x; concave down where f''(x) < 0 → x < 0."
   },
   {
-    "id": "polynomial-37",
+    "id": "polynomial-31",
     "type": "free-response",
     "question": "Let g(x) = 4 − 2x for x < 3, g(x) = x^2 + 2 for x ≥ 3. On what intervals is g decreasing?",
     "correctAnswer": "Decreasing on (−∞, 3) (linear with slope −2) and increasing on (3, ∞).",
     "explanation": "First piece is linear with negative slope, second piece is quadratic opening upward."
   },
   {
-    "id": "polynomial-39",
+    "id": "polynomial-32",
     "type": "free-response",
     "question": "Let h(x) = −2x(x−3)^2 (x+4)^3. Describe the end behavior of h(x).",
     "correctAnswer": "As x → ∞, h(x) → −∞; as x → −∞, h(x) → ∞",
     "explanation": "Degree is 6 (even) but leading coefficient is negative; hence downward at right, upward at left."
   },
   {
-    "id": "polynomial-40",
+    "id": "polynomial-33",
     "type": "free-response",
     "question": "Let g(x) = 4x^5 − 2x^4 + 3x − 1. Describe the end behavior of g(x).",
     "correctAnswer": "As x → ∞, g(x) → ∞; as x → −∞, g(x) → −∞",
     "explanation": "Odd degree (5) with positive leading coefficient."
   },
   {
-    "id": "polynomial-41",
+    "id": "polynomial-34",
     "type": "free-response",
     "question": "[Calculator] f(x) = −1.352x^5 + 3.051x^4 − 1.964x^2 + 6.542 on [−1, 2]. How many relative maxima and minima?",
     "correctAnswer": "Two relative maxima and one relative minimum (based on derivative sign changes in interval).",
     "explanation": "Examination of derivative shows three critical points with alternating slope sign."
   },
   {
-    "id": "polynomial-42",
+    "id": "polynomial-35",
     "type": "free-response",
     "question": "[Calculator] g(x) = 3.526x^4 − 5.152x^3 + 0.789x^2 − 2.665x − 4.152 on [−1, 2]. Local minimum occurs at?",
     "correctAnswer": "At approximately x = 1.1 (numerical computation).",
     "explanation": "Found by calculator."
   },
   {
-    "id": "polynomial-43",
+    "id": "polynomial-36",
     "type": "free-response",
     "question": "[Calculator] Let h(x) = 2.351x^3 − 7.662x^2 + 2.117x + 1.302 on [−1, 3]. Find all zeros.",
     "correctAnswer": "Approximately x ≈ −0.45, x ≈ 0.82, x ≈ 3.05",
     "explanation": "Numerically approximated using factoring/root-finding."
   },
   {
-    "id": "polynomial-44",
+    "id": "polynomial-37",
     "type": "free-response",
     "question": "Let h(x) = {3x^2+1 for x<4; 4x−9 for x≥4}. Find the average rate of change over [0,5].",
     "correctAnswer": "Average rate = (h(5) − h(0)) / 5 = (11 − 1)/5 = 2",
     "explanation": "h(0)=1 (first piece), h(5)=11 (second piece), slope =2."
   },
   {
-    "id": "polynomial-46",
+    "id": "polynomial-38",
     "type": "free-response",
     "question": "[Calculator] For g(x) = −0.645x^4 + 2.67x^3 − 1.34x^2 + 2.91x on [−3,3]: find (a) local minimum, (b) local maximum, (c) interval(s) increasing, (d) interval(s) decreasing, (e) zeros.",
     "correctAnswer": "(a) local min near x ≈ −1.2, (b) local max near x ≈ 1.5, (c) increasing on (−1.2, 1.5), (d) decreasing on (−3, −1.2) ∪ (1.5, 3), (e) zeros approximately x ≈ −2.5, 0, 1.7",
     "explanation": "Solved via derivative sign test and numerical root finding."
   },
   {
-    "id": "polynomial-47",
+    "id": "polynomial-39",
     "type": "free-response",
     "question": "Given table for f at selected x: x=−7,−4,a,6,7; g(x)=b,−5,5,7,12. If f is even, find a+b.",
     "correctAnswer": "a+b = 4-12 = -8",
     "explanation": "For even function f(−x)=f(x); use symmetry to find missing values."
   },
   {
-    "id": "polynomial-48",
+    "id": "polynomial-40",
     "type": "free-response",
     "question": "Given table for x=−6,−4,−3,−2,2,b,6; f(x)=−4,−5,5,1,a,5,c. Determine possible parity and concavity statements.",
     "correctAnswer": "Likely neither purely even nor odd; concavity changes where second differences change sign.",
     "explanation": "Check symmetry of data and analyze discrete second differences."
   },
   {
-    "id": "polynomial-50",
+    "id": "polynomial-41",
     "type": "multiple-choice",
     "question": "Data: x=1,3,5,7,9 and f(x)=−2,−1,3,10,20. Which statement best fits the data: linear or quadratic?",
     "options": [
@@ -425,7 +425,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "First differences are not constant, second differences approximately constant → quadratic model."
   },
   {
-    "id": "polynomial-51",
+    "id": "polynomial-42",
     "type": "multiple-choice",
     "question": "Data: x=0,10,20,30,40 and h(x)=100,60,40,30,25. Which statement about concavity is correct?",
     "options": [
@@ -437,7 +437,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Decreasing differences that shrink indicate concave down trend."
   },
   {
-    "id": "polynomial-52",
+    "id": "polynomial-43",
     "type": "free-response",
     "question": "The graph of the polynomial function f is shown above, where −5 ≤ x ≤ 5. The function f has local extrema at x = −2 and x = 2, and the graph of f has a point of inflection at x = 0. 1a) On what intervals is f increasing?",
     "image": "/images/apprecalc/polynomial-graph-extrema1.png",
@@ -445,7 +445,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "1a) The function f is increasing where the graph has a positive slope. From the graph, this occurs on the intervals (-5, -2) and (2, 5), which are before the local maximum at x = -2 and after the local minimum at x = 2."
   },
   {
-    "id": "polynomial-53",
+    "id": "polynomial-44",
     "type": "free-response",
     "question": "The graph of the polynomial function f is shown above, where −5 ≤ x ≤ 5. The function f has local extrema at x = −2 and x = 2, and the graph of f has a point of inflection at x = 0. 1b) On what intervals is the graph of f concave down?",
     "image": "/images/apprecalc/polynomial-graph-extrema1.png",
@@ -453,7 +453,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "1b) The graph of f is concave down where the curve opens downward. From the graph and the given information that there is a point of inflection at x = 0, the function is concave down on the interval (-5, 0)."
   },
   {
-    "id": "polynomial-54",
+    "id": "polynomial-45",
     "type": "free-response",
     "question": "the graph of 𝑔 is shown above, where −5 ≤ 𝑥 ≤ 4. The graph of 𝑔 has points of inflection at 𝑥 = −1 and 𝑥 = 1. 1a) On what intervals is g decreasing?",
     "image": "/images/apprecalc/polynomial-graph-extrema2.png",
@@ -461,7 +461,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Think about it."
   },
   {
-    "id": "polynomial-55",
+    "id": "polynomial-46",
     "type": "free-response",
     "question": "the graph of 𝑔 is shown above, where −5 ≤ 𝑥 ≤ 4. The graph of 𝑔 has points of inflection at 𝑥 = −1 and 𝑥 = 1. 1b) On what intervals is the graph of g concave up?",
     "image": "/images/apprecalc/polynomial-graph-extrema2.png",
@@ -469,7 +469,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "Think about it."
   },
   {
-    "id": "polynomial-56",
+    "id": "polynomial-47",
     "type": "multiple-choice",
     "question": "The function g is decreasing at a decreasing rate. Which of the following could be the graph of g?",
     "options": [
@@ -482,7 +482,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "A function that is decreasing at a decreasing rate has a negative first derivative (decreasing) and a positive second derivative (concave up). This means the graph slopes downward but curves upward."
   },
   {
-    "id": "polynomial-57",
+    "id": "polynomial-48",
     "type": "multiple-choice",
     "question": "The graph of a function k is shown in the figure. Which of the following best describes the behavior of the graph of k from point A to point B?",
     "image": "/images/apprecalc/polynomial10.png",
@@ -496,7 +496,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "N/A"
   },
   {
-    "id": "polynomial-58",
+    "id": "polynomial-49",
     "type": "multiple-choice",
     "question": "The function g is a polynomial with the following end behavior: lim_x-->-∞ g(x) = -∞ and lim_x-->∞ g(x) = -∞",
     "options": [
@@ -509,7 +509,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "N/A"
   },
   {
-    "id": "polynomial-59",
+    "id": "polynomial-50",
     "type": "multiple-choice",
     "question": "What is the average rate of change of h over the interval 0<=x<=6",
     "image": "/images/apprecalc/polynomial5.png",
@@ -523,7 +523,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "N/A"
   },
   {
-    "id": "polynomial-60",
+    "id": "polynomial-51",
     "type": "multiple-choice",
     "question": "The graph of the polynomial function p is shown above. Which of the following could be an expression for p?",
     "image": "/images/apprecalc/polynomial4.png",
@@ -537,7 +537,7 @@ export const polynomialQuestions: Question[] = [
     "explanation": "N/A"
   },
   {
-    "id": "polynomial-61",
+    "id": "polynomial-52",
     "type": "multiple-choice",
     "question": "Selected values of the polynomial g are shown in the table above. Which of the following claim and explanation statements could be true about g?",
     "image": "/images/apprecalc/polynomial11.png",
