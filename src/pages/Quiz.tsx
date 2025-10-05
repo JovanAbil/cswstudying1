@@ -63,7 +63,7 @@ const Quiz = () => {
   const [showGrading, setShowGrading] = useState(false);
 
   useEffect(() => {
-    const questionCount = quizType === 'daily' ? 10 : 30;
+    const questionCount = quizType === 'daily' ? 10 : quizType === 'cram' ? Infinity : 30;
     
     const questionMap: Record<string, Question[]> = {
       'precalc-polynomial': polynomialQuestions, 'precalc-rational': rationalQuestions,

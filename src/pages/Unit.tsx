@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, BookOpen, FileText } from 'lucide-react';
+import { ArrowLeft, BookOpen, FileText, Brain } from 'lucide-react';
 
 const Unit = () => {
   const { subject, unitId } = useParams();
@@ -61,6 +61,25 @@ const Unit = () => {
                   <div className="flex items-center gap-4 text-sm text-muted-foreground">
                     <span>⏱️ ~45 minutes</span>
                     <span>📝 {subject === 'biology' ? '25' : '30'} questions</span>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            <Card className="p-8 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 hover:border-primary"
+                  onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/cram`)}>
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/20 rounded-lg">
+                  <Brain className="h-8 w-8 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-semibold mb-2">Cram Study</h3>
+                  <p className="text-muted-foreground mb-4">
+                    Practice ALL available questions from this unit - perfect for last-minute studying
+                  </p>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>⏱️ Variable</span>
+                    <span>📝 All questions</span>
                   </div>
                 </div>
               </div>
