@@ -301,5 +301,115 @@ export const biochemistryQuestions: Question[] = [
     question: 'Based on the test results (tubes 1 and 2 positive for nitrogen, only tube 2 positive for sulfur, tube 1 has high phosphate), what is in tube 3?',
     correctAnswer: 'Lactose',
     explanation: 'Tube 3 contains lactose (a disaccharide/carbohydrate). Carbohydrates are made of C, H, and O only - they lack nitrogen, sulfur, and phosphate.'
-  }
+  },
+  {
+    id: 'biochemistry-26',
+    type: 'multiple-choice',
+    question: 'The diagram shows the structure of a water molecule. What allows the three atoms in a water molecule to stay together?',
+    images: "/images/biology/biochem1.png",
+    options: [
+      { label: 'A', value: 'A', text: 'Covalent bonds are formed by shared electrons between atoms' },
+      { label: 'B', value: 'B', text: 'Covalent bonds are formed by electrons that transfer between atoms' },
+      { label: 'C', value: 'C', text: 'Ionic bonds are formed by electrons that transfer between atoms' },
+      { label: 'D', value: 'D', text: 'Hydrogen bonds are formed only by the electrons of the hydrogen atoms' }
+    ],
+    correctAnswer: 'A',
+    explanation: 'Being covalently bonded is when nonmetals combine by sharing electrons.'
+  },
+  {
+    id: 'biochemistry-27a',
+    type: 'free-response',
+    question: 'Which of the above molecules is a sugar?',
+    images: "/images/biology/biochem2.png",
+    correctAnswer: 'C',
+    explanation: 'N/A'
+  },
+  {
+    id: 'biochemistry-27b',
+    type: 'free-response',
+    question: 'Which of the above molecules is a fatty acid?',
+    images: "/images/biology/biochem2.png",
+    correctAnswer: 'A',
+    explanation: 'N/A'
+  },
+  {
+    id: 'biochemistry-27c',
+    type: 'free-response',
+    question: 'Which of the above molecules is a nucleic acid?',
+    images: "/images/biology/biochem2.png",
+    correctAnswer: 'B',
+    explanation: 'N/A'
+  },
+  {
+    id: 'biochemistry-27d',
+    type: 'free-response',
+    question: 'Which of the above molecules is a amino acid?',
+    images: "/images/biology/biochem2.png",
+    correctAnswer: 'D',
+    explanation: 'N/A'
+  },
+  {
+    id: 'biochemistry-27e',
+    type: 'multiple-choice',
+    question: 'What is the polymer of option B?',
+    images: "/images/biology/biochem2.png",
+    options: [
+      { label: 'A', value: 'A', text: 'DNA' },
+      { label: 'B', value: 'B', text: 'Polysaccharide' },
+      { label: 'C', value: 'C', text: 'Protien' },
+      { label: 'D', value: 'D', text: 'Lipid' }
+    ],
+    correctAnswer: 'A',
+    explanation: 'B contains phosphorus and nitrogen which are both present in nucleic acid which makes up DNA.'
+  },
+  {
+    id: 'biochemistry-27f',
+    type: 'multiple-choice',
+    question: 'What is the polymer of option C?',
+    images: "/images/biology/biochem2.png",
+    options: [
+      { label: 'A', value: 'A', text: 'DNA' },
+      { label: 'B', value: 'B', text: 'Polysaccharide' },
+      { label: 'C', value: 'C', text: 'Protien' },
+      { label: 'D', value: 'D', text: 'Lipid' }
+    ],
+    correctAnswer: 'B',
+    explanation: 'C contains only carbon, oxygen, and hydrogen without any long chains which means it is a carbohydrate and that is a polysaccharide.'
+  },
+  {
+    id: 'biochemistry-28',
+    type: 'free-response',
+    question: 'Look at the two types of fatty acids below. Label each fatty acid as saturated or unsaturated. What is the main difference between these two molecules? Provide one example of each difference.',
+    images: "/images/biology/biochem3.png",
+    correctAnswer: 'The main difference is unsaturated fatty acids are connected through a double bond between carbon atoms while saturated fats dont have a double bond between carbon bonds.',
+    explanation: 'N/A'
+  },
+  {
+    id: 'biochemistry-29',
+    type: 'multiple-choice',
+    question: 'Which change to the model would improve its accuracy',
+    images: "/images/biology/biochem4.png",
+    options: [
+      { label: 'A', value: 'A', text: 'Move each neutron so it is next to a proton.' },
+      { label: 'B', value: 'B', text: 'Move the protons and neutrons to a small space in the center' },
+      { label: 'C', value: 'C', text: 'Move the protons and electrons to a small space in the center' },
+      { label: 'D', value: 'D', text: 'Move all the particles so that they are evenly space' }
+    ],
+    correctAnswer: 'B',
+    explanation: 'It is specific with moving protons and neutrons only to the center, A isnt specific and C & D are just wrong.'
+  },
+  {
+    id: 'biochemistry-30',
+    type: 'multiple-choice',
+    question: 'What property of a water molecule allows hydrogen bonds to form among adjacent molecules?',
+    images: "/images/biology/biochem5.png",
+    options: [
+      { label: 'A', value: 'A', text: 'The strong covalent bonds that hold the oxygen atom to each hydrogen atom.' },
+      { label: 'B', value: 'B', text: 'The ionic bonds that form after the molecule separates into a hydroxide ion (OH-) and hydrogen ion (H+)' },
+      { label: 'C', value: 'C', text: 'The small size of the 2 hydrogen atoms compared to the oxygen atom' },
+      { label: 'D', value: 'D', text: 'The polarity of the molecule, which involves a slightly negative oxygen atom and a slightly positive hydrogen atoms' }
+    ],
+    correctAnswer: 'D',
+    explanation: 'Polarity makes sense here, covalent only works between 1 molecule not outer, ionic bonds arent used for 2 nonmetals, size doesnt matter; electronegativity does.'
+  },
 ];
