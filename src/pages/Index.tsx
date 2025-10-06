@@ -147,38 +147,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Math 3 Section */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-4">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
-                <GraduationCap className="w-6 h-6 text-primary" />
-              </div>
-              <h2 className="text-2xl font-bold text-primary">Math 3 (Satalino)</h2>
-            </div>
-            <Button
-              onClick={() => navigate('/course-challenge/math3S')}
-              variant="outline"
-              className="border-primary text-primary hover:bg-primary hover:text-white"
-            >
-              Course Challenge
-            </Button>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {math3SUnits.map((unit) => (
-              <Card
-                key={unit.id}
-                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-primary group"
-                onClick={() => navigate(`/unit/math3S/${unit.id}`)}
-              >
-                <div className="text-center">
-                  <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-
         {/* AP Biology Toner Section */}
         <div className="max-w-6xl mx-auto mb-16">
           <div className="flex items-center justify-between mb-8">
