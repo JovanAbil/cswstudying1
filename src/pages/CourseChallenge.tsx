@@ -25,20 +25,6 @@ const CourseChallenge = () => {
           { id: 'parametric', name: 'Unit 4A - Parametric Functions' },
           { id: 'vectorsMatrices', name: 'Unit 4B - Vectors and Matrices' },
         ];
-      case 'math3S':
-        return [
-          { id: 'linear', name: 'Linear Functions and Systems' },
-          { id: 'polynomial', name: 'Polynomial Functions' },
-          { id: 'rational', name: 'Rational Functions' },
-          { id: 'rationalexp', name: 'Rational Exponents and Radical Functions' },
-          { id: 'exponential', name: 'Exponential and Logarithmic Functions' },
-          { id: 'trigonometric', name: 'Trigonometric Functions' },
-          { id: 'trigonometriciden', name: 'Trignometric Equations and Identities' },
-          { id: 'data', name: 'Data Anaylsis and Statistics' },
-          { id: 'coordinategeo', name: 'Coordinate Geometry' },
-          { id: 'circles', name: 'Circles' },
-          { id: 'dimensional', name: 'Two and Three Dimensoinal Models' },
-        ];
       case 'biology':
         return [
           { id: 'biochemistry', name: 'Unit 1 - Biochemistry' },
