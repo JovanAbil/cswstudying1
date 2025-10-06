@@ -26,6 +26,9 @@ const Index = () => {
     { id: 'unit6', name: 'Unit 6' },
     { id: 'unit7', name: 'Unit 7' },
     { id: 'unit8', name: 'Unit 8' },
+    { id: 'unit9', name: 'Unit 9' },
+    { id: 'unit10', name: 'Unit 10' },
+    { id: 'unit11', name: 'Unit 11' },
   ];
 
   const biologyUnits = [
@@ -98,17 +101,20 @@ const Index = () => {
   ];
 
   const worldHistoryKUnits = [
-    { id: 'unit1', name: 'Unit 1' },
-    { id: 'unit2', name: 'Unit 2' },
-    { id: 'unit3', name: 'Unit 3' },
-    { id: 'unit4', name: 'Unit 4' },
-    { id: 'unit5', name: 'Unit 5' },
-    { id: 'unit6', name: 'Unit 6' },
-    { id: 'unit7', name: 'Unit 7' },
-    { id: 'unit8', name: 'Unit 8' },
-    { id: 'unit9', name: 'Unit 9' },
-    { id: 'unit10', name: 'Unit 10' },
-    { id: 'unit11', name: 'Unit 11' },
+    { id: 'prehistory', name: 'Prehistory' },
+    { id: 'renaissance', name: 'Renaissance & Reformation' },
+    { id: 'islamexpansion', name: 'Rise and Expansion of Islam' },
+    { id: 'asianworld', name: 'The East Asian World' },
+    { id: 'globalage', name: 'The Beginnings of Our Global Age' },
+    { id: 'englightenment', name: 'Absolutism, Enlightenment and Revolution' },
+    { id: 'french', name: 'The French Revolution and the Age of Napoleon' },
+    { id: 'indust', name: 'Industrialization' },
+    { id: 'imperialism', name: 'The Height of Imperialism' },
+    { id: 'russianrevol', name: 'Revolution and Communism in Russia' },
+    { id: 'chinarevol', name: 'Revolution and Communism in China' },
+    { id: 'africaasiaindep', name: 'Independence in Africa and Asia' },
+    { id: 'middleeastconflict', name: 'Conflict in the Middle East' },
+    { id: 'currentage', name: 'Global Issues in the 20th & 21st Centuries' },
   ];
 
   return (
