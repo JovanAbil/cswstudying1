@@ -1,11 +1,16 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, BookOpen, FileText, Brain } from 'lucide-react';
+import { ArrowLeft, BookOpen, FileText, Brain, ExternalLink } from 'lucide-react';
+import { unitStudyResources } from '@/data/study-resources';
 
 const Unit = () => {
   const { subject, unitId } = useParams();
   const navigate = useNavigate();
+
+  // Get study resources for this unit
+  const resourceKey = `${subject}-${unitId}`;
+  const studyResources = unitStudyResources[resourceKey] || [];
 
   return (
     <div className="min-h-screen bg-background">
@@ -85,6 +90,30 @@ const Unit = () => {
               </div>
             </Card>
           </div>
+
+          {/* Study Resources Section */}
+          {studyResources.length > 0 && (
+            <Card className="mt-8 p-6 bg-muted/50">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <ExternalLink className="h-5 w-5" />
+                Helpful Study Resources
+              </h3>
+              <div className="space-y-2">
+                {studyResources.map((resource, index) => (
+                  <a
+                    key={index}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary hover:underline hover:text-primary/80 transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    {resource.title}
+                  </a>
+                ))}
+              </div>
+            </Card>
+          )}
         </div>
       </div>
     </div>

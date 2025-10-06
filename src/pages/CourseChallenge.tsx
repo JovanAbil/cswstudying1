@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Trophy } from 'lucide-react';
+import { ArrowLeft, Trophy, ExternalLink } from 'lucide-react';
 import { toast } from 'sonner';
+import { courseChallengeResources } from '@/data/study-resources';
 
 const CourseChallenge = () => {
   const { subject } = useParams();
@@ -107,6 +108,9 @@ const CourseChallenge = () => {
   };
 
   const units = getUnits();
+  
+  // Get study resources for this course challenge
+  const studyResources = courseChallengeResources[subject || ''] || [];
 
   const handleUnitToggle = (unitId: string) => {
     setSelectedUnits(prev =>
@@ -228,6 +232,30 @@ const CourseChallenge = () => {
             <li>• Review your performance at the end</li>
           </ul>
         </Card>
+
+        {/* Study Resources Section */}
+        {studyResources.length > 0 && (
+          <Card className="mt-6 p-6 bg-muted/50">
+            <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+              <ExternalLink className="h-5 w-5" />
+              Helpful Study Resources
+            </h3>
+            <div className="space-y-2">
+              {studyResources.map((resource, index) => (
+                <a
+                  key={index}
+                  href={resource.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-primary hover:underline hover:text-primary/80 transition-colors"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  {resource.title}
+                </a>
+              ))}
+            </div>
+          </Card>
+        )}
       </div>
     </div>
   );

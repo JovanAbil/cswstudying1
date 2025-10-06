@@ -307,7 +307,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-26',
     type: 'multiple-choice',
     question: 'The diagram shows the structure of a water molecule. What allows the three atoms in a water molecule to stay together?',
-    images: "/images/biology/biochem1.png",
+    image: "/images/biology/biochem1.png",
     options: [
       { label: 'A', value: 'A', text: 'Covalent bonds are formed by shared electrons between atoms' },
       { label: 'B', value: 'B', text: 'Covalent bonds are formed by electrons that transfer between atoms' },
@@ -321,7 +321,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-27a',
     type: 'free-response',
     question: 'Which of the above molecules is a sugar?',
-    images: "/images/biology/biochem2.png",
+    image: "/images/biology/biochem2.png",
     correctAnswer: 'C',
     explanation: 'N/A'
   },
@@ -329,7 +329,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-27b',
     type: 'free-response',
     question: 'Which of the above molecules is a fatty acid?',
-    images: "/images/biology/biochem2.png",
+    image: "/images/biology/biochem2.png",
     correctAnswer: 'A',
     explanation: 'N/A'
   },
@@ -337,7 +337,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-27c',
     type: 'free-response',
     question: 'Which of the above molecules is a nucleic acid?',
-    images: "/images/biology/biochem2.png",
+    image: "/images/biology/biochem2.png",
     correctAnswer: 'B',
     explanation: 'N/A'
   },
@@ -345,7 +345,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-27d',
     type: 'free-response',
     question: 'Which of the above molecules is a amino acid?',
-    images: "/images/biology/biochem2.png",
+    image: "/images/biology/biochem2.png",
     correctAnswer: 'D',
     explanation: 'N/A'
   },
@@ -353,7 +353,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-27e',
     type: 'multiple-choice',
     question: 'What is the polymer of option B?',
-    images: "/images/biology/biochem2.png",
+    image: "/images/biology/biochem2.png",
     options: [
       { label: 'A', value: 'A', text: 'DNA' },
       { label: 'B', value: 'B', text: 'Polysaccharide' },
@@ -367,7 +367,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-27f',
     type: 'multiple-choice',
     question: 'What is the polymer of option C?',
-    images: "/images/biology/biochem2.png",
+    image: "/images/biology/biochem2.png",
     options: [
       { label: 'A', value: 'A', text: 'DNA' },
       { label: 'B', value: 'B', text: 'Polysaccharide' },
@@ -381,7 +381,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-28',
     type: 'free-response',
     question: 'Look at the two types of fatty acids below. Label each fatty acid as saturated or unsaturated. What is the main difference between these two molecules? Provide one example of each difference.',
-    images: "/images/biology/biochem3.png",
+    image: "/images/biology/biochem3.png",
     correctAnswer: 'The main difference is unsaturated fatty acids are connected through a double bond between carbon atoms while saturated fats dont have a double bond between carbon bonds.',
     explanation: 'N/A'
   },
@@ -389,7 +389,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-29',
     type: 'multiple-choice',
     question: 'Which change to the model would improve its accuracy',
-    images: "/images/biology/biochem4.png",
+    image: "/images/biology/biochem4.png",
     options: [
       { label: 'A', value: 'A', text: 'Move each neutron so it is next to a proton.' },
       { label: 'B', value: 'B', text: 'Move the protons and neutrons to a small space in the center' },
@@ -403,7 +403,7 @@ export const biochemistryQuestions: Question[] = [
     id: 'biochemistry-30',
     type: 'multiple-choice',
     question: 'What property of a water molecule allows hydrogen bonds to form among adjacent molecules?',
-    images: "/images/biology/biochem5.png",
+    image: "/images/biology/biochem5.png",
     options: [
       { label: 'A', value: 'A', text: 'The strong covalent bonds that hold the oxygen atom to each hydrogen atom.' },
       { label: 'B', value: 'B', text: 'The ionic bonds that form after the molecule separates into a hydroxide ion (OH-) and hydrogen ion (H+)' },
