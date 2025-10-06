@@ -28,9 +28,33 @@ const Unit = () => {
           <h1 className="text-4xl font-bold text-center mb-3 text-primary">
             {unitId?.toUpperCase()}
           </h1>
-          <p className="text-center text-muted-foreground mb-12">
+          <p className="text-center text-muted-foreground mb-8">
             Choose your practice mode
           </p>
+
+          {/* Study Resources Section */}
+          {studyResources.length > 0 && (
+            <Card className="mb-8 p-6 bg-muted/50">
+              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+                <ExternalLink className="h-5 w-5" />
+                Helpful Study Resources
+              </h3>
+              <div className="space-y-2">
+                {studyResources.map((resource, index) => (
+                  <a
+                    key={index}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-primary hover:underline hover:text-primary/80 transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    {resource.title}
+                  </a>
+                ))}
+              </div>
+            </Card>
+          )}
 
           <div className="grid gap-6">
             <Card className="p-8 hover:shadow-lg transition-all duration-300 hover:scale-[1.02] cursor-pointer border-2 hover:border-primary"
@@ -90,30 +114,6 @@ const Unit = () => {
               </div>
             </Card>
           </div>
-
-          {/* Study Resources Section */}
-          {studyResources.length > 0 && (
-            <Card className="mt-8 p-6 bg-muted/50">
-              <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                <ExternalLink className="h-5 w-5" />
-                Helpful Study Resources
-              </h3>
-              <div className="space-y-2">
-                {studyResources.map((resource, index) => (
-                  <a
-                    key={index}
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-primary hover:underline hover:text-primary/80 transition-colors"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                    {resource.title}
-                  </a>
-                ))}
-              </div>
-            </Card>
-          )}
         </div>
       </div>
     </div>
