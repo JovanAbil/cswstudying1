@@ -110,7 +110,7 @@ const CourseChallenge = () => {
         ];
       case 'world-history-kohl':
         return [
-          { id: 'religions', name: 'Unit 1 - Religions' },
+          { id: 'prehistory', name: 'Prehistory' },
           { id: 'unit2', name: 'Unit 2' },
           { id: 'unit3', name: 'Unit 3' },
           { id: 'unit4', name: 'Unit 4' },
@@ -121,6 +121,9 @@ const CourseChallenge = () => {
           { id: 'unit9', name: 'Unit 9' },
           { id: 'unit10', name: 'Unit 10' },
           { id: 'unit11', name: 'Unit 11' },
+          { id: 'unit12', name: 'Unit 12' },
+          { id: 'unit13', name: 'Unit 13' },
+          { id: 'unit14', name: 'Unit 14' },
         ];
       default:
         return [];
