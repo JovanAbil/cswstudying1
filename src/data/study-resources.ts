@@ -120,11 +120,15 @@ export const courseChallengeResources: Record<string, StudyResource[]> = {
   // Example with filler links
   'precalc': [],
   'biology': [],
-  'apbio': [],
+  'apbio': [
+    { title: 'Khan Academy', url: 'https://www.khanacademy.org/science/ap-biology' },
+  ],
   'chemistry': [
     { title: 'ChemQuiz', url: 'https://chemquiz.net/quizzes/' },
   ],
-  'apchem': [],
+  'apchem': [
+    { title: 'Khan Academy', url: 'https://www.khanacademy.org/science/ap-chemistry-beta' },
+  ],
   'world-history': [],
   'world-history-kohl': [],
   'apush': [
