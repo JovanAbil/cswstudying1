@@ -28,18 +28,7 @@ const Index = () => {
     { id: 'ecology', name: 'Ecology' },
   ];
 
-  const apbioVUnits = [
-    { id: 'biochemistry', name: 'BioChem' },
-    { id: 'cellstructure', name: 'Cell Structure & Functions' },
-    { id: 'cellenergetics', name: 'Cell Energetics-Photosynthesis & Cell Respirations' },
-    { id: 'cellgrowth', name: 'Cell Growth & Division' },
-    { id: 'genetics', name: 'Genetics' },
-    { id: 'molecular', name: 'Molecular Biology' },
-    { id: 'evolution', name: 'Darwins Theory of Evolution' },
-    { id: 'ecology', name: 'Ecology' },
-  ];
-
-  const apbioTUnits = [
+  const apbioUnits = [
     { id: 'biochemistry', name: 'BioChem' },
     { id: 'cellstructure', name: 'Cell Structure & Functions' },
     { id: 'cellenergetics', name: 'Cell Energetics-Photosynthesis & Cell Respirations' },
@@ -61,7 +50,7 @@ const Index = () => {
     { id: 'acidbases', name: 'Acids and Bases' },
   ];
 
-  const apchemDUnits = [
+  const apchemUnits = [
     { id: 'unit1', name: 'Unit 1' },
     { id: 'unit2', name: 'Unit 2' },
     { id: 'unit3', name: 'Unit 3' },
@@ -122,7 +111,7 @@ const Index = () => {
               <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg">
                 <GraduationCap className="w-6 h-6 text-primary" />
               </div>
-              <h2 className="text-2xl font-bold text-primary">AP Precalculus (Damiani)</h2>
+              <h2 className="text-2xl font-bold text-primary">AP Precalculus</h2>
             </div>
             <Button
               onClick={() => navigate('/course-challenge/precalc')}
@@ -154,10 +143,10 @@ const Index = () => {
               <div className="inline-flex items-center justify-center w-12 h-12 bg-success/10 rounded-lg">
                 <Microscope className="w-6 h-6 text-success" />
               </div>
-              <h2 className="text-2xl font-bold text-success">AP Biology (Toner)</h2>
+              <h2 className="text-2xl font-bold text-success">AP Biology</h2>
             </div>
             <Button
-              onClick={() => navigate('/course-challenge/apbioT')}
+              onClick={() => navigate('/course-challenge/apbio')}
               variant="outline"
               className="border-success text-success hover:bg-success hover:text-white"
             >
@@ -165,43 +154,11 @@ const Index = () => {
             </Button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {apbioTUnits.map((unit) => (
+            {apbioUnits.map((unit) => (
               <Card
                 key={unit.id}
                 className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-success group"
-                onClick={() => navigate(`/unit/apbioT/${unit.id}`)}
-              >
-                <div className="text-center">
-                  <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* AP Biology Valenti Section */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-4">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-success/10 rounded-lg">
-                <Microscope className="w-6 h-6 text-success" />
-              </div>
-              <h2 className="text-2xl font-bold text-success">AP Biology (Valenti)</h2>
-            </div>
-            <Button
-              onClick={() => navigate('/course-challenge/apbioV')}
-              variant="outline"
-              className="border-success text-success hover:bg-success hover:text-white"
-            >
-              Course Challenge
-            </Button>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {apbioVUnits.map((unit) => (
-              <Card
-                key={unit.id}
-                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-success group"
-                onClick={() => navigate(`/unit/apbioV/${unit.id}`)}
+                onClick={() => navigate(`/unit/apbio/${unit.id}`)}
               >
                 <div className="text-center">
                   <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
@@ -283,10 +240,10 @@ const Index = () => {
               <div className="inline-flex items-center justify-center w-12 h-12 bg-accent/10 rounded-lg">
                 <Beaker className="w-6 h-6 text-accent" />
               </div>
-              <h2 className="text-2xl font-bold text-accent">AP Chemistry (Darone)</h2>
+              <h2 className="text-2xl font-bold text-accent">AP Chemistry</h2>
             </div>
             <Button
-              onClick={() => navigate('/course-challenge/apchemD')}
+              onClick={() => navigate('/course-challenge/apchem')}
               variant="outline"
               className="border-accent text-accent hover:bg-accent hover:text-foreground"
             >
@@ -294,11 +251,11 @@ const Index = () => {
             </Button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {apchemDUnits.map((unit) => (
+            {apchemUnits.map((unit) => (
               <Card
                 key={unit.id}
                 className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-accent group"
-                onClick={() => navigate(`/unit/apchemD/${unit.id}`)}
+                onClick={() => navigate(`/unit/apchem/${unit.id}`)}
               >
                 <div className="text-center">
                   <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
