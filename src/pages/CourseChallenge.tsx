@@ -36,18 +36,8 @@ const CourseChallenge = () => {
           { id: 'evolution', name: 'Unit 7 - Evolution' },
           { id: 'ecology', name: 'Unit 8 - Ecology' },
         ];
-      case 'apbioT':
-        return [
-          { id: 'biochemistry', name: 'Unit 1 - Biochemistry' },
-          { id: 'cellstructure', name: 'Unit 2 - Cell Structure & Function' },
-          { id: 'cellenergetics', name: 'Unit 3 - Cell Energetics' },
-          { id: 'cellgrowth', name: 'Unit 4 - Cell Growth & Division' },
-          { id: 'genetics', name: 'Unit 5 - Genetics' },
-          { id: 'molecular', name: 'Unit 6 - Molecular Biology' },
-          { id: 'evolution', name: 'Unit 7 - Evolution' },
-          { id: 'ecology', name: 'Unit 8 - Ecology' },
-        ];
-      case 'apbioV':
+    
+      case 'apbio':
         return [
           { id: 'biochemistry', name: 'Unit 1 - Biochemistry' },
           { id: 'cellstructure', name: 'Unit 2 - Cell Structure & Function' },
@@ -69,7 +59,7 @@ const CourseChallenge = () => {
           { id: 'stoichiometry', name: 'Unit 7 - Stoichiometry' },
           { id: 'acidbases', name: 'Unit 8 - Acids & Bases' },
         ];
-      case 'apchemD':
+      case 'apchem':
         return [
           { id: 'metric', name: 'Unit 1 - Metric Conversions' },
           { id: 'atomic', name: 'Unit 2 - Atomic Structure' },
