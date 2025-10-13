@@ -205,4 +205,144 @@ export const atomicQuestions: Question[] = [
     correctAnswer: '0/-1 e + γ + 231/91 Pa',
     explanation: '.'
   },
+  {
+    id: 'atomic-25',
+    type: 'free-response',
+    question: 'What type of light has a wavelength of 5.0 × 10^-4 m?',
+    correctAnswer: 'Infrared',
+    explanation: 'A wavelength of 5.0×10^-4 m (500 µm) lies in the infrared region of the EM spectrum.'
+  },
+  {
+    id: 'atomic-26',
+    type: 'free-response',
+    question: 'What type of light has a wavelength of 2.4 × 10^-8 m?',
+    correctAnswer: 'X-rays',
+    explanation: 'Wavelengths around 10^-8 m are characteristic of X-rays.'
+  },
+  {
+    id: 'atomic-27',
+    type: 'free-response',
+    question: 'What type of light has a wavelength of 12 mm?',
+    correctAnswer: 'Microwaves',
+    explanation: 'Wavelengths from 1 mm to 1 m belong to the microwave region.'
+  },
+  {
+    id: 'atomic-28',
+    type: 'free-response',
+    question: 'An ultraviolet light wave is used to kill bacteria. It has a frequency of 1.2 × 10^15 1/s. Find the wavelength.',
+    correctAnswer: '2.5 × 10^-7 m',
+    explanation: 'λ = c / ν = (3×10^8) / (1.2×10^15) = 2.5×10^-7 m (ultraviolet range).'
+  },
+  {
+    id: 'atomic-29',
+    type: 'free-response',
+    question: 'An x-ray has a wavelength of 1.54 × 10^-10 m. Find the frequency of this light.',
+    correctAnswer: '1.948 × 10^18 1/s',
+    explanation: 'ν = c / λ = (3×10^8) / (1.54×10^-10) = 1.95×10^18 1/s.'
+  },
+  {
+    id: 'atomic-30',
+    type: 'free-response',
+    question: 'A visible light wave has a frequency of 7.5 × 10^14 1/s. Find the wavelength in nanometers (nm) and determine the color of the light.',
+    correctAnswer: '400 nm, violet',
+    explanation: 'λ = (3×10^8)/(7.5×10^14) = 4×10^-7 m = 400 nm (violet region).'
+  },
+  {
+    id: 'atomic-31',
+    type: 'free-response',
+    question: 'One of the light waves produced when hydrogen is energized has a wavelength of 410.5 nm. What is the frequency of this light?',
+    correctAnswer: '7.308 × 10^14 1/s',
+    explanation: 'ν = c / λ = (3×10^8) / (4.105×10^-7) = 7.31×10^14 1/s.'
+  },
+  {
+    id: 'atomic-32',
+    type: 'free-response',
+    question: 'The frequency of light used to heat food in a microwave oven is 2.45 GHz. What is the wavelength of this light?',
+    correctAnswer: '0.122 m',
+    explanation: 'λ = c / ν = (3×10^8) / (2.45×10^9) = 0.122 m.'
+  },
+  {
+    id: 'atomic-33',
+    type: 'free-response',
+    question: 'A radio wave broadcast on the AM dial has a wavelength of 280.4 m. Find the frequency of this radio wave in hertz and kilohertz.',
+    correctAnswer: '1.07×10^6 Hz, 1069.9 kHz',
+    explanation: 'ν = (3×10^8) / (280.4) = 1.07×10^6 Hz = 1069.9 kHz.'
+  },
+  {
+    id: 'atomic-34',
+    type: 'free-response',
+    question: 'What is the wavelength of a radio broadcast with a frequency of 99.5 MHz (FM 99.5)?',
+    correctAnswer: '3.015 m',
+    explanation: 'λ = (3×10^8) / (99.5×10^6) = 3.02 m.'
+  },
+  {
+    id: 'atomic-35',
+    type: 'free-response',
+    question: 'Pilots often use waves of about 2.340 m to communicate. What is the frequency of this wave?',
+    correctAnswer: '1.28×10^8 1/s',
+    explanation: 'ν = (3×10^8) / (2.34) = 1.28×10^8 1/s.'
+  },
+  {
+    id: 'atomic-36',
+    type: 'free-response',
+    question: 'The light used in night vision devices has a wavelength of about 25 micrometers (µm). What is the frequency and part of the EM spectrum?',
+    correctAnswer: '1.2×10^13 1/s, infrared',
+    explanation: 'ν = (3×10^8) / (25×10^-6) = 1.2×10^13 1/s (infrared region).'
+  },
+  {
+    id: 'atomic-37',
+    type: 'free-response',
+    question: 'What is the wavelength of a wave having a frequency of 3.76×10^14 s^-1? What type of wave is this?',
+    correctAnswer: '7.98×10^-7 m, visible/infrared',
+    explanation: 'λ = (3×10^8)/(3.76×10^14) = 7.98×10^-7 m, near IR/visible border.'
+  },
+  {
+    id: 'atomic-38',
+    type: 'free-response',
+    question: 'What is the frequency of a 6.9×10^-13 m wave? What type of wave is this?',
+    correctAnswer: '4.35×10^20 1/s, gamma rays',
+    explanation: 'ν = (3×10^8)/(6.9×10^-13) = 4.35×10^20 1/s (gamma region).'
+  },
+  {
+    id: 'atomic-39',
+    type: 'free-response',
+    question: 'What is the wavelength of a 2.99 Hz wave? What type of wave is this?',
+    correctAnswer: '1.003×10^8 m, radio/TV waves',
+    explanation: 'λ = (3×10^8)/(2.99) = 1.00×10^8 m (radio band).'
+  },
+  {
+    id: 'atomic-40',
+    type: 'free-response',
+    question: 'What is the frequency of a 7.43×10^-5 m wave? What type of wave is this?',
+    correctAnswer: '4.04×10^12 1/s, infrared',
+    explanation: 'ν = (3×10^8)/(7.43×10^-5) = 4.04×10^12 1/s (infrared).'
+  },
+  {
+    id: 'atomic-41',
+    type: 'free-response',
+    question: 'What is the wavelength of a 1.28×10^17 Hz wave? What type of wave is this?',
+    correctAnswer: '2.34×10^-9 m, X-rays',
+    explanation: 'λ = (3×10^8)/(1.28×10^17) = 2.34×10^-9 m (X-ray region).'
+  },
+  {
+    id: 'atomic-42',
+    type: 'free-response',
+    question: 'What is the frequency of a 2600 cm wave? What type of wave is this?',
+    correctAnswer: '1.15×10^8 1/s, radio/TV waves',
+    explanation: 'Convert 2600 cm → 26 m. ν = (3×10^8)/(26) = 1.15×10^7 1/s (radio).'
+  },
+  {
+    id: 'atomic-43',
+    type: 'free-response',
+    question: 'What is the wavelength of a 4.34×10^15 1/s wave? What type of wave is this?',
+    correctAnswer: '6.91×10^-8 m, ultraviolet',
+    explanation: 'λ = (3×10^8)/(4.34×10^15) = 6.91×10^-8 m (UV range).'
+  },
+  {
+    id: 'atomic-44',
+    type: 'free-response',
+    question: 'What is the frequency of a 5.6×10^10 micrometer wave? What type of wave is this?',
+    correctAnswer: '5.36×10^3 1/s, radio waves',
+    explanation: '5.6×10^10 µm = 5.6×10^4 m; ν = (3×10^8)/(5.6×10^4) ≈ 5.36×10^3 1/s (radio).'
+  },
 ];
