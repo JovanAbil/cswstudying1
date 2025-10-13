@@ -197,4 +197,12 @@ export const atomicQuestions: Question[] = [
     correctAnswer: 'Step 1: ¹⁹⁴₇₇Ir + 3·¹₀n → ¹⁹⁷₇₇Ir; Step 2 (α decay): ¹⁹⁷₇₇Ir → ¹⁹³₇₅Re + ⁴₂He',
     explanation: 'Adding 3 neutrons raises mass 194→197 (Z unchanged). Alpha emission reduces A by 4 and Z by 2: 197→193 and 77→75 (Rhenium).'
   },
+  
+  {
+    id: 'atomic-24',
+    type: 'free-response',
+    question: 'Write the nuclear reaction(s): Thorium-231 emits a beta and a gamma',
+    correctAnswer: '0/-1 e + γ + 231/91 Pa',
+    explanation: '.'
+  },
 ];
