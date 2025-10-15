@@ -28,7 +28,9 @@ export interface StudyResource {
 export const unitStudyResources: Record<string, StudyResource[]> = {
   // AP Precalculus Units - Example with filler links
   'precalc-polynomial': [],
-  'precalc-rational': [],
+  'precalc-rational': [
+    { title: 'Rational', url: 'https://www.khanacademy.org/math/math3/x5549cc1686316ba5:rationals/x5549cc1686316ba5:rational-models/quiz/x5549cc1686316ba5:rationals-quiz-2' },
+  ],
   'precalc-exponential': [],
   'precalc-logarithmic': [],
   'precalc-trigonometric': [],
