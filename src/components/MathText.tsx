@@ -36,7 +36,7 @@ const preprocessMath = (text: string): string => {
     
     const flushText = () => {
       if (textBuffer) {
-        result += `\\text{${textBuffer}}`;
+        result += `\text{${textBuffer}}`;
         textBuffer = '';
       }
     };
