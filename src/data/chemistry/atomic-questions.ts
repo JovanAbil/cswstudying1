@@ -238,8 +238,8 @@ export const atomicQuestions: Question[] = [
   {
     "id": "atomic-20",
     "type": "multiple-choice",
-    "image": "/images/chemistry/atomic1.png"
-    "question": "Calculate the average atomic mass of barium, using the following data."
+    "image": "/images/chemistry/atomic1.png",
+    "question": "Calculate the average atomic mass of barium, using the following data.",
     "options": [
       { "label": "A", "value": "A", "text": "137.3" },
       { "label": "B", "value": "B", "text": "137.7" },
@@ -461,7 +461,7 @@ export const atomicQuestions: Question[] = [
     "id": "atomic-37",
     "type": "multiple-choice",
     "question": "Approximately how long would it take for 75% of a 20g sample of Am-243 to decay?",
-    "image": "/images/chemistry/atomic6.png"
+    "image": "/images/chemistry/atomic6.png",
     "options": [
       { "label": "A", "value": "A", "text": "3500 years" },
       { "label": "B", "value": "B", "text": "7500 years" },
@@ -513,7 +513,7 @@ export const atomicQuestions: Question[] = [
     "id": "atomic-41",
     "type": "multiple-choice",
     "question": "Use the table to predict the atomic radius of chlorine",
-    "image": "/images/chemistry/atomic7.png"
+    "image": "/images/chemistry/atomic7.png",
     "options": [
       { "label": "A", "value": "A", "text": "101 pm" },
       { "label": "B", "value": "B", "text": "174 pm" },
