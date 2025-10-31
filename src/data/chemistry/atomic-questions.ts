@@ -252,14 +252,14 @@ export const atomicQuestions: Question[] = [
   {
     "id": "atomic-21",
     "type": "multiple-choice",
-    "question": "Which list has elements that are all predicted to have a smaller atonic radius than gallium",
+    "question": "Which list has elements that are all predicted to have a smaller atomic radius than gallium",
     "options": [
       { "label": "A", "value": "A", "text": "Magnesium, Francium, Mercury" },
       { "label": "B", "value": "B", "text": "Molybdenum, Vanadium, Cadmium" },
       { "label": "C", "value": "C", "text": "Boron, Arsenic, Bromine" },
       { "label": "D", "value": "D", "text": "Thallium, Iron, Vanadium" }
     ],
-    "correctAnswer": "c",
+    "correctAnswer": "C",
     "explanation": "Boron, Arsenic, and Bromine are all to the right or above Gallium on the periodic table"
   },
   {
@@ -304,7 +304,7 @@ export const atomicQuestions: Question[] = [
   {
     "id": "atomic-25",
     "type": "multiple-choice",
-    "question": "The full electron configuration of a neutral atom is shown below. Which element could it represent? 1s^2 2s^2 2p^6 3s^2 3p^6 4s^2 3s^10 4p^6 5s^2 4d^10 5p^4",
+    "question": "The full electron configuration of a neutral atom is shown below. Which element could it represent? 1s^2 2s^2 2p^6 3s^2 3p^6 4s^2 3d^10 4p^6 5s^2 4d^10 5p^4",
     "options": [
       { "label": "A", "value": "A", "text": "Selenium" },
       { "label": "B", "value": "B", "text": "Tellurium" },
@@ -504,7 +504,7 @@ export const atomicQuestions: Question[] = [
     "options": [
       { "label": "A", "value": "A", "text": "Noble gases have full valence electron shells" },
       { "label": "B", "value": "B", "text": "Valence electrons are on the outermost shell" },
-      { "label": "C", "value": "C", "text": "Calcium's valence electrons are in the n = 3 shell" },
+      { "label": "C", "value": "C", "text": "Calcium's valence electrons are in the n = 3 shell" }
     ],
     "correctAnswer": "C",
     "explanation": "Valence electrons are on the outermost shell and Noble gases have full valence electrons which makes the other statement false by default."
