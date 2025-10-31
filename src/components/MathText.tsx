@@ -18,6 +18,32 @@ const preprocessMath = (text: string): string => {
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
   
+  // Convert chemical formulas with subscripts and superscripts
+  // Handles formats like: SO4²⁻, NH4⁺, CO3²⁻, H2O, etc.
+  processed = processed.replace(/([A-Z][a-z]?)(\d*)([⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+)?/g, (match, element, subscript, superscript) => {
+    // Only format if it looks like a chemical formula (has subscript or superscript)
+    if (!subscript && !superscript) return match;
+    
+    let formula = `$\\text{${element}}`;
+    if (subscript) {
+      formula += `_{${subscript}}`;
+    }
+    if (superscript) {
+      // Convert Unicode superscripts to regular characters for LaTeX
+      const superscriptMap: { [key: string]: string } = {
+        '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4',
+        '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9',
+        '⁺': '+', '⁻': '-'
+      };
+      const convertedSuperscript = superscript.split('').map(char => superscriptMap[char] || char).join('');
+      formula += `^{${convertedSuperscript}}`;
+    }
+    formula += '$';
+    
+    latexBlocks.push(formula);
+    return `__LATEX_${latexBlocks.length - 1}__`;
+  });
+  
   // Convert limits: lim_x-->a or lim_x-->∞ to proper LaTeX
   processed = processed.replace(/lim_([a-zA-Z])-->(-?∞|infinity|[^\s]+)/gi, (match, variable, approach) => {
     let approachValue = approach;
