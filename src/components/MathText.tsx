@@ -31,30 +31,38 @@ const preprocessMath = (text: string): string => {
       '⁺': '+', '⁻': '-'
     };
     
-    let formula = '$\\text{';
-    let inParens = false;
+    let result = '';
+    let textBuffer = '';
+    
+    const flushText = () => {
+      if (textBuffer) {
+        result += `\\text{${textBuffer}}`;
+        textBuffer = '';
+      }
+    };
     
     for (let i = 0; i < match.length; i++) {
       const char = match[i];
       
       if (char === '(') {
-        formula += '}(\\text{';
-        inParens = true;
+        flushText();
+        result += '(';
       } else if (char === ')') {
-        formula += '}';
-        inParens = false;
+        flushText();
+        result += ')';
       } else if (/\d/.test(char)) {
-        formula += `}_{${char}}\\text{`;
+        flushText();
+        result += `_{${char}}`;
       } else if (superscriptMap[char]) {
-        formula += `}^{${superscriptMap[char]}}`;
+        flushText();
+        result += `^{${superscriptMap[char]}}`;
       } else {
-        formula += char;
+        textBuffer += char;
       }
     }
     
-    formula += '}$';
-    // Clean up empty \text{} blocks
-    formula = formula.replace(/\\text\{\}/g, '');
+    flushText();
+    const formula = `$${result}$`;
     
     latexBlocks.push(formula);
     return `__LATEX_${latexBlocks.length - 1}__`;
