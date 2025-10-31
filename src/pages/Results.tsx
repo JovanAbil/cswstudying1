@@ -158,11 +158,19 @@ const Results = () => {
                         <div className="space-y-2 mb-3">
                           <div className="p-3 bg-muted rounded-lg text-sm">
                             <p className="font-semibold mb-1">Your Answer:</p>
-                            <MathText tag="p">{attempt.userAnswer || '(No answer)'}</MathText>
+                            {question.displayAs === 'paragraph' ? (
+                              <MathText tag="div" className="whitespace-pre-wrap">{attempt.userAnswer || '(No answer)'}</MathText>
+                            ) : (
+                              <MathText tag="p">{attempt.userAnswer || '(No answer)'}</MathText>
+                            )}
                           </div>
                           <div className={`p-3 rounded-lg border-2 border-success bg-success/10 text-sm`}>
                             <p className="font-semibold mb-1">Correct Answer:</p>
-                            <MathText tag="p">{question.correctAnswer}</MathText>
+                            {question.displayAs === 'paragraph' ? (
+                              <MathText tag="div" className="whitespace-pre-wrap">{question.correctAnswer}</MathText>
+                            ) : (
+                              <MathText tag="p">{question.correctAnswer}</MathText>
+                            )}
                           </div>
                         </div>
                       )}

@@ -18,6 +18,11 @@ const preprocessMath = (text: string): string => {
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
   
+  // Convert rational functions to fractions: ((ax+b)^c)/((dx+e)^f) -> \frac{(ax+b)^c}{(dx+e)^f}
+  processed = processed.replace(/\(([^()]+(?:\([^()]*\))*[^()]*)\)\/\(([^()]+(?:\([^()]*\))*[^()]*)\)/g, (match, numerator, denominator) => {
+    return `$\\frac{${numerator}}{${denominator}}$`;
+  });
+  
   // Convert superscripts: x^2 -> x^{2}, x^2y -> x^{2}y
   processed = processed.replace(/([a-zA-Z0-9)}\]])\^([a-zA-Z0-9({\[]+|\([^)]+\))/g, (match, base, exp) => {
     return `$${base}^{${exp}}$`;

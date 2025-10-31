@@ -22,6 +22,7 @@ export interface FreeResponseQuestion {
   explanation?: string;
   table?: TableData;
   image?: string;
+  displayAs?: 'paragraph';
 }
 
 export type Question = MultipleChoiceQuestion | FreeResponseQuestion;
