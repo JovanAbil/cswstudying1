@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import katex from 'katex';
-import 'katex/contrib/mhchem'; 
+import 'katex/contrib/mhchem';
+import 'katex/dist/katex.min.css';
 
 interface MathTextProps {
   children: string | number;
@@ -12,48 +13,27 @@ interface MathTextProps {
 const preprocessMath = (text: string): string => {
   let processed = String(text);
 
-  // Protect already-LaTeX content
+  // Protect existing LaTeX blocks
   const latexBlocks: string[] = [];
   processed = processed.replace(/\$\$[\s\S]*?\$\$|\$[^$]*?\$/g, (match) => {
     latexBlocks.push(match);
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
-  // --- FIXED CHEMICAL FORMULA REGEX ---
+  // --- SIMPLIFIED CHEMICAL FORMULA REGEX (MH-CHEM SAFE) ---
   processed = processed.replace(
-    /\b([A-Z][a-z]?(?:\d+)?(?:\([A-Za-z0-9]+\)\d*)*(?:[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻^0-9+\-]*)?)\b/g,
+    /\b([A-Z][a-z]?(?:\d+)?(?:\([A-Za-z0-9]+\)\d*)*(?:[+-]?\d*[+-]?)?)\b/g,
     (match) => {
-      if (
-        !/[A-Z]/.test(match) ||
-        /^[A-Z][a-z]+$/.test(match) ||
-        match.length < 2
-      ) {
-        return match;
-      }
-
+      // Skip normal words
+      if (/^[A-Z][a-z]+$/.test(match)) return match;
       const blacklist = [
         'The', 'This', 'That', 'An', 'A', 'In', 'Is', 'On', 'By', 'It',
         'At', 'As', 'Be', 'If', 'No', 'To'
       ];
       if (blacklist.includes(match)) return match;
 
-      const superscriptMap: Record<string, string> = {
-        '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4',
-        '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9',
-        '⁺': '+', '⁻': '-'
-      };
-
-      let normalized = match
-        .split('')
-        .map((c) => superscriptMap[c] ?? c)
-        .join('')
-        .replace(/\s+/g, '')
-        .replace(/(\d)([+-])([+-])?/, (_, num, sign1, sign2) => {
-          const charge = sign2 && sign2 === sign1 ? `${num}${sign1}` : `${num}${sign1}`;
-          return charge;
-        });
-
-      const formula = `$\\ce{${normalized}}$`;
+      // Wrap in mhchem syntax — no superscript remapping, mhchem handles that
+      const formula = `$\\ce{${match}}$`;
       latexBlocks.push(formula);
       return `__LATEX_${latexBlocks.length - 1}__`;
     }
@@ -71,14 +51,14 @@ const preprocessMath = (text: string): string => {
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
-  // Convert rational functions (a/b → \frac{a}{b})
+  // Convert rational functions: (a+b)/(c+d) → \frac{a+b}{c+d}
   processed = processed.replace(/\(([^()]+)\)\/\(([^()]+)\)/g, (match, numerator, denominator) => {
     const frac = `$\\frac{${numerator}}{${denominator}}$`;
     latexBlocks.push(frac);
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
-  // Convert superscripts: x^2 -> x^{2}
+  // Superscripts like x^2 → x^{2}
   processed = processed.replace(/([a-zA-Z0-9)}\]])\^([a-zA-Z0-9({\[]+|\([^)]+\))/g, (match, base, exp) => {
     return `$${base}^{${exp}}$`;
   });
@@ -90,7 +70,7 @@ const preprocessMath = (text: string): string => {
     processed = processed.replace(regex, `$\\${func}($`);
   });
 
-  // Restore LaTeX blocks
+  // Restore stored LaTeX blocks
   latexBlocks.forEach((block, index) => {
     processed = processed.replace(`__LATEX_${index}__`, block);
   });
@@ -104,8 +84,8 @@ const MathText = ({ children, className = '', tag = 'span' }: MathTextProps) => 
   useEffect(() => {
     if (containerRef.current) {
       const processed = preprocessMath(String(children));
-
       const parts = processed.split(/(\$\$[\s\S]*?\$\$|\$[^$]*?\$)/);
+
       containerRef.current.innerHTML = '';
 
       parts.forEach(part => {
