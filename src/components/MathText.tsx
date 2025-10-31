@@ -19,54 +19,130 @@ const preprocessMath = (text: string): string => {
   });
   
   // Convert chemical formulas with subscripts and superscripts
-  // Matches entire formulas like: SO4²⁻, NH4⁺, CO3²⁻, H2O, Ca(OH)2, etc.
-  processed = processed.replace(/([A-Z][a-z]?\d*(?:\([A-Z][a-z]?\d*\)\d*)*)+[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]*/g, (match) => {
-    // Check if this looks like a chemical formula (has numbers or charges)
+processed = processed.replace(
+  /([A-Z][a-z]?\d*(?:\([A-Z][a-z]?\d*\)\d*)*)+[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]*/g,
+  (match) => {
+    // quick sanity: only convert if there are digits or unicode sup chars
     if (!/\d|[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]/.test(match)) return match;
-    
-    // Convert Unicode superscripts to regular characters for LaTeX
+
     const superscriptMap: { [key: string]: string } = {
       '⁰': '0', '¹': '1', '²': '2', '³': '3', '⁴': '4',
       '⁵': '5', '⁶': '6', '⁷': '7', '⁸': '8', '⁹': '9',
       '⁺': '+', '⁻': '-'
     };
-    
-    let result = '';
-    let textBuffer = '';
-    
-    const flushText = () => {
-      if (textBuffer) {
-        result += `\text{${textBuffer}}`;
-        textBuffer = '';
+
+    // Build tokens: element symbols / letters, parentheses, digits, consecutive unicode superscripts, ASCII +/-, caret forms
+    const tokens: string[] = [];
+    for (let i = 0; i < match.length; ) {
+      const ch = match[i];
+
+      // ASCII digits (group multi-digit numbers)
+      if (/[0-9]/.test(ch)) {
+        let j = i;
+        while (j < match.length && /[0-9]/.test(match[j])) j++;
+        tokens.push(match.slice(i, j)); // e.g. "12"
+        i = j;
+        continue;
       }
-    };
-    
-    for (let i = 0; i < match.length; i++) {
-      const char = match[i];
-      
-      if (char === '(') {
-        flushText();
-        result += '(';
-      } else if (char === ')') {
-        flushText();
-        result += ')';
-      } else if (/\d/.test(char)) {
-        flushText();
-        result += `_{${char}}`;
-      } else if (superscriptMap[char]) {
-        flushText();
-        result += `^{${superscriptMap[char]}}`;
-      } else {
-        textBuffer += char;
+
+      // Consecutive Unicode superscript characters (³⁻ etc.)
+      if (Object.prototype.hasOwnProperty.call(superscriptMap, ch)) {
+        let j = i;
+        while (j < match.length && Object.prototype.hasOwnProperty.call(superscriptMap, match[j])) j++;
+        tokens.push(match.slice(i, j)); // e.g. "³⁻"
+        i = j;
+        continue;
       }
+
+      // ASCII caret-style superscripts like ^2- or ^{2-}
+      if (ch === '^') {
+        // capture ^{...} or ^x
+        if (match[i + 1] === '{') {
+          let j = i + 2;
+          while (j < match.length && match[j] !== '}') j++;
+          tokens.push(match.slice(i, j + 1)); // includes braces
+          i = j + 1;
+        } else {
+          // single next char
+          tokens.push(match.slice(i, i + 2));
+          i += 2;
+        }
+        continue;
+      }
+
+      // Parentheses
+      if (ch === '(' || ch === ')') {
+        tokens.push(ch);
+        i++;
+        continue;
+      }
+
+      // Letters (group consecutive letters like "Ca" "OH")
+      if (/[A-Za-z]/.test(ch)) {
+        let j = i;
+        while (j < match.length && /[A-Za-z]/.test(match[j])) j++;
+        tokens.push(match.slice(i, j));
+        i = j;
+        continue;
+      }
+
+      // Fallback single char
+      tokens.push(ch);
+      i++;
     }
-    
-    flushText();
-    const formula = `$${result}$`;
-    
+
+    // Convert tokens into LaTeX
+    let result = '';
+    for (let k = 0; k < tokens.length; k++) {
+      const t = tokens[k];
+
+      // pure number -> subscript (multi-digit ok)
+      if (/^[0-9]+$/.test(t)) {
+        result += `_{${t}}`;
+        continue;
+      }
+
+      // unicode superscript group -> map all, combine into one ^{...}
+      if (/^[⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻]+$/.test(t)) {
+        let mapped = '';
+        for (const c of t) mapped += superscriptMap[c] ?? c;
+        result += `^{${mapped}}`;
+        continue;
+      }
+
+      // caret-style ^{...} or ^x
+      if (/^\^(\{.*\}|.)$/.test(t)) {
+        if (t[1] === '{') {
+          // remove ^ and outer braces
+          const inner = t.slice(2, -1);
+          result += `^{${inner}}`;
+        } else {
+          result += `^{${t[1]}}`;
+        }
+        continue;
+      }
+
+      // parentheses (if followed by a number token, that number will be handled in next iteration)
+      if (t === '(') { result += '('; continue; }
+      if (t === ')') { result += ')'; continue; }
+
+      // letters / element symbols -> use \mathrm for consistent math-mode rendering
+      if (/^[A-Za-z]+$/.test(t)) {
+        result += `\\mathrm{${t}}`;
+        continue;
+      }
+
+      // fallback: append raw (shouldn't normally happen)
+      result += t;
+    }
+
+    // Now: if parentheses are followed by a number, earlier token logic placed "(" ")" and then the number token -> that number becomes the subscript as desired.
+
+    const formula = `$${result}$`; // store math-mode string
     latexBlocks.push(formula);
     return `__LATEX_${latexBlocks.length - 1}__`;
-  });
+  }
+);
   
   // Convert limits: lim_x-->a or lim_x-->∞ to proper LaTeX
   processed = processed.replace(/lim_([a-zA-Z])-->(-?∞|infinity|[^\s]+)/gi, (match, variable, approach) => {
