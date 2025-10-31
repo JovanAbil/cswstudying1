@@ -487,7 +487,7 @@ export const atomicQuestions: Question[] = [
   {
     "id": "atomic-39",
     "type": "multiple-choice",
-    "question": "Which of these is the correct electron configuration for Se^(2-)",
+    "question": "Which of these is the correct electron configuration for Se^2⁻",
     "options": [
       { "label": "A", "value": "A", "text": "1s^2 2s^2 2p^6 3s^2 3p^6 4s^2 3d^10 4p^2" },
       { "label": "B", "value": "B", "text": "1s^2 2s^2 2p^6 3s^2 3p^6 4s^2 3d^10 4p^4" },
@@ -495,7 +495,7 @@ export const atomicQuestions: Question[] = [
       { "label": "D", "value": "D", "text": "1s^2 2s^2 2p^6 3s^2 3p^6 4s^2 3d^10 4p^6 5s^2" }
     ],
     "correctAnswer": "C",
-    "explanation": "1s^2 2s^2 2p^6 3s^2 3p^6 4s^2 3d^10 4p^6 has the configuration of 36 electrons which is Se^(2-)"
+    "explanation": "1s^2 2s^2 2p^6 3s^2 3p^6 4s^2 3d^10 4p^6 has the configuration of 36 electrons which is Se^2⁻"
   },
   {
     "id": "atomic-40",
@@ -556,7 +556,7 @@ export const atomicQuestions: Question[] = [
   {
     "id": "atomic-46",
     "type": "free-response",
-    "question": "When an atom loses multiple electrons, each loss has its own ionization energy. The first ionization energy for sodium (Na --> Na^+) is 495.2 kJ. The second ionization energy (Na^(+) --> Na^(2+) is 4552 kJ. Why does it take so much more energy to remove the second electron?)",
+    "question": "When an atom loses multiple electrons, each loss has its own ionization energy. The first ionization energy for sodium (Na --> Na⁺) is 495.2 kJ. The second ionization energy (Na⁺ --> Na^2⁺ is 4552 kJ. Why does it take so much more energy to remove the second electron?)",
     "correctAnswer": "The second electron is part of a full valence shell meaning it is more stable and trying to make a stable ion less stable requires more energy.",
     "explanation": "."
   },
