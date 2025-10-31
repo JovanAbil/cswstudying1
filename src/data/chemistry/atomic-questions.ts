@@ -330,7 +330,7 @@ export const atomicQuestions: Question[] = [
   { //IMAGE
     "id": "atomic-27",
     "type": "multiple-choice",
-    "question": "Which of the following is the orbitl diagram for chromium",
+    "question": "Which of the following is the orbital diagram for chromium",
     "options": [
       { "label": "A", "value": "A", "text": "", "image": "/images/apprecalc/atomic2.png"},
       { "label": "B", "value": "B", "text": "", "image": "/images/apprecalc/atomic3.png" },
@@ -457,7 +457,7 @@ export const atomicQuestions: Question[] = [
     "correctAnswer": "B",
     "explanation": "Infrared light has a larger wavelength than x-rays because it has less energy in the photons"
   },
-  {
+  {//IMAGE
     "id": "atomic-37",
     "type": "multiple-choice",
     "question": "Approximately how long would it take for 75% of a 20g sample of Am-243 to decay?",
@@ -509,7 +509,7 @@ export const atomicQuestions: Question[] = [
     "correctAnswer": "C",
     "explanation": "Valence electrons are on the outermost shell and Noble gases have full valence electrons which makes the other statement false by default."
   },
-  {
+  {//IMAGE
     "id": "atomic-41",
     "type": "multiple-choice",
     "question": "Use the table to predict the atomic radius of chlorine",
@@ -533,8 +533,45 @@ export const atomicQuestions: Question[] = [
   {
     "id": "atomic-43",
     "type": "free-response",
-    "question": "",
-    "correctAnswer": "",
-    "explanation": ""
+    "question": "Costanzium-332 has a half life of 126 days. It was recently dumped into a lake, making it unsafe for fishing or swimming. The current Cz-332 amount is 6 g, and the lake will not be safe until the total mass is 750 mg or less. How much time, in years, will it take for lake to be safe?",
+    "correctAnswer": "1.036 years",
+    "explanation": "750 mg = .75 g, 6/2/2/2 = .75, 126 * 3 = 378 days / 365 days ~ 1.036 years"
+  },
+  {
+    "id": "atomic-44",
+    "type": "free-response",
+    "question": "When a sample of zinc is exposed to photons above a certain energy threshold, electrons are ejected from the metal at high speeds. Photons must have a total energy of 6.92 * 10^-19 J to cause this effect. Violet photons have a frequency of 7.5 * 10^5 GHz. Do they have enough energy to eject zinc's electrons?",
+    "correctAnswer": "No, because their energy (4.97×10⁻¹⁹ J) is less than the required threshold of 6.92×10⁻¹⁹ J.",
+    "explanation": "Use E = h·f, where h = 6.626×10⁻³⁴ J·s and f = 7.5×10¹⁴ Hz (converted from 7.5×10⁵ GHz). Then E = (6.626×10⁻³⁴)(7.5×10¹⁴) = 4.97×10⁻¹⁹ J. Since 4.97×10⁻¹⁹ J < 6.92×10⁻¹⁹ J, the violet photons do not have enough energy to eject electrons from zinc."
+  },
+  {//IMAGE
+    "id": "atomic-45", 
+    "type": "free-response",
+    "question": "The diagram on the right represents C and F sharing electrons through a chemical bond. The area around them represents the electron density, or the relative areas where electrons are most likely to be found. Which nucleus (1 or 2) represents flourine and explain your choice. Define the concept of electronegativity in your response.",
+    "image": "/images/chemistry/atomic8.png"
+    "correctAnswer": "Nucleus 1 represents flourine because flourine is more electronegative and that is when an element wants electrons and since flourine needs 1 more because it is a halogen and it only has 2 levels before the nucleus, there is more coloumbic atraction making it more electronegative.",
+    "explanation": "."
+    "displayAs": "paragraph"
+  },
+  {
+    "id": "atomic-46",
+    "type": "free-response",
+    "question": "When an atom loses multiple electrons, each loss has its own ionization energy. The first ionization energy for sodium (Na --> Na^+) is 495.2 kJ. The second ionization energy (Na^(+) --> Na^(2+) is 4552 kJ. Why does it take so much more energy to remove the second electron?)",
+    "correctAnswer": "The second electron is part of a full valence shell meaning it is more stable and trying to make a stable ion less stable requires more energy.",
+    "explanation": "."
+  },
+  {
+    "id": "atomic-47a",
+    "type": "free-response",
+    "question": "What does λ in E = hc/λ represent?",
+    "correctAnswer": "λ represents the wavelength",
+    "explanation": "."
+  },
+  {
+    "id": "atomic-47b",
+    "type": "free-response",
+    "question": "What does f in E = hf represent; (also f = c/λ)?",
+    "correctAnswer": "f represents the frequency",
+    "explanation": "."
   },
 ];
