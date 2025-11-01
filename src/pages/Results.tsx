@@ -80,7 +80,13 @@ const Results = () => {
           </p>
 
           <div className="space-y-6">
-            {extendedAttempts.map((attempt, index) => {
+            {extendedAttempts
+              .sort((a, b) => {
+                // Sort: incorrect answers first, then correct answers
+                if (a.isCorrect === b.isCorrect) return 0;
+                return a.isCorrect ? 1 : -1;
+              })
+              .map((attempt, index) => {
               const question = attempt.question;
               const isCorrect = attempt.isCorrect;
               

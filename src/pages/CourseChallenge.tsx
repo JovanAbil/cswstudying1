@@ -104,7 +104,12 @@ const CourseChallenge = () => {
       toast.error('Please select at least one unit');
       return;
     }
-    navigate(`/course-challenge/${subject}/quiz`, { state: { selectedUnits } });
+    navigate(`/quiz/${subject}/challenge/custom`, { state: { selectedUnits } });
+  };
+
+  const handleStartCramMode = () => {
+    const allUnitIds = units.map(u => u.id);
+    navigate(`/quiz/${subject}/challenge/cram`, { state: { selectedUnits: allUnitIds } });
   };
 
   const handleSelectAll = () => {
@@ -224,15 +229,23 @@ const CourseChallenge = () => {
           >
             Start Challenge ({selectedUnits.length} {selectedUnits.length === 1 ? 'unit' : 'units'} selected)
           </Button>
+          <Button
+            onClick={handleStartCramMode}
+            variant="outline"
+            size="lg"
+          >
+            <Trophy className="mr-2 h-4 w-4" />
+            Cram Mode (All Units)
+          </Button>
         </div>
 
         <Card className="mt-8 p-6 bg-muted">
           <h3 className="font-semibold mb-2">📝 Challenge Details</h3>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• 30 random questions from selected units</li>
+            <li>• <strong>Challenge Mode:</strong> 30 random questions from selected units</li>
+            <li>• <strong>Cram Mode:</strong> All questions from every unit for comprehensive review</li>
             <li>• Questions are randomized each time</li>
-            <li>• Tests your overall knowledge across multiple topics</li>
-            <li>• Review your performance at the end</li>
+            <li>• Review shows wrong answers first, then correct answers</li>
           </ul>
         </Card>
       </div>
