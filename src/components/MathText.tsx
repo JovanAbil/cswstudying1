@@ -20,9 +20,10 @@ const preprocessMath = (text: string): string => {
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
-  // --- SIMPLIFIED CHEMICAL FORMULA REGEX (MH-CHEM SAFE) ---
+  // --- CHEMICAL FORMULA REGEX (MHCHEM) ---
+  // Matches chemical formulas including Unicode subscripts/superscripts
   processed = processed.replace(
-    /\b([A-Z][a-z]?(?:\d+)?(?:\([A-Za-z0-9]+\)\d*)*(?:[+-]?\d*[+-]?)?)\b/g,
+    /\b([A-Z][a-z]?(?:\d+|[₀₁₂₃₄₅₆₇₈₉])*(?:\([A-Za-z0-9₀₁₂₃₄₅₆₇₈₉]+\)(?:\d+|[₀₁₂₃₄₅₆₇₈₉])*)*(?:[\^⁺⁻]|[\d⁰¹²³⁴⁵⁶⁷⁸⁹]+[⁺⁻]|[⁺⁻])?)\b/g,
     (match) => {
       // Skip normal words
       if (/^[A-Z][a-z]+$/.test(match)) return match;
@@ -32,7 +33,7 @@ const preprocessMath = (text: string): string => {
       ];
       if (blacklist.includes(match)) return match;
 
-      // Wrap in mhchem syntax — no superscript remapping, mhchem handles that
+      // Wrap in mhchem syntax — mhchem handles all subscripts and superscripts
       const formula = `$\\ce{${match}}$`;
       latexBlocks.push(formula);
       return `__LATEX_${latexBlocks.length - 1}__`;
