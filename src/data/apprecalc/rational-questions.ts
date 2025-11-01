@@ -17,54 +17,55 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-2",
     "type": "multiple-choice",
-    "question": "",
+    "question": "Let k be the rational function defined by k(x) = (((x-3)^3)((x+2)^3))/(((x-3)^2)((x+2)^4)) Which of the following statements about the graph of k is correct?",
     "options": [
-      { "label": "A", "value": "A", "text": "" },
-      { "label": "B", "value": "B", "text": "" },
-      { "label": "C", "value": "C", "text": "" },
-      { "label": "D", "value": "D", "text": "" }
+      { "label": "A", "value": "A", "text": "The graph of k has a vertical asymptote at x = -2 and a hold at x = 3" },
+      { "label": "B", "value": "B", "text": "The graph of k has a vertical asymptote at x = 3 and a hole at x = -2" },
+      { "label": "C", "value": "C", "text": "The graph of k has vertical asymptotes at x = -2 and x = 3" },
+      { "label": "D", "value": "D", "text": "The graph of k has holes at x = -2 and x = 3" }
     ],
-    "correctAnswer": "",
-    "explanation": ""
+    "correctAnswer": "A",
+    "explanation": "Factoring"
   },
   {
     "id": "rational-3",
     "type": "multiple-choice",
-    "question": "",
+    "question": "What is the coefficient of the x^3 term in the expansion of (x-3)^5?",
     "options": [
-      { "label": "A", "value": "A", "text": "" },
-      { "label": "B", "value": "B", "text": "" },
-      { "label": "C", "value": "C", "text": "" },
-      { "label": "D", "value": "D", "text": "" }
+      { "label": "A", "value": "A", "text": "60" },
+      { "label": "B", "value": "B", "text": "-60" },
+      { "label": "C", "value": "C", "text": "90" },
+      { "label": "D", "value": "D", "text": "-90" }
     ],
-    "correctAnswer": "",
-    "explanation": ""
+    "correctAnswer": "C",
+    "explanation": "Pascals Triangle"
   },
   {
     "id": "rational-4",
     "type": "multiple-choice",
-    "question": "",
+    "question": "The graph of the rational function h has a horizontal asymptote of y = -3. Which of the following could be an expression for h(x)",
     "options": [
-      { "label": "A", "value": "A", "text": "" },
-      { "label": "B", "value": "B", "text": "" },
-      { "label": "C", "value": "C", "text": "" },
-      { "label": "D", "value": "D", "text": "" }
+      { "label": "A", "value": "A", "text": "(x^2-4x+7)/(-3x^2+5)" },
+      { "label": "B", "value": "B", "text": "(3x^2-5x-2)/(x^2-x+1)" },
+      { "label": "C", "value": "C", "text": "(-3x^3+x-2)/(x^2+5x-6)" },
+      { "label": "D", "value": "D", "text": "(-6x^3+7x^2-12)/(2x^3+11)" }
     ],
-    "correctAnswer": "",
-    "explanation": ""
+    "correctAnswer": "D",
+    "explanation": "Fits the criteria"
   },
   {
     "id": "rational-5",
     "type": "multiple-choice",
-    "question": "",
+    "question": "The graph of the rational function r is shown above. On the interval (-∞, 1), the graph of r is:",
+    "image": "/images/apprecalc/rational1.png",
     "options": [
-      { "label": "A", "value": "A", "text": "" },
-      { "label": "B", "value": "B", "text": "" },
-      { "label": "C", "value": "C", "text": "" },
-      { "label": "D", "value": "D", "text": "" }
+      { "label": "A", "value": "A", "text": "decreasing at a decreasing rate" },
+      { "label": "B", "value": "B", "text": "decreasing at an increasing rate" },
+      { "label": "C", "value": "C", "text": "increasing at a decreasing rate" },
+      { "label": "D", "value": "D", "text": "increasing at an increasing rate" }
     ],
-    "correctAnswer": "",
-    "explanation": ""
+    "correctAnswer": "A",
+    "explanation": "."
   },
   {
     "id": "rational-6",
