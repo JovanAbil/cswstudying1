@@ -64,6 +64,10 @@ const CourseChallenge = () => {
           { id: 'unit10', name: 'Unit 10' },
           { id: 'unit11', name: 'Unit 11' },
         ];
+      case 'memory':
+        return [
+          { id: 'general', name: 'General Memory' },
+        ];
       default:
         return [];
     }
@@ -109,6 +113,7 @@ const CourseChallenge = () => {
       case 'biology': return 'success';
       case 'chemistry': return 'accent';
       case 'world-history': return 'destructive';
+      case 'memory': return 'purple-500';
       default: return 'primary';
     }
   };
@@ -136,6 +141,7 @@ const CourseChallenge = () => {
             {subject === 'biology' && 'Biology'}
             {subject === 'chemistry' && 'Chemistry'}
             {subject === 'world-history' && 'World History'}
+            {subject === 'memory' && 'Memory'}
             {' '}Course Challenge
           </h1>
           <p className="text-muted-foreground text-lg">

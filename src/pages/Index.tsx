@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { GraduationCap, Microscope, Beaker, Landmark, ChartLine } from 'lucide-react';
+import { GraduationCap, Microscope, Beaker, Landmark, ChartLine, Brain } from 'lucide-react';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -73,6 +73,10 @@ const Index = () => {
     { id: 'unit9', name: 'Unit 9' },
     { id: 'unit10', name: 'Unit 10' },
     { id: 'unit11', name: 'Unit 11' },
+  ];
+
+  const memoryUnits = [
+    { id: 'general', name: 'General Memory' },
   ];
 
   return (
@@ -271,6 +275,38 @@ const Index = () => {
             >
               Course Challenge
             </Button>
+          </div>
+        </div>
+
+        {/* Memory Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-500/10 rounded-lg">
+                <Brain className="w-6 h-6 text-purple-500" />
+              </div>
+              <h2 className="text-2xl font-bold text-purple-500">Memory</h2>
+            </div>
+            <Button
+              onClick={() => navigate('/course-challenge/memory')}
+              variant="outline"
+              className="border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white"
+            >
+              Course Challenge
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {memoryUnits.map((unit) => (
+              <Card
+                key={unit.id}
+                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-purple-500 group"
+                onClick={() => navigate(`/unit/memory/${unit.id}`)}
+              >
+                <div className="text-center">
+                  <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
 
