@@ -66,7 +66,8 @@ const CourseChallenge = () => {
         ];
       case 'memory':
         return [
-          { id: 'general', name: 'General Memory' },
+          { id: 'general', name: 'Polyatomic Ions - Chemistry' },
+          { id: 'general2', name: 'Molecular Geometry - Chemistry' },
         ];
       default:
         return [];
