@@ -64,7 +64,7 @@ const Index = () => {
   const worldHistoryUnits = [
     { id: 'religions', name: 'Religions' },
     { id: 'islam', name: 'Islam' },
-    { id: 'unit3', name: 'Unit 3' },
+    { id: 'renaissance', name: 'Renaissance' },
     { id: 'unit4', name: 'Unit 4' },
     { id: 'unit5', name: 'Unit 5' },
     { id: 'unit6', name: 'Unit 6' },
