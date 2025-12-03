@@ -50,7 +50,7 @@ export const general2Questions: Question[] = [
       "type": "free-response",
       "image": "/images/memory/general2-6.png/",
       "question": "Name the molecular geometry.",
-      "correctAnswer": "Bent",
+      "correctAnswer": "Angular",
       "explanation": "Memorize"
     },
 
