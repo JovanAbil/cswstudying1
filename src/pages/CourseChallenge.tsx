@@ -53,7 +53,7 @@ const CourseChallenge = () => {
       case 'world-history':
         return [
           { id: 'religions', name: 'Unit 1 - Religions' },
-          { id: 'unit2', name: 'Unit 2' },
+          { id: 'islam', name: 'Unit 2 - Islam' },
           { id: 'unit3', name: 'Unit 3' },
           { id: 'unit4', name: 'Unit 4' },
           { id: 'unit5', name: 'Unit 5' },
