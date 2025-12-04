@@ -17,7 +17,7 @@ export const compoundsQuestions: Question[] = [
   {
     id: "compounds-2",
     type: "multiple-choice",
-    question: "What type of bond is expected between atoms of zinc and gallium",
+    question: "What type of bond is expected between atoms of Cadmium and Indium",
     options: [
       { label: "A", value: "A", text: "Metallic" },
       { label: "B", value: "B", text: "Polar Covalent" },
@@ -25,7 +25,7 @@ export const compoundsQuestions: Question[] = [
       { label: "D", value: "D", text: "Ionic" }
     ],
     correctAnswer: "A",
-    explanation: "Both Zn and Ga are metals, so they form metallic bonds."
+    explanation: "Both Cd and In are metals, so they form metallic bonds."
   },
   {
     id: "compounds-3",
@@ -125,16 +125,16 @@ export const compoundsQuestions: Question[] = [
   {
     id: "compounds-14",
     type: "free-response",
-    question: "What is the Geometry and Polarity of IF2 + and does it have resonance? Draw the structure",
-    correctAnswer: "Angular, Polar, No Resonance",
-    explanation: "IF2⁺ has 2 bonds + 2 lone pairs (AB2E2) → bent/angular. Asymmetry makes it polar. No resonance."
+    question: "Skip for now being updated",
+    correctAnswer: "",
+    explanation: ""
   },
   {
     id: "compounds-15",
     type: "free-response",
-    question: "What is the Geometry and Polarity of HClO and does it have resonance? Draw the structure",
-    correctAnswer: "Angular, Polar, No Resonance",
-    explanation: "H–O–Cl has 2 bonds + 2 lone pairs on O → bent. Large EN difference creates polarity. No resonance."
+    question: "Skip for now being updated",
+    correctAnswer: "",
+    explanation: ""
   },
   {
     id: "compounds-16",
@@ -230,16 +230,16 @@ export const compoundsQuestions: Question[] = [
   {
     id: "compounds-29",
     type: "free-response",
-    question: "What is the formula of Potassium Bisulfite",
-    correctAnswer: "KHSO3",
-    explanation: "Bisulfite ion = HSO3⁻ → potassium bisulfite = KHSO3."
+    question: "Skip Question",
+    correctAnswer: "",
+    explanation: ""
   },
   {
     id: "compounds-30",
     type: "free-response",
-    question: "What is the formula of Copper (II) Azide",
-    correctAnswer: "Cu(N3)2",
-    explanation: "Cu²⁺ and azide is N3⁻ → Cu(N3)2."
+    question: "Skip Question",
+    correctAnswer: "",
+    explanation: ""
   },
   {
     id: "compounds-31",
@@ -258,16 +258,16 @@ export const compoundsQuestions: Question[] = [
   {
     id: "compounds-33",
     type: "free-response",
-    question: "What is the formula of Tungesten (IV) oxide",
-    correctAnswer: "WO2",
-    explanation: "W⁴⁺ and O²⁻ combine in a 1:2 ratio → WO2."
+    question: "Skip Question",
+    correctAnswer: "",
+    explanation: ""
   },
   {
     id: "compounds-34",
     type: "free-response",
-    question: "What is the formula of Barium pyrophosphate",
-    correctAnswer: "Ba2P2O7",
-    explanation: "Pyrophosphate = P2O7⁴⁻; Ba²⁺ requires 2 cations → Ba2P2O7."
+    question: "Skip Question",
+    correctAnswer: "",
+    explanation: ""
   },
   {
     id: "compounds-35",
