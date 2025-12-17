@@ -50,6 +50,17 @@ const Index = () => {
     { id: 'acidbases', name: 'Acids and Bases' },
   ];
 
+  const chemistryDaroneUnits = [
+    { id: 'metric', name: 'Matter and Measurement' },
+    { id: 'atomic', name: 'Atomic Theory' },
+    { id: 'compounds', name: 'Compounds' },
+    { id: 'gases', name: 'Gases' },
+    { id: 'solutions', name: 'Solutions' },
+    { id: 'reactions', name: 'Chemical Reactions' },
+    { id: 'stoichiometry', name: 'Stoichiometry' },
+    { id: 'acidbases', name: 'Acids and Bases' },
+  ];
+
   const apchemUnits = [
     { id: 'unit1', name: 'Unit 1' },
     { id: 'unit2', name: 'Unit 2' },
@@ -65,6 +76,20 @@ const Index = () => {
     { id: 'religions', name: 'Religions' },
     { id: 'islam', name: 'Islam' },
     { id: 'renaissance', name: 'Renaissance' },
+    { id: 'unit4', name: 'Protestant' },
+    { id: 'unit5', name: 'Unit 5' },
+    { id: 'unit6', name: 'Unit 6' },
+    { id: 'unit7', name: 'Unit 7' },
+    { id: 'unit8', name: 'Unit 8' },
+    { id: 'unit9', name: 'Unit 9' },
+    { id: 'unit10', name: 'Unit 10' },
+    { id: 'unit11', name: 'Unit 11' },
+  ];
+
+  const worldHistoryKohlUnits = [
+    { id: 'unit1', name: 'Unit 1' },
+    { id: 'unit2', name: 'Unit 2' },
+    { id: 'unit3', name: 'Unit 3' },
     { id: 'unit4', name: 'Unit 4' },
     { id: 'unit5', name: 'Unit 5' },
     { id: 'unit6', name: 'Unit 6' },
@@ -79,6 +104,20 @@ const Index = () => {
     { id: 'general', name: 'Polyatomic Ions - Chemistry' },
     { id: 'general2', name: 'Molecular Geometry - Chemistry' },
     { id: 'general3', name: 'Rates of Change - AP Precalc' },
+  ];
+
+  const practiceUnits = [
+    { id: 'unit1', name: 'Unit 1' },
+    { id: 'unit2', name: 'Unit 2' },
+    { id: 'unit3', name: 'Unit 3' },
+    { id: 'unit4', name: 'Unit 4' },
+    { id: 'unit5', name: 'Unit 5' },
+    { id: 'unit6', name: 'Unit 6' },
+    { id: 'unit7', name: 'Unit 7' },
+    { id: 'unit8', name: 'Unit 8' },
+    { id: 'unit9', name: 'Unit 9' },
+    { id: 'unit10', name: 'Unit 10' },
+    { id: 'unit11', name: 'Unit 11' },
   ];
 
   return (
@@ -152,8 +191,10 @@ const Index = () => {
               <div className="inline-flex items-center justify-center w-12 h-12 bg-success/10 rounded-lg">
                 <Microscope className="w-6 h-6 text-success" />
               </div>
-              <h2 className="text-2xl font-bold text-success">Biology (Valenti)</h2>
+              {/*Change depending on unit*/}
+              <h2 className="text-2xl font-bold text-success">Biology (Valenti)</h2> 
             </div>
+            {/*Change depending on unit*/}
             <Button
               onClick={() => navigate('/course-challenge/biology')}
               variant="outline"
@@ -163,11 +204,12 @@ const Index = () => {
             </Button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {/*Change depending on unit*/}
             {biologyUnits.map((unit) => (
               <Card
                 key={unit.id}
                 className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-success group"
-                onClick={() => navigate(`/unit/biology/${unit.id}`)}
+                onClick={() => navigate(`/unit/biology/${unit.id}`)} {/*Change depending on unit*/}
               >
                 <div className="text-center">
                   <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
@@ -197,7 +239,7 @@ const Index = () => {
           
         </div>
         
-        {/* Chemistry Section */}
+        {/* Chemistry Griffiths Section */}
         <div className="max-w-6xl mx-auto mb-16">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
@@ -229,7 +271,39 @@ const Index = () => {
           </div>
         </div>
 
-        {/* World History Section */}
+      {/* Chemistry Darones Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-accent/10 rounded-lg">
+                <Beaker className="w-6 h-6 text-accent" />
+              </div>
+              <h2 className="text-2xl font-bold text-accent">Chemistry (Darone)</h2>
+            </div>
+            <Button
+              onClick={() => navigate('/course-challenge/chemistryDarone')}
+              variant="outline"
+              className="border-accent text-accent hover:bg-accent hover:text-foreground"
+            >
+              Course Challenge
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {chemistryDaroneUnits.map((unit) => (
+              <Card
+                key={unit.id}
+                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-accent group"
+                onClick={() => navigate(`/unit/chemistryDarone/${unit.id}`)}
+              >
+                <div className="text-center">
+                  <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+        
+        {/* World History Stella Section */}
         <div className="max-w-6xl mx-auto mb-16">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
@@ -252,6 +326,38 @@ const Index = () => {
                 key={unit.id}
                 className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-destructive group"
                 onClick={() => navigate(`/unit/world-history/${unit.id}`)}
+              >
+                <div className="text-center">
+                  <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+
+        {/* World History Kohl Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-destructive/10 rounded-lg">
+                <Landmark className="w-6 h-6 text-destructive" />
+              </div>
+              <h2 className="text-2xl font-bold text-destructive">World History (Kohl)</h2>
+            </div>
+            <Button
+              onClick={() => navigate('/course-challenge/world-history-kohl')}
+              variant="outline"
+              className="border-destructive text-destructive hover:bg-destructive hover:text-white"
+            >
+              Course Challenge
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {worldHistoryKohlUnits.map((unit) => (
+              <Card
+                key={unit.id}
+                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-destructive group"
+                onClick={() => navigate(`/unit/world-history-kohl/${unit.id}`)}
               >
                 <div className="text-center">
                   <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
@@ -312,6 +418,38 @@ const Index = () => {
           </div>
         </div>
 
+        {/* Pratice Section */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-4">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-500/10 rounded-lg">
+                <Brain className="w-6 h-6 text-purple-500" />
+              </div>
+              <h2 className="text-2xl font-bold text-purple-500">Temporary Practice</h2>
+            </div>
+            <Button
+              onClick={() => navigate('/course-challenge/practice')}
+              variant="outline"
+              className="border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white"
+            >
+              Course Challenge
+            </Button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {practiceUnits.map((unit) => (
+              <Card
+                key={unit.id}
+                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-purple-500 group"
+                onClick={() => navigate(`/unit/practice/${unit.id}`)}
+              >
+                <div className="text-center">
+                  <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+        
         {/* Info Cards */}
         <div className="mt-16 max-w-4xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
