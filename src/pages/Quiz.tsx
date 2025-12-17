@@ -34,15 +34,9 @@ import { solutionsQuestions } from '@/data/chemistry/solutions-questions';
 import { reactionsQuestions } from '@/data/chemistry/reactions-questions';
 import { stoichiometryQuestions } from '@/data/chemistry/stoichiometry-questions';
 import { acidbasesQuestions } from '@/data/chemistry/acidbases-questions';
-//Darones
-import { metricQuestions } from '@/data/chemistryDarone/metric-questions';
-import { atomicQuestions } from '@/data/chemistryDarone/atomic-questions';
-import { compoundsQuestions } from '@/data/chemistryDarone/compounds-questions';
-import { gasesQuestions } from '@/data/chemistryDarone/gases-questions';
-import { solutionsQuestions } from '@/data/chemistryDarone/solutions-questions';
-import { reactionsQuestions } from '@/data/chemistryDarone/reactions-questions';
-import { stoichiometryQuestions } from '@/data/chemistryDarone/stoichiometry-questions';
-import { acidbasesQuestions } from '@/data/chemistryDarone/acidbases-questions';
+//Darone - files not yet populated
+//Kohl - files not yet populated
+//Practice - files not yet populated
 //Stella
 import { religionsQuestions } from '@/data/worldhistory/religions-questions';
 import { islamQuestions } from '@/data/worldhistory/islam-questions';
@@ -55,14 +49,12 @@ import { worldHistoryUnit8Questions } from '@/data/worldhistory/world-history-un
 import { worldHistoryUnit9Questions } from '@/data/worldhistory/world-history-unit9';
 import { worldHistoryUnit10Questions } from '@/data/worldhistory/world-history-unit10';
 import { worldHistoryUnit11Questions } from '@/data/worldhistory/world-history-unit11';
-//Kohl
-import { prehistoryQuestions } from '@/data/worldhistoryKohl/prehistory-questions';
+//Kohl - question file not yet populated
 //Memory
 import { generalQuestions } from '@/data/memory/general-questions';
 import { general2Questions } from '@/data/memory/general2-questions';
 import { general3Questions } from '@/data/memory/general3-questions';
-//Practice
-import { practice1Questions } from '@/data/practice/unit1-questions';
+//Practice - question file not yet populated
 import { Question, QuizAttempt } from '@/types/quiz';
 import { toast } from 'sonner';
 import QuestionTable from '@/components/QuestionTable';
@@ -105,8 +97,9 @@ const Quiz = () => {
       'world-history-unit5': worldHistoryUnit5Questions, 'world-history-unit6': worldHistoryUnit6Questions,
       'world-history-unit7': worldHistoryUnit7Questions, 'world-history-unit8': worldHistoryUnit8Questions,
       'world-history-unit9': worldHistoryUnit9Questions, 'world-history-unit10': worldHistoryUnit10Questions,
-      'world-history-unit11': worldHistoryUnit11Questions, 'world-history-kohl-prehistory': prehistoryQuestions,
-      'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions, 'practice-unit1': unit1-questions,
+      'world-history-unit11': worldHistoryUnit11Questions,
+      'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions,
+      // Note: chemistryDarone, world-history-kohl, and practice question files need to be populated
     };
     
     let allQuestions: Question[] = [];

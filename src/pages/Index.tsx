@@ -209,7 +209,7 @@ const Index = () => {
               <Card
                 key={unit.id}
                 className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-success group"
-                onClick={() => navigate(`/unit/biology/${unit.id}`)} {/*Change depending on unit*/}
+                onClick={() => navigate(`/unit/biology/${unit.id}`)}
               >
                 <div className="text-center">
                   <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
