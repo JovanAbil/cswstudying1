@@ -49,13 +49,25 @@ const CourseChallenge = () => {
           { id: 'stoichiometry', name: 'Unit 7 - Stoichiometry' },
           { id: 'acidbases', name: 'Unit 8 - Acids & Bases' },
         ];
-     
+
+       case 'chemistryDarone':
+        return [
+          { id: 'metric', name: 'Unit 1 - Metric Conversions' },
+          { id: 'atomic', name: 'Unit 2 - Atomic Structure' },
+          { id: 'compounds', name: 'Unit 3 - Compounds' },
+          { id: 'gases', name: 'Unit 4 - Gases' },
+          { id: 'solutions', name: 'Unit 5 - Solutions' },
+          { id: 'reactions', name: 'Unit 6 - Reactions' },
+          { id: 'stoichiometry', name: 'Unit 7 - Stoichiometry' },
+          { id: 'acidbases', name: 'Unit 8 - Acids & Bases' },
+        ];
+      
       case 'world-history':
         return [
           { id: 'religions', name: 'Unit 1 - Religions' },
           { id: 'islam', name: 'Unit 2 - Islam' },
           { id: 'renaissance', name: 'Unit 3 - Renaissance' },
-          { id: 'unit4', name: 'Unit 4' },
+          { id: 'unit4', name: 'Unit 4 - Protestant' },
           { id: 'unit5', name: 'Unit 5' },
           { id: 'unit6', name: 'Unit 6' },
           { id: 'unit7', name: 'Unit 7' },
@@ -64,11 +76,33 @@ const CourseChallenge = () => {
           { id: 'unit10', name: 'Unit 10' },
           { id: 'unit11', name: 'Unit 11' },
         ];
+
+      case 'world-history-Kohl':
+        return [
+          { id: 'religions', name: 'Unit 1' },
+          { id: 'islam', name: 'Unit 2' },
+          { id: 'renaissance', name: 'Unit 3' },
+          { id: 'unit4', name: 'Unit 4' },
+          { id: 'unit5', name: 'Unit 5' },
+          { id: 'unit6', name: 'Unit 6' },
+          { id: 'unit7', name: 'Unit 7' },
+          { id: 'unit8', name: 'Unit 8' },
+          { id: 'unit9', name: 'Unit 9' },
+          { id: 'unit10', name: 'Unit 10' },
+          { id: 'unit11', name: 'Unit 11' },
+        ]; 
+        
       case 'memory':
         return [
           { id: 'general', name: 'Polyatomic Ions - Chemistry' },
           { id: 'general2', name: 'Molecular Geometry - Chemistry' },
         ];
+
+      case 'practice':
+        return [
+          { id: 'unit1', name: 'Temp' },
+        ];
+
       default:
         return [];
     }
