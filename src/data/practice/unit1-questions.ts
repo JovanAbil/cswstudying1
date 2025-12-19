@@ -1,6 +1,6 @@
 import { Question } from '@/types/quiz';
 
-export const unit1Questions: Question[] = {
+export const unit1Questions: Question[] = [
   {
     id: 'unit1-1',
     type: 'multiple-choice',
@@ -1051,5 +1051,5 @@ export const unit1Questions: Question[] = {
     correctAnswer: 'Object that represents something else, light/dark = good/evil',
     explanation: 'Remember'
   },  
-};
+];
 
