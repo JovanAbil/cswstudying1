@@ -41,7 +41,7 @@ import { acidbasesQuestions } from '@/data/chemistry/acidbases-questions';
 import { religionsQuestions } from '@/data/worldhistory/religions-questions';
 import { islamQuestions } from '@/data/worldhistory/islam-questions';
 import { renaissanceQuestions } from '@/data/worldhistory/renaissance-questions';
-import { worldHistoryUnit4Questions } from '@/data/worldhistory/world-history-unit4';
+import { protestantQuestions } from '@/data/worldhistory/protestant-questions';
 import { worldHistoryUnit5Questions } from '@/data/worldhistory/world-history-unit5';
 import { worldHistoryUnit6Questions } from '@/data/worldhistory/world-history-unit6';
 import { worldHistoryUnit7Questions } from '@/data/worldhistory/world-history-unit7';
@@ -95,7 +95,7 @@ const Quiz = () => {
       'chemistry-solutions': solutionsQuestions, 'chemistry-reactions': reactionsQuestions,
       'chemistry-stoichiometry': stoichiometryQuestions, 'chemistry-acidbases': acidbasesQuestions,
       'world-history-religions': religionsQuestions, 'world-history-islam': islamQuestions,
-      'world-history-renaissance': renaissanceQuestions, 'world-history-unit4': worldHistoryUnit4Questions,
+      'world-history-renaissance': renaissanceQuestions, 'world-history-protestant': protestantQuestions,
       'world-history-unit5': worldHistoryUnit5Questions, 'world-history-unit6': worldHistoryUnit6Questions,
       'world-history-unit7': worldHistoryUnit7Questions, 'world-history-unit8': worldHistoryUnit8Questions,
       'world-history-unit9': worldHistoryUnit9Questions, 'world-history-unit10': worldHistoryUnit10Questions,
