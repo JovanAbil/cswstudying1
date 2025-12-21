@@ -35,14 +35,14 @@ import { reactionsQuestions } from '@/data/chemistry/reactions-questions';
 import { stoichiometryQuestions } from '@/data/chemistry/stoichiometry-questions';
 import { acidbasesQuestions } from '@/data/chemistry/acidbases-questions';
 //Darone
-import { metricQuestions } from '@/data/chemistryDarone/metric-questions';
-import { atomicQuestions } from '@/data/chemistryDarone/atomic-questions';
-import { compoundsQuestions } from '@/data/chemistryDarone/compounds-questions';
-import { gasesQuestions } from '@/data/chemistryDarone/gases-questions';
-import { solutionsQuestions } from '@/data/chemistryDarone/solutions-questions';
-import { reactionsQuestions } from '@/data/chemistryDarone/reactions-questions';
-import { stoichiometryQuestions } from '@/data/chemistryDarone/stoichiometry-questions';
-import { acidbasesQuestions } from '@/data/chemistryDarone/acidbases-questions';
+import { metricQuestions } from '@/data/chemistryDarone/metricD-questions';
+import { atomicQuestions } from '@/data/chemistryDarone/atomicD-questions';
+import { compoundsQuestions } from '@/data/chemistryDarone/compoundsD-questions';
+import { gasesQuestions } from '@/data/chemistryDarone/gasesD-questions';
+import { solutionsQuestions } from '@/data/chemistryDarone/solutionsD-questions';
+import { reactionsQuestions } from '@/data/chemistryDarone/reactionsD-questions';
+import { stoichiometryQuestions } from '@/data/chemistryDarone/stoichiometryD-questions';
+import { acidbasesQuestions } from '@/data/chemistryDarone/acidbasesD-questions';
 //Stella
 import { religionsQuestions } from '@/data/worldhistory/religions-questions';
 import { islamQuestions } from '@/data/worldhistory/islam-questions';
@@ -64,7 +64,7 @@ import { general2Questions } from '@/data/memory/general2-questions';
 import { general3Questions } from '@/data/memory/general3-questions';
 //Practice
 import { unit1Questions } from '@/data/practice/unit1-questions';
-import { gases } from '@/data/practice/gases-questions';
+import { gases } from '@/data/practice/gas-questions';
 import { log } from '@/data/practice/log-questions';
 //Others
 import { Question, QuizAttempt } from '@/types/quiz';
@@ -104,17 +104,17 @@ const Quiz = () => {
       'chemistry-compounds': compoundsQuestions, 'chemistry-gases': gasesQuestions,
       'chemistry-solutions': solutionsQuestions, 'chemistry-reactions': reactionsQuestions,
       'chemistry-stoichiometry': stoichiometryQuestions, 'chemistry-acidbases': acidbasesQuestions,
-      'chemistryDarone-metric': metricQuestions, 'chemistryDarone-atomic': atomicQuestions,
-      'chemistryDarone-compounds': compoundsQuestions, 'chemistryDarone-gases': gasesQuestions,
-      'chemistryDarone-solutions': solutionsQuestions, 'chemistryDarone-reactions': reactionsQuestions,
-      'chemistryDarone-stoichiometry': stoichiometryQuestions, 'chemistryDarone-acidbases': acidbasesQuestions,
+      'chemistryDarone-metric': metricDQuestions, 'chemistryDarone-atomic': atomicDQuestions,
+      'chemistryDarone-compounds': compoundsDQuestions, 'chemistryDarone-gases': gasesDQuestions,
+      'chemistryDarone-solutions': solutionsDQuestions, 'chemistryDarone-reactions': reactionsDQuestions,
+      'chemistryDarone-stoichiometry': stoichiometryDQuestions, 'chemistryDarone-acidbases': acidbasesDQuestions,
       'world-history-religions': religionsQuestions, 'world-history-islam': islamQuestions,
       'world-history-renaissance': renaissanceQuestions, 'world-history-protestant': protestantQuestions,
       'world-history-unit5': worldHistoryUnit5Questions, 'world-history-unit6': worldHistoryUnit6Questions,
       'world-history-unit7': worldHistoryUnit7Questions, 'world-history-unit8': worldHistoryUnit8Questions,
       'world-history-unit9': worldHistoryUnit9Questions, 'world-history-unit10': worldHistoryUnit10Questions,
       'world-history-unit11': worldHistoryUnit11Questions, 'world-history-kohl-prehistory': prehistoryQuestions, 'world-history-kohl-renreform': renreformQuestions, 
-      'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions, 'practice-unit1': unit1Questions, 'practice-gases': gasesQuestions,
+      'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions, 'practice-unit1': unit1Questions, 'practice-gas': gasQuestions,
       'practice-log': logQuestions,
       // Note: chemistryDarone, world-history-kohl,
     };
