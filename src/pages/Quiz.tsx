@@ -34,8 +34,15 @@ import { solutionsQuestions } from '@/data/chemistry/solutions-questions';
 import { reactionsQuestions } from '@/data/chemistry/reactions-questions';
 import { stoichiometryQuestions } from '@/data/chemistry/stoichiometry-questions';
 import { acidbasesQuestions } from '@/data/chemistry/acidbases-questions';
-//Darone - files not yet populated
-//Kohl - files not yet populated
+//Darone
+import { metricQuestions } from '@/data/chemistryDarone/metric-questions';
+import { atomicQuestions } from '@/data/chemistryDarone/atomic-questions';
+import { compoundsQuestions } from '@/data/chemistryDarone/compounds-questions';
+import { gasesQuestions } from '@/data/chemistryDarone/gases-questions';
+import { solutionsQuestions } from '@/data/chemistryDarone/solutions-questions';
+import { reactionsQuestions } from '@/data/chemistryDarone/reactions-questions';
+import { stoichiometryQuestions } from '@/data/chemistryDarone/stoichiometry-questions';
+import { acidbasesQuestions } from '@/data/chemistryDarone/acidbases-questions';
 //Stella
 import { religionsQuestions } from '@/data/worldhistory/religions-questions';
 import { islamQuestions } from '@/data/worldhistory/islam-questions';
@@ -49,6 +56,8 @@ import { worldHistoryUnit9Questions } from '@/data/worldhistory/world-history-un
 import { worldHistoryUnit10Questions } from '@/data/worldhistory/world-history-unit10';
 import { worldHistoryUnit11Questions } from '@/data/worldhistory/world-history-unit11';
 //Kohl - question file not yet populated
+import { prehistoryQuestions } from '@/data/worldhistoryKohl/prehistory-questions';
+import { renreformQuestions } from '@/data/worldhistoryKohl/renreform-questions';
 //Memory
 import { generalQuestions } from '@/data/memory/general-questions';
 import { general2Questions } from '@/data/memory/general2-questions';
