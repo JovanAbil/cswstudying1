@@ -11,10 +11,10 @@ const Index = () => {
     { id: 'rational', name: 'Rational' },
     { id: 'exponential', name: 'Exponential' },
     { id: 'logarithmic', name: 'Logarithmic' },
-    { id: 'trigonometric', name: 'Trigonometric' },
-    { id: 'polar', name: 'Polar' },
-    { id: 'parametric', name: 'Parametric' },
-    { id: 'vectorsMatrices', name: 'Vectors and Matrices' },
+    { id: 'trigonometric', name: 'Trigonometric (Not Updated)' },
+    { id: 'polar', name: 'Polar (Not Updated)' },
+    { id: 'parametric', name: 'Parametric (Not Updated)' },
+    { id: 'vectorsMatrices', name: 'Vectors and Matrices (Not Updated)' },
   ];
   
   const biologyUnits = [
@@ -22,10 +22,10 @@ const Index = () => {
     { id: 'cellstructure', name: 'Cell Structure & Functions' },
     { id: 'cellenergetics', name: 'Cell Energetics-Photosynthesis & Cell Respirations' },
     { id: 'cellgrowth', name: 'Cell Growth & Division' },
-    { id: 'genetics', name: 'Genetics' },
-    { id: 'molecular', name: 'Molecular Biology' },
-    { id: 'evolution', name: 'Darwins Theory of Evolution' },
-    { id: 'ecology', name: 'Ecology' },
+    { id: 'genetics', name: 'Genetics (Not Updated)' },
+    { id: 'molecular', name: 'Molecular Biology (Not Updated)' },
+    { id: 'evolution', name: 'Darwins Theory of Evolution (Not Updated)' },
+    { id: 'ecology', name: 'Ecology (Not Updated)' },
   ];
 
   const apbioUnits = [
@@ -44,10 +44,10 @@ const Index = () => {
     { id: 'atomic', name: 'Atomic Theory' },
     { id: 'compounds', name: 'Compounds' },
     { id: 'gases', name: 'Gases' },
-    { id: 'solutions', name: 'Solutions' },
-    { id: 'reactions', name: 'Chemical Reactions' },
-    { id: 'stoichiometry', name: 'Stoichiometry' },
-    { id: 'acidbases', name: 'Acids and Bases' },
+    { id: 'solutions', name: 'Solutions (Not Updated)' },
+    { id: 'reactions', name: 'Chemical Reactions (Not Updated)' },
+    { id: 'stoichiometry', name: 'Stoichiometry (Not Updated)' },
+    { id: 'acidbases', name: 'Acids and Bases (Not Updated)' },
   ];
 
   const chemistryDaroneUnits = [
@@ -55,10 +55,10 @@ const Index = () => {
     { id: 'atomic', name: 'Atomic Theory' },
     { id: 'compounds', name: 'Compounds' },
     { id: 'gases', name: 'Gases' },
-    { id: 'solutions', name: 'Solutions' },
-    { id: 'reactions', name: 'Chemical Reactions' },
-    { id: 'stoichiometry', name: 'Stoichiometry' },
-    { id: 'acidbases', name: 'Acids and Bases' },
+    { id: 'solutions', name: 'Solutions (Not Updated)' },
+    { id: 'reactions', name: 'Chemical Reactions (Not Updated)' },
+    { id: 'stoichiometry', name: 'Stoichiometry (Not Updated)' },
+    { id: 'acidbases', name: 'Acids and Bases (Not Updated)' },
   ];
 
   const apchemUnits = [
@@ -77,19 +77,19 @@ const Index = () => {
     { id: 'islam', name: 'Islam' },
     { id: 'renaissance', name: 'Renaissance' },
     { id: 'protestant', name: 'Protestant' },
-    { id: 'unit5', name: 'Unit 5' },
-    { id: 'unit6', name: 'Unit 6' },
-    { id: 'unit7', name: 'Unit 7' },
-    { id: 'unit8', name: 'Unit 8' },
-    { id: 'unit9', name: 'Unit 9' },
-    { id: 'unit10', name: 'Unit 10' },
-    { id: 'unit11', name: 'Unit 11' },
+    { id: 'unit5', name: 'Unit 5 (Not Updated)' },
+    { id: 'unit6', name: 'Unit 6 (Not Updated)' },
+    { id: 'unit7', name: 'Unit 7 (Not Updated)' },
+    { id: 'unit8', name: 'Unit 8 (Not Updated)' },
+    { id: 'unit9', name: 'Unit 9 (Not Updated)' },
+    { id: 'unit10', name: 'Unit 10 (Not Updated)' },
+    { id: 'unit11', name: 'Unit 11 (Not Updated)' },
   ];
 
   const worldHistoryKohlUnits = [
-    { id: 'unit1', name: 'Unit 1' },
-    { id: 'unit2', name: 'Unit 2' },
-    { id: 'unit3', name: 'Unit 3' },
+    { id: 'unit1', name: 'Prehistory' },
+    { id: 'unit2', name: 'Religions (Not Updated)' },
+    { id: 'unit3', name: 'Renaissance and Reformation' },
     { id: 'unit4', name: 'Unit 4' },
     { id: 'unit5', name: 'Unit 5' },
     { id: 'unit6', name: 'Unit 6' },
@@ -108,7 +108,8 @@ const Index = () => {
 
   const practiceUnits = [
     { id: 'unit1', name: 'English Midterm Practice; Phase 4' },
-    { id: 'unit2', name: 'Unit 2' },
+    { id: 'gases', name: 'Gases Practice' },
+    { id: 'log', name: 'Logarithms Practice' },
   ];
 
   return (
@@ -416,7 +417,7 @@ const Index = () => {
               <div className="inline-flex items-center justify-center w-12 h-12 bg-purple-500/10 rounded-lg">
                 <Brain className="w-6 h-6 text-purple-500" />
               </div>
-              <h2 className="text-2xl font-bold text-purple-500">Temporary Practice</h2>
+              <h2 className="text-2xl font-bold text-purple-500">Temporary Practice (Homework Assignments are posted here)</h2>
             </div>
             <Button
               onClick={() => navigate('/course-challenge/practice')}
