@@ -3,7 +3,7 @@ import { Question } from '@/types/quiz';
 
 export const exponentialQuestions: Question[] = [
   {
-    id: "",
+    id: "exponential-1",
     type: "multiple-choice",
     question: "Selected values of the terms of an arithmetic sequence a_n are graphed in the figure above. Which of following is an expression for the n'th term of the arithmetic sequence?",
     image: "/images/apprecalc/exponential14.png",
@@ -17,7 +17,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-2",
     type: "multiple-choice",
     question: "Let m(x) = 5(2/3)^x-1. Which of the following statements about m is correct?",
     options: [
@@ -30,7 +30,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-3",
     type: "multiple-choice",
     question: "The function g is an exponential function that increases at a decreasing rate for all values of x. Which of the following pairs of limit statements could describe the end behaviors for the graph of g?",
     options: [
@@ -43,7 +43,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-4",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential8.png",
     question: "Selected values of function g are given in table above. Which of the following statements about g is most appropriate?",
@@ -57,7 +57,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-5",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential9.png",
     question: "The exponential function h is defined by h(x) = ab^x, where a and b are positive constants. The table above gives values of h(x) at selected values of x. Which of the following statements is true.",
@@ -71,7 +71,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-6",
     type: "multiple-choice",
     question: "Which of the following functions is an equivalent form of the function k(x) = 4 * 9^2x",
     options: [
@@ -84,7 +84,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-7",
     type: "multiple-choice",
     question: "The function f is given by f(x) = 2x. For any function g(x), which of the following is true?",
     options: [
@@ -97,7 +97,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-8",
     type: "multiple-choice",
     question: "Which of the following functions is an equivalent form of the function y = 3^(x+3)?",
     options: [
@@ -110,7 +110,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-9",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential10.png",
     question: "After returning home from running a half marathon, Mr. Damiani notices a large number of crabgrass in his yard and decides to apply weed killer to his yard. The decreasing function D gives the number of crabgrass in his yard. The table above gives values of D(t) for selected values of t, in days, since Mr. Damiani applied week killer to his yard. If a model is constructed to represent these data, which of the following best applies to this situation?",
@@ -124,7 +124,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-10",
     type: "multiple-choice",
     question: "From 2011 - 2015, the number of electric vehicles purchased in Norway grew exponentially, The percent of all new vehicles purchased that were electroic modeled by the function E, which increased by 96.8% each year. In 2011 (t=0), 1.6% of all new cars purchased in Norway were electric. If t is measured in months, which of the following is an expression for E(t)? (Note: There are twelve months in one year.)",
     options: [
@@ -137,7 +137,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-11",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential15.png",
     question: "A quadratic regression was used to develop a model for a given set of data. The figure above shows a graph of the residuals of the quadratic regression. Which of the following statements about the quadratic regression is true?",
@@ -151,7 +151,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-12",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential16.png",
     question: "A set of data was used to create a linear, a quadratic, and an exponential regression model. The residual plots for the three models are shown above. Based on the three residual plots, which of the following could be an appropriate model for the data?",
@@ -165,7 +165,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-13",
     type: "multiple-choice",
     question: "If p(x) = 2x-4, which of the following is an expression for p^-1(x)?",
     options: [
@@ -178,7 +178,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-14",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential13.png",
     question: "The graph of piecewise-linear function h is shown in the figure. Values of the decreasing function k are given in the table above for selected values of x. The maximum value of h^-1 is: ",
@@ -192,7 +192,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-15",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential13.png",
     question: "The graph of piecewise-linear function h is shown in the figure. Values of the decreasing function k are given in the table above for selected values of x. Which of the following gives the domain of h^-1?",
@@ -206,7 +206,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-16",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential13.png",
     question: "The graph of piecewise-linear function h is shown in the figure. Values of the decreasing function k are given in the table above for selected values of x. h(k(3)) = ",
@@ -220,7 +220,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-17",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential13.png",
     question: "The graph of piecewise-linear function h is shown in the figure. Values of the decreasing function k are given in the table above for selected values of x. k^-1(h(3)) = ",
@@ -234,7 +234,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-18",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential13.png",
     question: "The graph of piecewise-linear function h is shown in the figure. Values of the decreasing function k are given in the table above for selected values of x. h^-1(k^-1(3)) = ",
@@ -248,7 +248,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-19",
     type: "free-response",
     image: "/images/apprecalc/exponential12.png",
     question: "The table presents values for an exponential function f at selected values of x, where f(x) = a(b)^x + k. Find the value of b.",
@@ -256,7 +256,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: " ",
+    id: "exponential-20",
     type: "free-response",
     image: "/images/apprecalc/exponential12.png",
     question: "The table presents values for an exponential function f at selected values of x, where f(x) = a(b)^x + k. Use the given data to write two equations that can be used to find values for the constants a and k in the expression for f(x).",
@@ -264,7 +264,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: " ",
+    id: "exponential-21",
     type: "free-response",
     image: "/images/apprecalc/exponential12.png",
     question: "The table presents values for an exponential function f at selected values of x, where f(x) = a(b)^x + k. Use the two equations that can be used to find values for the constants a and k in the expression for f(x). What is the values of a and k",
@@ -272,7 +272,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: " ",
+    id: "exponential-22",
     type: "free-response",
     image: "/images/apprecalc/exponential12.png",
     question: "Find the value of f(f(1))",
@@ -280,14 +280,14 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: " ",
+    id: "exponential-23",
     type: "free-response",
     question: "Using the equation f(x) = 3(2)^x - 2, find the value of f(-2)",
     correctAnswer: "f(-2) = -5/4",
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-24",
     type: "multiple-choice",
     question: "[Calculator] The growth of a bacteria in a culture is modeled by y = 2.3(e)^(1.5t), where t is the measured in days. At what time t is the number of bacteria approximately 210?",
     options: [
@@ -300,7 +300,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-25",
     type: "multiple-choice",
     question: "[Calculator] During flu season at one school, Administrators feared that the flu was spreading exponentially. Ten students had the flu three days after the initial flu case, and 20 students had the flu one week after the initial flu case. If an exponential regression function F(t) is used to model the number of students F who have the flue t days after the initial flu case, what is the predicted number of students who will have the flu two weeks after the initial case?",
     options: [
@@ -313,7 +313,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-26",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential1.png",
     question: "[Calculator] The function i gives the total number of iPhones sold worldwide yearly from 2007-2012. The table above gives the number of iPhones sold, in millions, for the years 2007 - 2012. A quadratic regression y = at^2 + bt + c is used to model the function i. What is the residual for the number of iPhones sold (in millions) in year 2009?",
@@ -327,7 +327,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-27",
     type: "multiple-choice",
     question: "[Calculator] The popluation of deer in a forest is modeled by a team of wildlife biologists. Two function models are created: D(t) = 0.21t^2 + 1.72t + 6.18 and E(t) = 5.02(1.19)^t, where t = 0 represents 2020 and 0 <= t <= 20. What is the earliest calender year that the population predicted by the exponential model exceeds that predicted by the quadratic model?",
     options: [
@@ -340,7 +340,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-28",
     type: "multiple-choice",
     question: "[Calculator] A geometric sequence g_n has known terms g_4 = 9 and g_7 30.375. What is the value of g_12?",
     options: [
@@ -353,7 +353,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-29",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential2.png",
     question: "[Calculator] The table above gives values of the function y = f(x) for selected values of x. Which of the following input-output pairs describes f^-1?",
@@ -367,7 +367,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-30",
     type: "free-response",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. The number of subscribers can be modeled by the function S given by S(p) = ab^p, where S(p) is the number of subscribers, in thousands, for a subscription price of p dollars. Use the given data to find the average rate of change, in thousands of subscribers per dollar, from p=0 to p=13.5. Express your answer as a decimal approximation. Show the computations that lead to your answer.",
@@ -375,7 +375,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-31",
     type: "free-response",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. The number of subscribers can be modeled by the function S given by S(p) = ab^p, where S(p) is the number of subscribers, in thousands, for a subscription price of p dollars. Use the given data to find the average rate of change, in thousands of subscribers per dollar, from p=0 to p=13.5. Using the average rate of change, interpret the meaning in the context of the problem.",
@@ -383,7 +383,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-32",
     type: "free-response",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. Use the given data to write two equations that can be used to find the values for the contstants a and b.",
@@ -391,7 +391,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-33",
     type: "free-response",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. Use the given data to write two equations and find the values of a and b",
@@ -399,7 +399,7 @@ export const exponentialQuestions: Question[] = [
     explanation: "."
   },
   {
-    id: "",
+    id: "exponential-34",
     type: "free-response",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. Use the given data to write two equations and find the values of a and b and does the function S(p) model exponential growth or exponential decay? Explain your answer based on your values of a and b.",
