@@ -1,6 +1,6 @@
 import { Question } from '@/types/quiz';
 
-export const gasesQuestions: Question[] = [
+export const gasQuestions: Question[] = [
   {
     id: "gas-1",
     type: "free-response",
