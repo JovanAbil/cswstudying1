@@ -111,7 +111,7 @@ const Quiz = () => {
       'world-history-unit7': worldHistoryUnit7Questions, 'world-history-unit8': worldHistoryUnit8Questions,
       'world-history-unit9': worldHistoryUnit9Questions, 'world-history-unit10': worldHistoryUnit10Questions,
       'world-history-unit11': worldHistoryUnit11Questions, 
-      'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions, 'practice-unit1': unit1Questions, 'practice-gas': gasQuestions,
+      'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions, 'practice-unit1': unit1Questions, 'practice-gases': gasQuestions,
       'practice-log': logQuestions,
       // Note: chemistryDarone, world-history-kohl,
     };
