@@ -7,6 +7,8 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
+import useQuizTimer from '@/hooks/useQuizTimer';
+import QuizTimer from '@/components/QuizTimer';
 //AP Precalc
 import { polynomialQuestions } from '@/data/apprecalc/polynomial-questions';
 import { rationalQuestions } from '@/data/apprecalc/rational-questions';
@@ -73,8 +75,8 @@ const Quiz = () => {
   const { subject, unitId, quizType } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const timer = useQuizTimer();
   
-  // Memoize selectedUnits to prevent infinite loop
   const selectedUnits = useMemo(() => location.state?.selectedUnits || [], [location.state?.selectedUnits]);
   
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -85,66 +87,94 @@ const Quiz = () => {
   const [showGrading, setShowGrading] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<any[]>([]);
 
+  const questionMap: Record<string, Question[]> = useMemo(() => ({
+    'precalc-polynomial': polynomialQuestions, 'precalc-rational': rationalQuestions,
+    'precalc-exponential': exponentialQuestions, 'precalc-logarithmic': logarithmicQuestions,
+    'precalc-trigonometric': trigonometricQuestions, 'precalc-polar': polarQuestions,
+    'precalc-parametric': parametricQuestions, 'precalc-vectorsMatrices': vectorsMatricesQuestions,
+    'biology-biochemistry': biochemistryQuestions, 'biology-cellstructure': cellstructureQuestions,
+    'biology-cellenergetics': cellenergeticsQuestions, 'biology-cellgrowth': cellgrowthQuestions,
+    'biology-genetics': geneticsQuestions, 'biology-molecular': molecularQuestions,
+    'biology-evolution': evolutionQuestions, 'biology-ecology': ecologyQuestions,
+    'chemistry-metric': metricQuestions, 'chemistry-atomic': atomicQuestions,
+    'chemistry-compounds': compoundsQuestions, 'chemistry-gases': gasesQuestions,
+    'chemistry-solutions': solutionsQuestions, 'chemistry-reactions': reactionsQuestions,
+    'chemistry-stoichiometry': stoichiometryQuestions, 'chemistry-acidbases': acidbasesQuestions,
+    'chemistryDarone-metric': metricDQuestions, 'chemistryDarone-atomic': atomicDQuestions,
+    'chemistryDarone-compounds': compoundsDQuestions, 'chemistryDarone-gases': gasesDQuestions,
+    'chemistryDarone-solutions': solutionsDQuestions, 'chemistryDarone-reactions': reactionsDQuestions,
+    'chemistryDarone-stoichiometry': stoichiometryDQuestions, 'chemistryDarone-acidbases': acidbasesDQuestions,
+    'world-history-religions': religionsQuestions, 'world-history-islam': islamQuestions,
+    'world-history-renaissance': renaissanceQuestions, 'world-history-protestant': protestantQuestions,
+    'world-history-unit5': worldHistoryUnit5Questions, 'world-history-unit6': worldHistoryUnit6Questions,
+    'world-history-unit7': worldHistoryUnit7Questions, 'world-history-unit8': worldHistoryUnit8Questions,
+    'world-history-unit9': worldHistoryUnit9Questions, 'world-history-unit10': worldHistoryUnit10Questions,
+    'world-history-unit11': worldHistoryUnit11Questions, 
+    'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions,
+    'practice-unit1': unit1Questions, 'practice-gases': gasQuestions, 'practice-log': logQuestions,
+  }), []);
+
   useEffect(() => {
-    const questionCount = quizType === 'daily' ? 10 : quizType === 'cram' ? Infinity : 30;
-    
-    const questionMap: Record<string, Question[]> = {
-      'precalc-polynomial': polynomialQuestions, 'precalc-rational': rationalQuestions,
-      'precalc-exponential': exponentialQuestions, 'precalc-logarithmic': logarithmicQuestions,
-      'precalc-trigonometric': trigonometricQuestions, 'precalc-polar': polarQuestions,
-      'precalc-parametric': parametricQuestions, 'precalc-vectorsMatrices': vectorsMatricesQuestions,
-      'biology-biochemistry': biochemistryQuestions, 'biology-cellstructure': cellstructureQuestions,
-      'biology-cellenergetics': cellenergeticsQuestions, 'biology-cellgrowth': cellgrowthQuestions,
-      'biology-genetics': geneticsQuestions, 'biology-molecular': molecularQuestions,
-      'biology-evolution': evolutionQuestions, 'biology-ecology': ecologyQuestions,
-      'chemistry-metric': metricQuestions, 'chemistry-atomic': atomicQuestions,
-      'chemistry-compounds': compoundsQuestions, 'chemistry-gases': gasesQuestions,
-      'chemistry-solutions': solutionsQuestions, 'chemistry-reactions': reactionsQuestions,
-      'chemistry-stoichiometry': stoichiometryQuestions, 'chemistry-acidbases': acidbasesQuestions,
-      'chemistryDarone-metric': metricDQuestions, 'chemistryDarone-atomic': atomicDQuestions,
-      'chemistryDarone-compounds': compoundsDQuestions, 'chemistryDarone-gases': gasesDQuestions,
-      'chemistryDarone-solutions': solutionsDQuestions, 'chemistryDarone-reactions': reactionsDQuestions,
-      'chemistryDarone-stoichiometry': stoichiometryDQuestions, 'chemistryDarone-acidbases': acidbasesDQuestions,
-      'world-history-religions': religionsQuestions, 'world-history-islam': islamQuestions,
-      'world-history-renaissance': renaissanceQuestions, 'world-history-protestant': protestantQuestions,
-      'world-history-unit5': worldHistoryUnit5Questions, 'world-history-unit6': worldHistoryUnit6Questions,
-      'world-history-unit7': worldHistoryUnit7Questions, 'world-history-unit8': worldHistoryUnit8Questions,
-      'world-history-unit9': worldHistoryUnit9Questions, 'world-history-unit10': worldHistoryUnit10Questions,
-      'world-history-unit11': worldHistoryUnit11Questions, 
-      'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions, 'practice-unit1': unit1Questions, 'practice-gases': gasQuestions,
-      'practice-log': logQuestions,
-      // Note: chemistryDarone, world-history-kohl,
-    };
+    const totalQuestions = 30;
+    const questionCount = quizType === 'daily' ? 10 : quizType === 'cram' ? Infinity : totalQuestions;
     
     let allQuestions: Question[] = [];
-    if (selectedUnits.length > 0) {
+    
+    if (selectedUnits.length > 0 && quizType === 'test') {
+      // Course challenge: distribute 30 questions evenly across selected units
+      const numUnits = selectedUnits.length;
+      const baseQuestionsPerUnit = Math.floor(totalQuestions / numUnits);
+      let remainder = totalQuestions % numUnits;
+      
+      selectedUnits.forEach((unit: string) => {
+        const unitQuestions = questionMap[`${subject}-${unit}`] || [];
+        const shuffledUnit = [...unitQuestions].sort(() => Math.random() - 0.5);
+        
+        // Calculate how many questions to take from this unit
+        let questionsToTake = baseQuestionsPerUnit;
+        if (remainder > 0) {
+          questionsToTake += 1;
+          remainder -= 1;
+        }
+        
+        // Take the calculated number of questions (or all if fewer available)
+        const selected = shuffledUnit.slice(0, Math.min(questionsToTake, shuffledUnit.length));
+        allQuestions = [...allQuestions, ...selected];
+      });
+      
+      // Shuffle the final combined list
+      allQuestions = allQuestions.sort(() => Math.random() - 0.5);
+    } else if (selectedUnits.length > 0) {
+      // Cram mode: all questions from all units
       selectedUnits.forEach((unit: string) => {
         allQuestions = [...allQuestions, ...(questionMap[`${subject}-${unit}`] || [])];
       });
+      allQuestions = allQuestions.sort(() => Math.random() - 0.5);
     } else {
+      // Single unit quiz
       allQuestions = questionMap[`${subject}-${unitId}`] || [];
+      const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
+      allQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
     }
     
-    const shuffled = [...allQuestions].sort(() => Math.random() - 0.5);
-    const selected = shuffled.slice(0, Math.min(questionCount, shuffled.length));
-    
-    if (selected.length > 0) {
-      setQuestions(selected);
-      setAttempts(selected.map(q => ({
+    if (allQuestions.length > 0) {
+      setQuestions(allQuestions);
+      setAttempts(allQuestions.map(q => ({
         questionId: q.id, userAnswer: null, isCorrect: null, selfGraded: q.type === 'free-response'
       })));
       setCurrentIndex(0);
       setCurrentAnswer('');
       setIsSubmitted(false);
       setShowGrading(false);
+      timer.reset();
+      timer.start();
     }
-  }, [subject, unitId, quizType, selectedUnits]);
+  }, [subject, unitId, quizType, selectedUnits, questionMap]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];
   const progress = ((currentIndex + 1) / questions.length) * 100;
 
-  // Shuffle options when question changes
   useEffect(() => {
     if (currentQuestion && currentQuestion.type === 'multiple-choice') {
       const shuffled = [...currentQuestion.options].sort(() => Math.random() - 0.5);
@@ -162,7 +192,6 @@ const Quiz = () => {
         }
       }
       
-      // Self-grading keyboard shortcuts for free-response questions
       if (showGrading && currentQuestion.type === 'free-response') {
         if (e.key === 'ArrowRight') {
           handleSelfGrade(true);
@@ -215,7 +244,7 @@ const Quiz = () => {
       setShowGrading(false);
       setShuffledOptions([]);
     } else {
-      // Quiz complete
+      const finalTime = timer.stop();
       const score = attempts.filter(a => a.isCorrect).length;
       const total = attempts.length;
       navigate('/results', { 
@@ -225,6 +254,7 @@ const Quiz = () => {
           subject,
           unitId, 
           quizType,
+          timeElapsed: finalTime,
           attempts: attempts.map((a, i) => ({
             ...a,
             question: questions[i]
@@ -237,7 +267,10 @@ const Quiz = () => {
   if (questions.length === 0) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-lg text-muted-foreground">Loading questions...</p>
+        <div className="text-center animate-fade-in">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-lg text-muted-foreground">Loading questions...</p>
+        </div>
       </div>
     );
   }
@@ -245,14 +278,16 @@ const Quiz = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate(selectedUnits.length > 0 ? `/course-challenge/${subject}` : `/unit/${subject}/${unitId}`)}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          {selectedUnits.length > 0 ? 'Back to Challenge' : 'Back to Unit'}
-        </Button>
+        <div className="flex items-center justify-between mb-6">
+          <Button
+            variant="ghost"
+            onClick={() => navigate(selectedUnits.length > 0 ? `/course-challenge/${subject}` : `/unit/${subject}/${unitId}`)}
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            {selectedUnits.length > 0 ? 'Back to Challenge' : 'Back to Unit'}
+          </Button>
+          <QuizTimer formatted={timer.formatted} isRunning={timer.isRunning} />
+        </div>
 
         <div className="mb-8">
           <div className="flex justify-between items-center mb-2">
@@ -266,7 +301,7 @@ const Quiz = () => {
           <Progress value={progress} className="h-2" />
         </div>
 
-        <Card className="p-8">
+        <Card className="p-8 animate-fade-in">
           {currentQuestion.table && (
             <QuestionTable data={currentQuestion.table} enableChemistry={subject === 'chemistry'} />
           )}
@@ -357,7 +392,7 @@ const Quiz = () => {
                     <Button
                       onClick={() => handleSelfGrade(true)}
                       variant="outline"
-                      className="flex-1 border-success text-success hover:bg-success hover:text-white"
+                      className="flex-1 border-success text-success hover:bg-success hover:text-success-foreground"
                     >
                       <CheckCircle2 className="mr-2 h-4 w-4" />
                       I got it right
@@ -365,7 +400,7 @@ const Quiz = () => {
                     <Button
                       onClick={() => handleSelfGrade(false)}
                       variant="outline"
-                      className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-white"
+                      className="flex-1 border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
                     >
                       <XCircle className="mr-2 h-4 w-4" />
                       I got it wrong
@@ -386,9 +421,9 @@ const Quiz = () => {
                 onClick={handleNext} 
                 className="flex-1" 
                 size="lg"
-                disabled={currentQuestion.type === 'free-response' && currentAttempt.isCorrect === null}
+                disabled={currentQuestion.type === 'free-response' && showGrading}
               >
-                {currentIndex < questions.length - 1 ? 'Next Question' : 'View Results'}
+                {currentIndex < questions.length - 1 ? 'Next Question' : 'See Results'}
               </Button>
             )}
           </div>

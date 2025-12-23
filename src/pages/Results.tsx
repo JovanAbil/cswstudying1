@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { Trophy, Home, CheckCircle2, XCircle } from 'lucide-react';
+import { Trophy, Home, CheckCircle2, XCircle, Clock } from 'lucide-react';
 import { useEffect } from 'react';
 import { Question, QuizAttempt } from '@/types/quiz';
 import QuestionTable from '@/components/QuestionTable';
@@ -16,7 +16,7 @@ interface ExtendedAttempt extends QuizAttempt {
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { score, total, subject, unitId, quizType, attempts } = location.state || {};
+  const { score, total, subject, unitId, quizType, attempts, timeElapsed } = location.state || {};
 
   useEffect(() => {
     if (!location.state) {
@@ -29,6 +29,20 @@ const Results = () => {
   }
 
   const percentage = Math.round((score / total) * 100);
+  
+  const formatTime = (totalSeconds: number): string => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const secs = totalSeconds % 60;
+
+    if (hours > 0) {
+      return `${hours}h ${minutes}m ${secs}s`;
+    }
+    if (minutes > 0) {
+      return `${minutes}m ${secs}s`;
+    }
+    return `${secs}s`;
+  };
   
   const getGrade = () => {
     if (percentage >= 90) return { grade: 'A', message: 'Outstanding!', color: 'text-success' };
@@ -45,19 +59,19 @@ const Results = () => {
   return (
     <div className="min-h-screen bg-background py-8 px-4">
       <div className="container mx-auto max-w-4xl">
-        <Card className="p-8 md:p-12 mb-8">
+        <Card className="p-8 md:p-12 mb-8 animate-fade-in">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6">
               <Trophy className="w-10 h-10 text-primary" />
             </div>
             
-            <h1 className="text-4xl font-bold mb-2">Quiz Complete!</h1>
+            <h1 className="text-4xl font-display font-bold mb-2">Quiz Complete!</h1>
             <p className="text-muted-foreground mb-8">
               Unit {unitId?.toUpperCase()} - {quizType === 'daily' ? 'Daily Practice' : 'Full Test'}
             </p>
 
             <div className="bg-muted rounded-lg p-8 mb-8">
-              <div className={`text-6xl font-bold mb-2 ${gradeInfo.color}`}>
+              <div className={`text-6xl font-display font-bold mb-2 ${gradeInfo.color}`}>
                 {gradeInfo.grade}
               </div>
               <p className="text-xl font-semibold mb-4">{gradeInfo.message}</p>
@@ -67,14 +81,21 @@ const Results = () => {
               </div>
               <p className="text-muted-foreground mb-4">Correct Answers</p>
               
-              <Progress value={percentage} className="h-3 mb-2" />
-              <p className="text-sm text-muted-foreground">{percentage}% Score</p>
+              <Progress value={percentage} className="h-3 mb-4" />
+              <p className="text-sm text-muted-foreground mb-4">{percentage}% Score</p>
+              
+              {timeElapsed !== undefined && (
+                <div className="flex items-center justify-center gap-2 text-muted-foreground">
+                  <Clock className="h-4 w-4" />
+                  <span className="timer-display">Time: {formatTime(timeElapsed)}</span>
+                </div>
+              )}
             </div>
           </div>
         </Card>
 
-        <Card className="p-8 mb-8">
-          <h2 className="text-2xl font-bold mb-6">Review Your Answers</h2>
+        <Card className="p-8 mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <h2 className="text-2xl font-display font-bold mb-6">Review Your Answers</h2>
           <p className="text-muted-foreground mb-6">
             Review each question to understand what to study next
           </p>
@@ -82,7 +103,6 @@ const Results = () => {
           <div className="space-y-6">
             {extendedAttempts
               .sort((a, b) => {
-                // Sort: incorrect answers first, then correct answers
                 if (a.isCorrect === b.isCorrect) return 0;
                 return a.isCorrect ? 1 : -1;
               })

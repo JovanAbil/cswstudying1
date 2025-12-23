@@ -9,6 +9,11 @@ import Quiz from "./pages/Quiz";
 import Results from "./pages/Results";
 import NotFound from "./pages/NotFound";
 import CourseChallenge from "./pages/CourseChallenge";
+import MathCategory from "./pages/categories/MathCategory";
+import EnglishCategory from "./pages/categories/EnglishCategory";
+import ScienceCategory from "./pages/categories/ScienceCategory";
+import SocialCategory from "./pages/categories/SocialCategory";
+import OtherCategory from "./pages/categories/OtherCategory";
 
 const queryClient = new QueryClient();
 
@@ -21,12 +26,16 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/category/math" element={<MathCategory />} />
+            <Route path="/category/english" element={<EnglishCategory />} />
+            <Route path="/category/science" element={<ScienceCategory />} />
+            <Route path="/category/social" element={<SocialCategory />} />
+            <Route path="/category/other" element={<OtherCategory />} />
             <Route path="/unit/:subject/:unitId" element={<Unit />} />
             <Route path="/unit/:subject/:unitId/quiz/:quizType" element={<Quiz />} />
             <Route path="/course-challenge/:subject" element={<CourseChallenge />} />
             <Route path="/quiz/:subject/:unitId/:quizType" element={<Quiz />} />
             <Route path="/results" element={<Results />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
