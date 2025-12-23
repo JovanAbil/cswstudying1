@@ -55,9 +55,6 @@ import { worldHistoryUnit8Questions } from '@/data/worldhistory/world-history-un
 import { worldHistoryUnit9Questions } from '@/data/worldhistory/world-history-unit9';
 import { worldHistoryUnit10Questions } from '@/data/worldhistory/world-history-unit10';
 import { worldHistoryUnit11Questions } from '@/data/worldhistory/world-history-unit11';
-//Kohl - question file not yet populated
-import { prehistoryQuestions } from '@/data/worldhistoryKohl/prehistory-questions';
-import { renreformQuestions } from '@/data/worldhistoryKohl/renreform-questions';
 //Memory
 import { generalQuestions } from '@/data/memory/general-questions';
 import { general2Questions } from '@/data/memory/general2-questions';
@@ -113,7 +110,7 @@ const Quiz = () => {
       'world-history-unit5': worldHistoryUnit5Questions, 'world-history-unit6': worldHistoryUnit6Questions,
       'world-history-unit7': worldHistoryUnit7Questions, 'world-history-unit8': worldHistoryUnit8Questions,
       'world-history-unit9': worldHistoryUnit9Questions, 'world-history-unit10': worldHistoryUnit10Questions,
-      'world-history-unit11': worldHistoryUnit11Questions, 'world-history-kohl-prehistory': prehistoryQuestions, 'world-history-kohl-renreform': renreformQuestions, 
+      'world-history-unit11': worldHistoryUnit11Questions, 
       'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions, 'practice-unit1': unit1Questions, 'practice-gas': practiceGasQuestions,
       'practice-log': logQuestions,
       // Note: chemistryDarone, world-history-kohl,

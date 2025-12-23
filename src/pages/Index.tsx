@@ -86,19 +86,6 @@ const Index = () => {
     { id: 'unit11', name: 'Unit 11 (Not Updated)' },
   ];
 
-  const worldHistoryKohlUnits = [
-    { id: 'unit1', name: 'Prehistory' },
-    { id: 'unit2', name: 'Religions (Not Updated)' },
-    { id: 'unit3', name: 'Renaissance and Reformation' },
-    { id: 'unit4', name: 'Unit 4' },
-    { id: 'unit5', name: 'Unit 5' },
-    { id: 'unit6', name: 'Unit 6' },
-    { id: 'unit7', name: 'Unit 7' },
-    { id: 'unit8', name: 'Unit 8' },
-    { id: 'unit9', name: 'Unit 9' },
-    { id: 'unit10', name: 'Unit 10' },
-    { id: 'unit11', name: 'Unit 11' },
-  ];
 
   const memoryUnits = [
     { id: 'general', name: 'Polyatomic Ions - Chemistry' },
@@ -327,37 +314,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* World History Kohl Section */}
-        <div className="max-w-6xl mx-auto mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-4">
-              <div className="inline-flex items-center justify-center w-12 h-12 bg-destructive/10 rounded-lg">
-                <Landmark className="w-6 h-6 text-destructive" />
-              </div>
-              <h2 className="text-2xl font-bold text-destructive">World History (Kohl)</h2>
-            </div>
-            <Button
-              onClick={() => navigate('/course-challenge/world-history-kohl')}
-              variant="outline"
-              className="border-destructive text-destructive hover:bg-destructive hover:text-white"
-            >
-              Course Challenge
-            </Button>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {worldHistoryKohlUnits.map((unit) => (
-              <Card
-                key={unit.id}
-                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-destructive group"
-                onClick={() => navigate(`/unit/world-history-kohl/${unit.id}`)}
-              >
-                <div className="text-center">
-                  <p className="text-sm font-medium text-muted-foreground">{unit.name}</p>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </div>
 
         {/* APUSH Section */}
         <div className="max-w-6xl mx-auto mb-16">
