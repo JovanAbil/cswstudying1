@@ -32,6 +32,7 @@ export interface QuizAttempt {
   userAnswer: string | null;
   isCorrect: boolean | null;
   selfGraded?: boolean;
+  skipped?: boolean;
 }
 
 export interface QuizState {
@@ -39,4 +40,27 @@ export interface QuizState {
   attempts: QuizAttempt[];
   isSubmitted: boolean;
   isComplete: boolean;
+}
+
+// Homework Assignment Types
+export interface HomeworkAssignment {
+  id: string;
+  name: string;
+  notes?: string; // Markdown or plain text notes for the assignment
+}
+
+export interface UnitContent {
+  assignments: HomeworkAssignment[];
+  testId?: string; // Reference to the test question set
+}
+
+// Wrong answers storage for targeted practice
+export interface WrongAnswer {
+  questionId: string;
+  question: Question;
+  timestamp: number;
+}
+
+export interface SubjectWrongAnswers {
+  [unitId: string]: WrongAnswer[];
 }

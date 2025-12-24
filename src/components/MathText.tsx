@@ -49,8 +49,18 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
     );
   }
 
+  // Convert infinity symbols
+  processed = processed.replace(/∞/g, '$\\infty$');
+  processed = processed.replace(/-∞/g, '$-\\infty$');
+  
+  // Convert ≤ and ≥ symbols
+  processed = processed.replace(/≤/g, '$\\leq$');
+  processed = processed.replace(/≥/g, '$\\geq$');
+  processed = processed.replace(/<=/g, '$\\leq$');
+  processed = processed.replace(/>=/g, '$\\geq$');
+
   // Convert limits: lim_x-->a or lim_x-->∞ to LaTeX
-  processed = processed.replace(/lim_([a-zA-Z])-->(-?∞|infinity|[^\s]+)/gi, (match, variable, approach) => {
+  processed = processed.replace(/lim_([a-zA-Z])-->(-?∞|infinity|-?\d+|[^\s,]+)/gi, (match, variable, approach) => {
     let approachValue = approach;
     if (approach.toLowerCase() === 'infinity') approachValue = '\\infty';
     else if (approach === '∞') approachValue = '\\infty';
@@ -61,6 +71,13 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
+  // Convert sqrt patterns: sqrt(x) → \sqrt{x}
+  processed = processed.replace(/sqrt\(([^)]+)\)/gi, (match, content) => {
+    const sqrt = `$\\sqrt{${content}}$`;
+    latexBlocks.push(sqrt);
+    return `__LATEX_${latexBlocks.length - 1}__`;
+  });
+
   // Convert rational functions: (a+b)/(c+d) → \frac{a+b}{c+d}
   processed = processed.replace(/\(([^()]+)\)\/\(([^()]+)\)/g, (match, numerator, denominator) => {
     const frac = `$\\frac{${numerator}}{${denominator}}$`;
@@ -68,22 +85,51 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
-  // Superscripts like x^2 → x^{2}
-  processed = processed.replace(/([a-zA-Z0-9)}\]])\^([a-zA-Z0-9({\[]+|\([^)]+\))/g, (match, base, exp) => {
-    return `$${base}^{${exp}}$`;
+  // Convert simple fractions like 1/2, 1x/4, -1x^2/4 → \frac{...}{...}
+  processed = processed.replace(/(-?[\da-zA-Z\^\{\}]+)\/(\d+)/g, (match, numerator, denominator) => {
+    // Skip if it's part of a URL or similar
+    if (match.includes('http') || match.includes('://')) return match;
+    const frac = `$\\frac{${numerator}}{${denominator}}$`;
+    latexBlocks.push(frac);
+    return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
-  // Convert log/ln to LaTeX
-  const functions = ['log', 'ln'];
-  functions.forEach(func => {
-    const regex = new RegExp(`\\b${func}\\s*\\(`, 'gi');
-    processed = processed.replace(regex, `$\\${func}($`);
+  // Convert polynomial expressions with exponents: x^2, x^3, etc.
+  // Handle patterns like 2x^2, -3x^3+5x^2, etc.
+  processed = processed.replace(/([a-zA-Z])\^(\d+)/g, (match, base, exp) => {
+    const superscript = `$${base}^{${exp}}$`;
+    latexBlocks.push(superscript);
+    return `__LATEX_${latexBlocks.length - 1}__`;
   });
+
+  // Convert expressions with parenthetical exponents like (x+2)^2
+  processed = processed.replace(/\(([^()]+)\)\^(\d+)/g, (match, base, exp) => {
+    const superscript = `$(${base})^{${exp}}$`;
+    latexBlocks.push(superscript);
+    return `__LATEX_${latexBlocks.length - 1}__`;
+  });
+
+  // Convert log/ln to LaTeX with proper formatting
+  processed = processed.replace(/\blog\s*\(/gi, '$\\log($');
+  processed = processed.replace(/\bln\s*\(/gi, '$\\ln($');
+
+  // Convert union symbols
+  processed = processed.replace(/\s+U\s+/g, ' $\\cup$ ');
+
+  // Convert interval notation with infinity
+  processed = processed.replace(/\(-∞,/g, '$(-\\infty,$');
+  processed = processed.replace(/,\s*∞\)/g, '$, \\infty)$');
+
+  // Convert pi symbol
+  processed = processed.replace(/\bpi\b/gi, '$\\pi$');
 
   // Restore stored LaTeX blocks
   latexBlocks.forEach((block, index) => {
     processed = processed.replace(`__LATEX_${index}__`, block);
   });
+
+  // Clean up consecutive dollar signs from multiple replacements
+  processed = processed.replace(/\$\s*\$/g, ' ');
 
   return processed;
 };
@@ -111,7 +157,7 @@ const MathText = ({ children, className = '', tag = 'span', enableChemistry = fa
           } catch {
             span.textContent = part;
           }
-          containerRef.current.appendChild(span);
+          containerRef.current?.appendChild(span);
         } else if (part.startsWith('$') && part.endsWith('$')) {
           const span = document.createElement('span');
           span.className = 'math-inline';
@@ -124,13 +170,13 @@ const MathText = ({ children, className = '', tag = 'span', enableChemistry = fa
           } catch {
             span.textContent = part;
           }
-          containerRef.current.appendChild(span);
+          containerRef.current?.appendChild(span);
         } else if (part) {
-          containerRef.current.appendChild(document.createTextNode(part));
+          containerRef.current?.appendChild(document.createTextNode(part));
         }
       });
     }
-  }, [children]);
+  }, [children, enableChemistry]);
 
   const Tag = tag as any;
   return <Tag ref={containerRef} className={className} />;
