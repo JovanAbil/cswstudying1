@@ -236,7 +236,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-20",
     "type": "free-response",
-    "question": "The function p is a polynomial function of degree 3. Zeros of p include -2 abd 1+sqrt(3). Write a possible expression for p(x) in standard form.",
+    "question": "The function p is a polynomial function of degree 3. Zeros of p include -2 and 1+sqrt(3). Write a possible expression for p(x) in standard form.",
     "correctAnswer": "p(x) = x^3 - 6x - 4",
     "explanation": ""
   },
