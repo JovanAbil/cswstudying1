@@ -4,11 +4,12 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Unit from "./pages/Unit";
+import UnitDetail from "./pages/UnitDetail";
 import Quiz from "./pages/Quiz";
 import Results from "./pages/Results";
 import NotFound from "./pages/NotFound";
 import CourseChallenge from "./pages/CourseChallenge";
+import ViewAllQuestions from "./pages/ViewAllQuestions";
 import MathCategory from "./pages/categories/MathCategory";
 import EnglishCategory from "./pages/categories/EnglishCategory";
 import ScienceCategory from "./pages/categories/ScienceCategory";
@@ -31,7 +32,8 @@ const App = () => {
             <Route path="/category/science" element={<ScienceCategory />} />
             <Route path="/category/social" element={<SocialCategory />} />
             <Route path="/category/other" element={<OtherCategory />} />
-            <Route path="/unit/:subject/:unitId" element={<Unit />} />
+            <Route path="/unit/:subject/:unitId" element={<UnitDetail />} />
+            <Route path="/unit/:subject/:unitId/view-all" element={<ViewAllQuestions />} />
             <Route path="/unit/:subject/:unitId/quiz/:quizType" element={<Quiz />} />
             <Route path="/course-challenge/:subject" element={<CourseChallenge />} />
             <Route path="/quiz/:subject/:unitId/:quizType" element={<Quiz />} />
