@@ -236,14 +236,14 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-20",
     "type": "free-response",
-    "question": "The function p is a polynomial function of degree 3. Zeros of p include -2 and 1+sqrt(3). Write a possible expression for p(x) in standard form.",
+    "question": "The function p is a polynomial function of degree 3. Zeros of p include -2 abd 1+sqrt(3). Write a possible expression for p(x) in standard form.",
     "correctAnswer": "p(x) = x^3 - 6x - 4",
     "explanation": ""
   },
   {
     "id": "polynomial-21",
     "type": "multiple-choice",
-    "question": "[Calculator] The function f is 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. Which of the following values of x is a zero of f?",
+    "question": "[Calculator] The function f is given below, where -1 <= x <= 3. Which of the following values of x is a zero of f?",
     "options": [
       { "label": "A", "value": "A", "text": "0.248", },
       { "label": "B", "value": "B", "text": "1.210", },
@@ -256,7 +256,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-22",
     "type": "multiple-choice",
-    "question": "[Calculator] The function f is 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. On which of the following intervals is f decreasing?",
+    "question": "[Calculator] The function f is given below, where -1 <= x <= 3. On whihc of the following intervals is f decreasing?",
     "options": [
       { "label": "A", "value": "A", "text": "(-0.381, 1.210)", },
       { "label": "B", "value": "B", "text": "(0.248, 1.679)", },
@@ -269,7 +269,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-23",
     "type": "multiple-choice",
-    "question": "[Calculator] The function f is 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. Which of the following statements about the graph of f is correct?",
+    "question": "[Calculator] The function f is given below, where -1 <= x <= 3. Which of the following statements about the graph of f is correct?",
     "options": [
       { "label": "A", "value": "A", "text": "The graph of f has one distinct real zero and one local extremum on the interval -1 < x < 3.", },
       { "label": "B", "value": "B", "text": "The graph of f has one distinct real zero and two local extrema on the interval -1 < x < 3.", },
@@ -282,7 +282,7 @@ export const polynomialQuestions: Question[] = [
   {
     "id": "polynomial-24",
     "type": "multiple-choice",
-    "question": "[Calculator] The function f is 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. Which of the following values of x is an inflection point of f?",
+    "question": "[Calculator] The function f is given below, where -1 <= x <= 3. Which of the following values of x is an inflection point of f?",
     "options": [
       { "label": "A", "value": "A", "text": "-8.221", },
       { "label": "B", "value": "B", "text": ".964", },
