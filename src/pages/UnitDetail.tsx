@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, BookOpen, FileText, Brain, ExternalLink, Eye } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Eye, Brain } from 'lucide-react';
 import { unitStudyResources } from '@/data/study-resources';
 
 const UnitDetail = () => {
@@ -16,6 +16,7 @@ const UnitDetail = () => {
     if (subject.includes('biology') || subject.includes('chemistry')) return '/category/science';
     if (subject === 'world-history') return '/category/social';
     if (subject === 'memory') return '/category/other';
+    if (subject === 'stock') return '/stock';
     return '/';
   };
 
@@ -59,34 +60,6 @@ const UnitDetail = () => {
 
           <h2 className="text-2xl font-display font-bold mb-4 mt-8">Practice Modes</h2>
           <div className="grid gap-6">
-            <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary"
-              onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/daily`)}>
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-secondary/20 rounded-lg"><BookOpen className="h-8 w-8 text-secondary" /></div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-semibold mb-2">Daily Practice</h3>
-                  <p className="text-muted-foreground mb-4">Quick practice with 10 questions</p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span>⏱️ ~15 min</span><span>📝 10 questions</span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
-            <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-accent"
-              onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/full`)}>
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-accent/20 rounded-lg"><FileText className="h-8 w-8 text-accent" /></div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-semibold mb-2">Full Test</h3>
-                  <p className="text-muted-foreground mb-4">Comprehensive assessment</p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span>⏱️ ~45 min</span><span>📝 30 questions</span>
-                  </div>
-                </div>
-              </div>
-            </Card>
-
             <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary"
               onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/cram`)}>
               <div className="flex items-start gap-4">

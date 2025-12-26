@@ -15,6 +15,7 @@ import EnglishCategory from "./pages/categories/EnglishCategory";
 import ScienceCategory from "./pages/categories/ScienceCategory";
 import SocialCategory from "./pages/categories/SocialCategory";
 import OtherCategory from "./pages/categories/OtherCategory";
+import StockPage from "./pages/StockPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/stock" element={<StockPage />} />
             <Route path="/category/math" element={<MathCategory />} />
             <Route path="/category/english" element={<EnglishCategory />} />
             <Route path="/category/science" element={<ScienceCategory />} />

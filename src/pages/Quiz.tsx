@@ -184,11 +184,27 @@ const Quiz = () => {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      // Number keys 1-9 for selecting options
+      if (!isSubmitted && currentQuestion?.type === 'multiple-choice') {
+        const keyNum = parseInt(e.key);
+        if (keyNum >= 1 && keyNum <= shuffledOptions.length) {
+          setCurrentAnswer(shuffledOptions[keyNum - 1].value);
+          return;
+        }
+      }
+
       if (e.key === 'Enter') {
         if (!isSubmitted) {
           handleSubmit();
         } else if (currentQuestion.type === 'multiple-choice' || currentAttempt.isCorrect !== null) {
           handleNext();
+        }
+      }
+      
+      // 's' key for skip
+      if (e.key === 's' || e.key === 'S') {
+        if (!isSubmitted) {
+          handleSkip();
         }
       }
       
@@ -203,7 +219,7 @@ const Quiz = () => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [isSubmitted, currentAnswer, currentQuestion, currentAttempt, currentIndex, showGrading]);
+  }, [isSubmitted, currentAnswer, currentQuestion, currentAttempt, currentIndex, showGrading, shuffledOptions]);
 
   const handleSubmit = () => {
     if (!currentAnswer.trim()) {
@@ -234,6 +250,42 @@ const Quiz = () => {
     newAttempts[currentIndex].isCorrect = isCorrect;
     setAttempts(newAttempts);
     setShowGrading(false);
+  };
+
+  const handleSkip = () => {
+    const newAttempts = [...attempts];
+    newAttempts[currentIndex] = {
+      ...newAttempts[currentIndex],
+      userAnswer: 'SKIPPED',
+      isCorrect: false
+    };
+    setAttempts(newAttempts);
+    
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      setCurrentAnswer('');
+      setIsSubmitted(false);
+      setShowGrading(false);
+      setShuffledOptions([]);
+    } else {
+      const finalTime = timer.stop();
+      const score = newAttempts.filter(a => a.isCorrect).length;
+      const total = newAttempts.length;
+      navigate('/results', { 
+        state: { 
+          score, 
+          total,
+          subject,
+          unitId, 
+          quizType,
+          timeElapsed: finalTime,
+          attempts: newAttempts.map((a, i) => ({
+            ...a,
+            question: questions[i]
+          }))
+        } 
+      });
+    }
   };
 
   const handleNext = () => {
@@ -327,7 +379,7 @@ const Quiz = () => {
               disabled={isSubmitted}
               className="space-y-3"
             >
-              {shuffledOptions.map((option) => (
+              {shuffledOptions.map((option, index) => (
                 <div
                   key={option.value}
                   className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all ${
@@ -340,11 +392,11 @@ const Quiz = () => {
                 >
                   <RadioGroupItem value={option.value} id={option.value} />
                   <Label htmlFor={option.value} className="flex-1 cursor-pointer">
-                    <span className="font-semibold mr-2">{option.label})</span>
+                    <span className="font-semibold mr-2 text-muted-foreground">{index + 1}.</span>
                     {option.image ? (
                       <img 
                         src={option.image} 
-                        alt={`Option ${option.label}`}
+                        alt={`Option ${index + 1}`}
                         className="max-w-md max-h-64 w-auto h-auto object-contain rounded border border-border mt-2"
                       />
                     ) : (
@@ -413,9 +465,14 @@ const Quiz = () => {
 
           <div className="mt-8 flex gap-4">
             {!isSubmitted ? (
-              <Button onClick={handleSubmit} className="flex-1" size="lg">
-                Submit Answer
-              </Button>
+              <>
+                <Button onClick={handleSkip} variant="outline" size="lg" className="border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground">
+                  Skip (S)
+                </Button>
+                <Button onClick={handleSubmit} className="flex-1" size="lg">
+                  Submit Answer
+                </Button>
+              </>
             ) : (
               <Button 
                 onClick={handleNext} 
