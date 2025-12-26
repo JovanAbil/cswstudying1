@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { Question, QuizAttempt } from '@/types/quiz';
 import QuestionTable from '@/components/QuestionTable';
 import MathText from '@/components/MathText';
+import useWrongAnswers from '@/hooks/useWrongAnswers';
 
 interface ExtendedAttempt extends QuizAttempt {
   question: Question;
@@ -16,13 +17,27 @@ interface ExtendedAttempt extends QuizAttempt {
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { addWrongAnswers } = useWrongAnswers();
   const { score, total, subject, unitId, quizType, attempts, timeElapsed } = location.state || {};
 
   useEffect(() => {
     if (!location.state) {
       navigate('/');
+      return;
     }
-  }, [location.state, navigate]);
+
+    // Save wrong answers to localStorage
+    if (attempts && subject) {
+      const extAttempts = attempts as ExtendedAttempt[];
+      const wrongQuestions = extAttempts
+        .filter(a => !a.isCorrect)
+        .map(a => a.question);
+      
+      if (wrongQuestions.length > 0) {
+        addWrongAnswers(subject, unitId || 'course-challenge', wrongQuestions);
+      }
+    }
+  }, [location.state, navigate, attempts, subject, unitId, addWrongAnswers]);
 
   if (!location.state) {
     return null;

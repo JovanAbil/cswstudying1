@@ -65,9 +65,28 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
     if (approach.toLowerCase() === 'infinity') approachValue = '\\infty';
     else if (approach === '∞') approachValue = '\\infty';
     else if (approach === '-∞') approachValue = '-\\infty';
+    else if (approach === '-infinity') approachValue = '-\\infty';
 
     const limit = `$\\lim_{${variable} \\to ${approachValue}}$`;
     latexBlocks.push(limit);
+    return `__LATEX_${latexBlocks.length - 1}__`;
+  });
+
+  // Fix already-formatted LaTeX limits that didn't render properly
+  // Match patterns like: \lim_{x \to -\infty} f(x) = -
+  processed = processed.replace(/\\lim_\{([^}]+)\s*\\to\s*([^}]+)\}/g, (match, variable, approach) => {
+    const limit = `$\\lim_{${variable} \\to ${approach}}$`;
+    latexBlocks.push(limit);
+    return `__LATEX_${latexBlocks.length - 1}__`;
+  });
+  
+  // Fix standalone \infty and -\infty
+  processed = processed.replace(/\\infty(?![^$]*\$)/g, (match) => {
+    latexBlocks.push('$\\infty$');
+    return `__LATEX_${latexBlocks.length - 1}__`;
+  });
+  processed = processed.replace(/-\\infty(?![^$]*\$)/g, (match) => {
+    latexBlocks.push('$-\\infty$');
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
