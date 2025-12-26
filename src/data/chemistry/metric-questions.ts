@@ -399,7 +399,7 @@ export const metricQuestions: Question[] = [
       { "label": "C", "value": "C", "text": "I. gas II. liquid III. solid", },
       { "label": "D", "value": "D", "text": "I. gas II. solid III. liquid", }
     ],
-    correctAnswer: 'B',
+    correctAnswer: 'D',
     explanation: 'N/A'
   },
   {
