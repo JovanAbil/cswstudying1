@@ -223,7 +223,7 @@ export const exponentialQuestions: Question[] = [
     id: "exponential-17",
     type: "multiple-choice",
     image: "/images/apprecalc/exponential13.png",
-    question: "The graph of piecewise-linear function h is shown in the figure. Values of the decreasing function k are given in the table above for selected values of x. k^-1(h(3)) = ",
+    question: "The graph of piecewise-linear function h is shown in the figure. Values of the decreasing function k are given in the table above for selected values of x. k^-1(h(-3)) = ",
     options: [
       { "label": "A", "value": "A", "text": "-8" },
       { "label": "B", "value": "B", "text": "2" },
