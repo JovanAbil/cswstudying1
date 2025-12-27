@@ -1,30 +1,32 @@
-import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Eye, Brain, Lock } from 'lucide-react';
+import { ArrowLeft, Eye, Brain, Lock, Trophy, Target } from 'lucide-react';
+import useWrongAnswers from '@/hooks/useWrongAnswers';
+
+// Import question files
+import { basicsQuestions } from '@/data/stock/basics-questions';
 
 // Personal units - add your units here
 const stockUnits = [
   {
     id: 'basics',
     name: 'Basics',
-    subject: 'basics',
-    questionCount: 13,
-    enabled: true,
+    questionCount: basicsQuestions.length,
   },
   // Add more units as needed:
   // {
-  //   id: 'stock-myunit',
-  //   name: 'My Custom Unit',
-  //   subject: 'stock',
-  //   questionCount: 25,
-  //   enabled: true,
+  //   id: 'technical-analysis',
+  //   name: 'Technical Analysis',
+  //   questionCount: technicalQuestions.length,
   // },
 ];
 
 const StockPage = () => {
   const navigate = useNavigate();
+  const { getWrongAnswerCount, getAllWrongQuestionsForSubject } = useWrongAnswers();
+  
+  const wrongCount = getWrongAnswerCount('stock');
 
   return (
     <div className="min-h-screen bg-background">
@@ -48,43 +50,58 @@ const StockPage = () => {
           </div>
         </div>
 
+        {/* Actions Row */}
+        <div className="flex gap-2 flex-wrap mb-6">
+          {wrongCount > 0 && (
+            <Button
+              onClick={() => navigate(`/quiz/stock/wrong/cram`, { 
+                state: { wrongQuestions: getAllWrongQuestionsForSubject('stock') } 
+              })}
+              variant="outline"
+              className="border-destructive text-destructive hover:bg-destructive hover:text-destructive-foreground"
+            >
+              <Target className="mr-2 h-4 w-4" />
+              Targeted Practice ({wrongCount})
+            </Button>
+          )}
+          <Button
+            onClick={() => navigate(`/course-challenge/stock`)}
+            variant="outline"
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <Trophy className="mr-2 h-4 w-4" />
+            Course Challenge
+          </Button>
+        </div>
+
+        {wrongCount === 0 && (
+          <Card className="p-4 mb-6 border-dashed bg-muted/30">
+            <p className="text-sm text-muted-foreground text-center">
+              No targeted practice available yet - complete some quizzes first!
+            </p>
+          </Card>
+        )}
+
         <div className="mb-12">
           <h2 className="text-2xl font-display font-bold mb-6">Your Units</h2>
           {stockUnits.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {stockUnits.map((unit) => (
                 <Card
                   key={unit.id}
-                  className={`p-6 border-2 transition-all ${
-                    unit.enabled 
-                      ? 'hover:shadow-lg hover:scale-105 cursor-pointer hover:border-primary' 
-                      : 'opacity-50 cursor-not-allowed'
-                  }`}
-                  onClick={() => unit.enabled && navigate(`/unit/${unit.subject}/${unit.id}`)}
+                  className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-primary group"
+                  onClick={() => navigate(`/unit/stock/${unit.id}`)}
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/20 rounded-lg">
-                      <Brain className="h-6 w-6 text-primary" />
+                  <div className="flex items-start gap-3">
+                    <div className="p-2 bg-primary/20 rounded-lg">
+                      <Brain className="h-5 w-5 text-primary" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-semibold mb-1">{unit.name}</h3>
-                      <p className="text-sm text-muted-foreground">
-                        {unit.enabled ? `${unit.questionCount} questions` : 'Not yet configured'}
+                      <h3 className="text-sm font-semibold mb-1 group-hover:text-foreground">{unit.name}</h3>
+                      <p className="text-xs text-muted-foreground">
+                        {unit.questionCount} questions
                       </p>
                     </div>
-                    {unit.enabled && (
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          navigate(`/unit/${unit.subject}/${unit.id}/view-all`);
-                        }}
-                      >
-                        <Eye className="h-4 w-4 mr-1" />
-                        View All
-                      </Button>
-                    )}
                   </div>
                 </Card>
               ))}
@@ -102,10 +119,11 @@ const StockPage = () => {
         <Card className="p-6 bg-muted/50">
           <h3 className="text-lg font-semibold mb-3">How to Add Personal Units</h3>
           <ol className="list-decimal list-inside space-y-2 text-sm text-muted-foreground">
-            <li>Create a new question file in <code className="bg-background px-1 rounded">src/data/stock/</code></li>
-            <li>Add the unit to the <code className="bg-background px-1 rounded">stockUnits</code> array in this file</li>
-            <li>Add the question mapping in <code className="bg-background px-1 rounded">Quiz.tsx</code></li>
-            <li>Set <code className="bg-background px-1 rounded">enabled: true</code> when ready</li>
+            <li>Create a new question file in <code className="bg-background px-1 rounded">src/data/stock/</code> (e.g., <code className="bg-background px-1 rounded">myunit-questions.ts</code>)</li>
+            <li>Export your questions array (follow the format in <code className="bg-background px-1 rounded">basics-questions.ts</code>)</li>
+            <li>Import your questions at the top of this file</li>
+            <li>Add your unit to the <code className="bg-background px-1 rounded">stockUnits</code> array</li>
+            <li>Add the mapping in <code className="bg-background px-1 rounded">Quiz.tsx</code> questionMap: <code className="bg-background px-1 rounded">'stock-myunit': myUnitQuestions</code></li>
           </ol>
         </Card>
       </div>

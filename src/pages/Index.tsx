@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight } from 'lucide-react';
+import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown } from 'lucide-react';
 
 const categories = [
   {
@@ -45,6 +45,14 @@ const categories = [
   },
 ];
 
+const controls = [
+  { key: '1-5', description: 'Select answer option (1 for first, 2 for second, etc.)' },
+  { key: 'Enter', description: 'Submit answer / Move to next question' },
+  { key: 'S', description: 'Skip question (marks as wrong)' },
+  { key: '← Arrow', description: 'Mark free response as incorrect' },
+  { key: '→ Arrow', description: 'Mark free response as correct' },
+];
+
 const Index = () => {
   const navigate = useNavigate();
 
@@ -62,9 +70,14 @@ const Index = () => {
               Master your classes at CSW with interactive practice tests and daily exercises. 
               Choose a subject category to get started.
             </p>
-            <p className="text-sm text-muted-foreground/70">
+            <p className="text-sm text-muted-foreground/70 mb-4">
               Reach out to abilash.jovan@charterschool.org with question banks to add new courses!
             </p>
+            <div className="flex items-center justify-center gap-2 text-primary font-medium animate-bounce">
+              <ArrowDown className="h-5 w-5" />
+              <span>Scroll down to see how to use the website</span>
+              <ArrowDown className="h-5 w-5" />
+            </div>
           </div>
         </div>
       </div>
@@ -99,24 +112,73 @@ const Index = () => {
         <div className="mt-16 max-w-4xl mx-auto">
           <div className="grid md:grid-cols-3 gap-6">
             <Card className="p-6 bg-science/5 border-science/20 animate-fade-in" style={{ animationDelay: '0.5s' }}>
-              <h3 className="text-lg font-display font-semibold mb-2 text-science">📚 Daily Practice</h3>
+              <h3 className="text-lg font-display font-semibold mb-2 text-science">📚 Cram Study</h3>
               <p className="text-sm text-muted-foreground">
-                Quick 10-question sessions to keep your skills sharp
+                Practice ALL questions in a unit to master the material
               </p>
             </Card>
             <Card className="p-6 bg-english/5 border-english/20 animate-fade-in" style={{ animationDelay: '0.6s' }}>
-              <h3 className="text-lg font-display font-semibold mb-2 text-english">📝 Full Tests</h3>
+              <h3 className="text-lg font-display font-semibold mb-2 text-english">📝 View All Questions</h3>
               <p className="text-sm text-muted-foreground">
-                Comprehensive 30-question tests for thorough review
+                Browse questions with IDs without taking a test
               </p>
             </Card>
             <Card className="p-6 bg-math/5 border-math/20 animate-fade-in" style={{ animationDelay: '0.7s' }}>
-              <h3 className="text-lg font-display font-semibold mb-2 text-math">🏆 Course Challenge</h3>
+              <h3 className="text-lg font-display font-semibold mb-2 text-math">🎯 Targeted Practice</h3>
               <p className="text-sm text-muted-foreground">
-                Test across multiple units to prepare for exams
+                Review questions you got wrong on previous attempts
               </p>
             </Card>
           </div>
+        </div>
+
+        {/* Controls Section */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <Card className="p-8 border-2 border-primary/20 bg-primary/5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-primary/20 rounded-lg">
+                <Keyboard className="h-6 w-6 text-primary" />
+              </div>
+              <h2 className="text-2xl font-display font-bold">Keyboard Controls</h2>
+            </div>
+            <p className="text-muted-foreground mb-6">
+              Use these keyboard shortcuts during quizzes to navigate quickly:
+            </p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {controls.map((control, index) => (
+                <div key={index} className="flex items-center gap-4 p-3 bg-background rounded-lg border">
+                  <kbd className="px-3 py-2 bg-muted rounded-md font-mono text-sm font-semibold min-w-[80px] text-center">
+                    {control.key}
+                  </kbd>
+                  <span className="text-sm text-muted-foreground">{control.description}</span>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        {/* How to Use Section */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <Card className="p-8 border-2 border-accent/20 bg-accent/5">
+            <h2 className="text-2xl font-display font-bold mb-6">How to Use Practice Hub</h2>
+            <ol className="space-y-4 list-decimal list-inside text-muted-foreground">
+              <li className="leading-relaxed">
+                <span className="font-semibold text-foreground">Choose a Category</span> - Click on Math, Science, or any subject area above
+              </li>
+              <li className="leading-relaxed">
+                <span className="font-semibold text-foreground">Select a Subject</span> - Pick the specific course (e.g., AP Precalculus, Chemistry)
+              </li>
+              <li className="leading-relaxed">
+                <span className="font-semibold text-foreground">Pick a Unit</span> - Click on a unit to see practice options
+              </li>
+              <li className="leading-relaxed">
+                <span className="font-semibold text-foreground">Start Practicing</span> - Choose "Cram Study" for all questions or "View All Questions" to browse
+              </li>
+              <li className="leading-relaxed">
+                <span className="font-semibold text-foreground">Review Mistakes</span> - Use "Targeted Practice" to review questions you got wrong
+              </li>
+            </ol>
+          </Card>
         </div>
       </div>
     </div>

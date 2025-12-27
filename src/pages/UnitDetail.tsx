@@ -1,14 +1,16 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, ExternalLink, Eye, Brain } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Eye, Brain, FileText, BookOpen, ClipboardList } from 'lucide-react';
 import { unitStudyResources } from '@/data/study-resources';
+import { unitAssignments } from '@/data/assignments/unit-assignments';
 
 const UnitDetail = () => {
   const { subject, unitId } = useParams();
   const navigate = useNavigate();
   const resourceKey = `${subject}-${unitId}`;
   const studyResources = unitStudyResources[resourceKey] || [];
+  const unitContent = unitAssignments[resourceKey];
 
   const getCategoryPath = () => {
     if (!subject) return '/';
@@ -47,6 +49,7 @@ const UnitDetail = () => {
             </Card>
           )}
 
+          {/* View All Questions */}
           <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-accent group bg-accent/5"
             onClick={() => navigate(`/unit/${subject}/${unitId}/view-all`)}>
             <div className="flex items-start gap-4">
@@ -58,22 +61,65 @@ const UnitDetail = () => {
             </div>
           </Card>
 
+          {/* Cram Study */}
           <h2 className="text-2xl font-display font-bold mb-4 mt-8">Practice Modes</h2>
-          <div className="grid gap-6">
-            <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary"
-              onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/cram`)}>
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/20 rounded-lg"><Brain className="h-8 w-8 text-primary" /></div>
-                <div className="flex-1">
-                  <h3 className="text-2xl font-semibold mb-2">Cram Study</h3>
-                  <p className="text-muted-foreground mb-4">Practice ALL questions</p>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <span>⏱️ Variable</span><span>📝 All questions</span>
-                  </div>
+          <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary mb-8"
+            onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/cram`)}>
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-primary/20 rounded-lg"><Brain className="h-8 w-8 text-primary" /></div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-semibold mb-2">Cram Study</h3>
+                <p className="text-muted-foreground mb-4">Practice ALL questions</p>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span>⏱️ Variable</span><span>📝 All questions</span>
                 </div>
               </div>
-            </Card>
-          </div>
+            </div>
+          </Card>
+
+          {/* Homework Assignments Section */}
+          {unitContent && unitContent.assignments.length > 0 && (
+            <>
+              <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2">
+                <ClipboardList className="h-6 w-6" /> Homework Assignments
+              </h2>
+              <div className="grid gap-4 mb-8">
+                {unitContent.assignments.map((assignment) => (
+                  <Card key={assignment.id} className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-english bg-english/5"
+                    onClick={() => navigate(`/unit/${subject}/${unitId}/assignment/${assignment.id}/quiz/cram`)}>
+                    <div className="flex items-start gap-4">
+                      <div className="p-3 bg-english/20 rounded-lg"><FileText className="h-6 w-6 text-english" /></div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold mb-1">{assignment.name}</h3>
+                        {assignment.notes && (
+                          <p className="text-muted-foreground text-sm">{assignment.notes}</p>
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </>
+          )}
+
+          {/* Notes Section */}
+          {unitContent && unitContent.assignments.some(a => a.notes) && (
+            <>
+              <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2">
+                <BookOpen className="h-6 w-6" /> Study Notes
+              </h2>
+              <Card className="p-6 mb-8 bg-science/5 border-science/20 cursor-pointer hover:shadow-lg"
+                onClick={() => navigate(`/unit/${subject}/${unitId}/notes`)}>
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-science/20 rounded-lg"><BookOpen className="h-6 w-6 text-science" /></div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold mb-1">View All Notes & Rules</h3>
+                    <p className="text-muted-foreground text-sm">Study guide for this unit</p>
+                  </div>
+                </div>
+              </Card>
+            </>
+          )}
         </div>
       </div>
     </div>

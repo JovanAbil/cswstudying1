@@ -10,6 +10,57 @@ interface MathTextProps {
   enableChemistry?: boolean;
 }
 
+// Helper to find matching parenthesis
+const findMatchingParen = (str: string, startIndex: number): number => {
+  let depth = 0;
+  for (let i = startIndex; i < str.length; i++) {
+    if (str[i] === '(') depth++;
+    else if (str[i] === ')') {
+      depth--;
+      if (depth === 0) return i;
+    }
+  }
+  return -1;
+};
+
+// Convert complex fractions with nested parentheses
+const convertComplexFraction = (text: string): { result: string; found: boolean } => {
+  // Look for pattern: (...)/(...) where parentheses can be nested
+  let i = 0;
+  let result = text;
+  let found = false;
+  
+  while (i < result.length) {
+    if (result[i] === '(' ) {
+      const numStart = i;
+      const numEnd = findMatchingParen(result, i);
+      
+      if (numEnd !== -1 && numEnd + 1 < result.length && result[numEnd + 1] === '/') {
+        // Check if followed by another parenthesized expression
+        if (numEnd + 2 < result.length && result[numEnd + 2] === '(') {
+          const denomStart = numEnd + 2;
+          const denomEnd = findMatchingParen(result, denomStart);
+          
+          if (denomEnd !== -1) {
+            const numerator = result.substring(numStart + 1, numEnd);
+            const denominator = result.substring(denomStart + 1, denomEnd);
+            
+            // Convert to LaTeX fraction
+            const latex = `$\\frac{${numerator}}{${denominator}}$`;
+            result = result.substring(0, numStart) + latex + result.substring(denomEnd + 1);
+            found = true;
+            i = numStart + latex.length;
+            continue;
+          }
+        }
+      }
+    }
+    i++;
+  }
+  
+  return { result, found };
+};
+
 // Convert common math notation to LaTeX
 const preprocessMath = (text: string, enableChemistry: boolean = false): string => {
   let processed = String(text);
@@ -73,7 +124,6 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
   });
 
   // Fix already-formatted LaTeX limits that didn't render properly
-  // Match patterns like: \lim_{x \to -\infty} f(x) = -
   processed = processed.replace(/\\lim_\{([^}]+)\s*\\to\s*([^}]+)\}/g, (match, variable, approach) => {
     const limit = `$\\lim_{${variable} \\to ${approach}}$`;
     latexBlocks.push(limit);
@@ -81,11 +131,11 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
   });
   
   // Fix standalone \infty and -\infty
-  processed = processed.replace(/\\infty(?![^$]*\$)/g, (match) => {
+  processed = processed.replace(/\\infty(?![^$]*\$)/g, () => {
     latexBlocks.push('$\\infty$');
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
-  processed = processed.replace(/-\\infty(?![^$]*\$)/g, (match) => {
+  processed = processed.replace(/-\\infty(?![^$]*\$)/g, () => {
     latexBlocks.push('$-\\infty$');
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
@@ -97,7 +147,15 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
     return `__LATEX_${latexBlocks.length - 1}__`;
   });
 
-  // Convert rational functions: (a+b)/(c+d) → \frac{a+b}{c+d}
+  // Handle complex nested fractions like (((x-2)^2)((x+3)^3))/((x-2)^3)
+  let fractionResult = convertComplexFraction(processed);
+  while (fractionResult.found) {
+    processed = fractionResult.result;
+    fractionResult = convertComplexFraction(processed);
+  }
+
+  // Convert simpler rational functions: (a+b)/(c+d) → \frac{a+b}{c+d}
+  // This handles non-nested parentheses
   processed = processed.replace(/\(([^()]+)\)\/\(([^()]+)\)/g, (match, numerator, denominator) => {
     const frac = `$\\frac{${numerator}}{${denominator}}$`;
     latexBlocks.push(frac);
@@ -114,7 +172,6 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
   });
 
   // Convert polynomial expressions with exponents: x^2, x^3, etc.
-  // Handle patterns like 2x^2, -3x^3+5x^2, etc.
   processed = processed.replace(/([a-zA-Z])\^(\d+)/g, (match, base, exp) => {
     const superscript = `$${base}^{${exp}}$`;
     latexBlocks.push(superscript);

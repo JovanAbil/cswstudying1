@@ -1,7 +1,6 @@
 import { Question } from '@/types/quiz';
 
-export const cellgrowthQuestions: Question[] = [
- [
+export const basicsQuestions: Question[] = [
   {
     id: 'basics-1',
     type: 'free-response',
@@ -47,9 +46,9 @@ export const cellgrowthQuestions: Question[] = [
   {
     id: 'basics-7',
     type: 'free-response',
-    question: 'Why doesn’t a stock immediately sell when you press sell?',
+    question: "Why doesn't a stock immediately sell when you press sell?",
     correctAnswer: 'A buyer must agree to buy it at that price',
-    explanation: 'Stocks only sell when a matching buyer accepts the seller’s price.'
+    explanation: "Stocks only sell when a matching buyer accepts the seller's price."
   },
   {
     id: 'basics-8',
@@ -93,4 +92,4 @@ export const cellgrowthQuestions: Question[] = [
     correctAnswer: 'The spread, which is the difference between the bid and the ask',
     explanation: 'The spread reflects liquidity and trading costs in the market.'
   }
-]
+];

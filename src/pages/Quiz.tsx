@@ -65,6 +65,8 @@ import { general3Questions } from '@/data/memory/general3-questions';
 import { unit1Questions } from '@/data/practice/unit1-questions';
 import { gasQuestions } from '@/data/practice/gas-questions';
 import { logQuestions } from '@/data/practice/log-questions';
+//Stock
+import { basicsQuestions } from '@/data/stock/basics-questions';
 //Others
 import { Question, QuizAttempt } from '@/types/quiz';
 import { toast } from 'sonner';
@@ -78,6 +80,7 @@ const Quiz = () => {
   const timer = useQuizTimer();
   
   const selectedUnits = useMemo(() => location.state?.selectedUnits || [], [location.state?.selectedUnits]);
+  const wrongQuestions = useMemo(() => location.state?.wrongQuestions || [], [location.state?.wrongQuestions]);
   
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -112,6 +115,7 @@ const Quiz = () => {
     'world-history-unit11': worldHistoryUnit11Questions, 
     'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions,
     'practice-unit1': unit1Questions, 'practice-gases': gasQuestions, 'practice-log': logQuestions,
+    'stock-basics': basicsQuestions,
   }), []);
 
   useEffect(() => {
@@ -120,7 +124,10 @@ const Quiz = () => {
     
     let allQuestions: Question[] = [];
     
-    if (selectedUnits.length > 0 && quizType === 'test') {
+    // Handle wrong questions from targeted practice
+    if (wrongQuestions.length > 0) {
+      allQuestions = [...wrongQuestions].sort(() => Math.random() - 0.5);
+    } else if (selectedUnits.length > 0 && quizType === 'test') {
       // Course challenge: distribute 30 questions evenly across selected units
       const numUnits = selectedUnits.length;
       const baseQuestionsPerUnit = Math.floor(totalQuestions / numUnits);
@@ -169,7 +176,7 @@ const Quiz = () => {
       timer.reset();
       timer.start();
     }
-  }, [subject, unitId, quizType, selectedUnits, questionMap]);
+  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, questionMap]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];
