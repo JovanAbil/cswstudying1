@@ -23,7 +23,7 @@ export const exponentialQuestions: Question[] = [
     options: [
       { "label": "A", "value": "A", "text": "m is increasing and the graph of m is concave up" },
       { "label": "B", "value": "B", "text": "m is increasing and the graph of m is concave down" },
-      { "label": "C", "value": "C", "text": "m is deceeasing and the graph of m is concave up" },
+      { "label": "C", "value": "C", "text": "m is decreasing and the graph of m is concave up" },
       { "label": "D", "value": "D", "text": "m is decreasing and the graph of m is concave down" }
     ],
     correctAnswer: "C",
