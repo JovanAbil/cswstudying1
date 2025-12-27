@@ -176,7 +176,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-14",
     "type": "multiple-choice",
-    "question": "A rational function k is given by k(x) = (-2((x+1)^2)(x-3)/(x-7) What are all intervals on which k(x) <= 0?",
+    "question": "A rational function k is given by k(x) = (((-2(x+1)^2))(x-3))/(x-7) What are all intervals on which k(x) <= 0?",
     "options": [
       { "label": "A", "value": "A", "text": "[3, 7)" },
       { "label": "B", "value": "B", "text": "[-1, 3] U (7, ∞)" },
