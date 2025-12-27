@@ -303,7 +303,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-26",
     "type": "free-response",
-    "question": "If f(x) = -3(x+1)^5(x-3)^2, evaluate the following limits: a) lim_x-->-∞ g(x) =  b) lim_x-->∞ g(x) = ",
+    "question": "If g(x) = -3(x+1)^5(x-3)^2, evaluate the following limits: a) lim_x-->-∞ g(x) =  b) lim_x-->∞ g(x) = ",
     "correctAnswer": "a) ∞ b) -∞",
     "explanation": "Finding the vertical asymptote using the highest degree numerator and the denominator"
   },
