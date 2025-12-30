@@ -228,7 +228,7 @@ export const metricQuestions: Question[] = [
     id: 'metric-20',
     type: 'free-response',
     question: 'Using the equivalence statements (1 cable = 100 fathom; 1 fathom = 2.0266 yd; 1 yd = 3 ft; 1 ft = 12 in; 1 in = 2.54 cm), convert 28.45 cable to centimeters.',
-    correctAnswer: '526213.5049 cm',
+    correctAnswer: '527213.5049 cm',
     explanation: ''
   },
   {
