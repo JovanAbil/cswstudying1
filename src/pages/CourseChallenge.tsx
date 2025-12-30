@@ -4,14 +4,18 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, Trophy, ExternalLink } from 'lucide-react';
+import { ArrowLeft, Trophy, ExternalLink, Wrench, Target } from 'lucide-react';
 import { toast } from 'sonner';
 import { courseChallengeResources } from '@/data/study-resources';
-
+import { useWrongAnswers } from '@/hooks/useWrongAnswers';
 const CourseChallenge = () => {
   const { subject } = useParams();
   const navigate = useNavigate();
   const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
+  const { getAllWrongQuestionsForSubject, getWrongAnswerCount } = useWrongAnswers();
+  
+  const wrongAnswers = getAllWrongQuestionsForSubject(subject || '');
+  const wrongCount = getWrongAnswerCount(subject || '');
 
   const getUnits = () => {
     switch (subject) {
@@ -230,7 +234,7 @@ const CourseChallenge = () => {
           </div>
         </Card>
 
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           <Button
             onClick={handleStartChallenge}
             className="flex-1"
@@ -247,6 +251,43 @@ const CourseChallenge = () => {
             <Trophy className="mr-2 h-4 w-4" />
             Cram Mode (All Units)
           </Button>
+        </div>
+
+        {/* Custom Practice & Targeted Practice */}
+        <div className="grid md:grid-cols-2 gap-4 mt-6">
+          <Card 
+            className="p-6 cursor-pointer hover:border-primary transition-all"
+            onClick={() => navigate(`/course-challenge/${subject}/preset-builder`)}
+          >
+            <div className="flex items-center gap-3">
+              <Wrench className="h-6 w-6 text-primary" />
+              <div>
+                <h3 className="font-semibold">Build Custom Practice</h3>
+                <p className="text-sm text-muted-foreground">
+                  Select specific questions from any unit
+                </p>
+              </div>
+            </div>
+          </Card>
+
+          {wrongCount > 0 && (
+            <Card 
+              className="p-6 cursor-pointer hover:border-destructive transition-all border-destructive/50"
+              onClick={() => navigate(`/quiz/${subject}/targeted/cram`, { 
+                state: { wrongQuestions: wrongAnswers } 
+              })}
+            >
+              <div className="flex items-center gap-3">
+                <Target className="h-6 w-6 text-destructive" />
+                <div>
+                  <h3 className="font-semibold">Targeted Practice</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Review {wrongCount} questions you got wrong
+                  </p>
+                </div>
+              </div>
+            </Card>
+          )}
         </div>
 
         <Card className="mt-8 p-6 bg-muted">

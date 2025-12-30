@@ -4,7 +4,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-1",
     "type": "multiple-choice",
-    "question": "Which of the following rational functions have a horizontal asymptote. f(x) = (3x^2+x-1)/(x^2+4)  g(x)=((x+1)(2x-3)^2)/((5x-7)^2)  h(x)= (x-4)/(x^3+x^2-6)",
+    "question": "Which of the following rational functions have a horizontal asymptote. $f(x) = \\frac{3x^2+x-1}{x^2+4}$  $g(x)=\\frac{(x+1)(2x-3)^2}{(5x-7)^2}$  $h(x)= \\frac{x-4}{x^3+x^2-6}$",
     "options": [
       { "label": "A", "value": "A", "text": "f(x) only" },
       { "label": "B", "value": "B", "text": "f(x) and g(x) only" },
@@ -17,7 +17,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-2",
     "type": "multiple-choice",
-    "question": "Let k be the rational function defined by k(x) = (((x-3)^3)((x+2)^3))/(((x-3)^2)((x+2)^4)) Which of the following statements about the graph of k is correct?",
+    "question": "Let k be the rational function defined by $k(x) = \\frac{(x-3)^3(x+2)^3}{(x-3)^2(x+2)^4}$ Which of the following statements about the graph of k is correct?",
     "options": [
       { "label": "A", "value": "A", "text": "The graph of k has a vertical asymptote at x = -2 and a hole at x = 3" },
       { "label": "B", "value": "B", "text": "The graph of k has a vertical asymptote at x = 3 and a hole at x = -2" },
@@ -70,7 +70,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-6",
     "type": "multiple-choice",
-    "question": "Use the rational function f(x) = ((2x-7)(x-2))/(x^2-5x+6). lim_x-->3⁺ f(x) = ",
+    "question": "Use the rational function $f(x) = \\frac{(2x-7)(x-2)}{x^2-5x+6}$. $\\lim_{x \\to 3^+} f(x) = $",
     "options": [
       { "label": "A", "value": "A", "text": "2" },
       { "label": "B", "value": "B", "text": "3" },
@@ -83,7 +83,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-7",
     "type": "multiple-choice",
-    "question": "Use the rational function f(x) = ((2x-7)(x-2))/(x^2-5x+6). lim_x-->-∞ f(x) = ",
+    "question": "Use the rational function $f(x) = \\frac{(2x-7)(x-2)}{x^2-5x+6}$. $\\lim_{x \\to -\\infty} f(x) = $",
     "options": [
       { "label": "A", "value": "A", "text": "2" },
       { "label": "B", "value": "B", "text": "3" },
@@ -96,7 +96,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-8",
     "type": "multiple-choice",
-    "question": "Use the rational function f(x) = ((2x-7)(x-2))/(x^2-5x+6). lim_x-->2⁻ f(x) = ",
+    "question": "Use the rational function $f(x) = \\frac{(2x-7)(x-2)}{x^2-5x+6}$. $\\lim_{x \\to 2^-} f(x) = $",
     "options": [
       { "label": "A", "value": "A", "text": "2" },
       { "label": "B", "value": "B", "text": "3" },
@@ -122,7 +122,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-10",
     "type": "multiple-choice",
-    "question": "Let g(x) = (((x-2)^2)((x+3)^3)((x-4)^2))/(((x-2)^3)((x+3)^2)) The graph of g has a zeros at which of the following values of x?",
+    "question": "Let $g(x) = \\frac{(x-2)^2(x+3)^3(x-4)^2}{(x-2)^3(x+3)^2}$ The graph of g has zeros at which of the following values of x?",
     "options": [
       { "label": "A", "value": "A", "text": "x = 4 only" },
       { "label": "B", "value": "B", "text": "x = 4 and x = -3 only" },
@@ -135,7 +135,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-11",
     "type": "multiple-choice",
-    "question": "Let k(x) = (3x^2-4x+12)/(x+2) Which of the following is the equation of the slant asymptote of the graph of k?",
+    "question": "Let $k(x) = \\frac{3x^2-4x+12}{x+2}$ Which of the following is the equation of the slant asymptote of the graph of k?",
     "options": [
       { "label": "A", "value": "A", "text": "y=3x-2" },
       { "label": "B", "value": "B", "text": "y=3x+2" },
@@ -176,7 +176,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-14",
     "type": "multiple-choice",
-    "question": "A rational function k is given by k(x) = (((-2(x+1)^2))(x-3))/(x-7) What are all intervals on which k(x) <= 0?",
+    "question": "A rational function k is given by $k(x) = \\frac{-2(x+1)^2(x-3)}{x-7}$ What are all intervals on which k(x) ≤ 0?",
     "options": [
       { "label": "A", "value": "A", "text": "[3, 7)" },
       { "label": "B", "value": "B", "text": "[-1, 3] U (7, ∞)" },
