@@ -332,10 +332,10 @@ export const atomicQuestions: Question[] = [
     "type": "multiple-choice",
     "question": "Which of the following is the orbital diagram for chromium",
     "options": [
-      { "label": "A", "value": "A", "text": "", "image": "/images/apprecalc/atomic2.png"},
-      { "label": "B", "value": "B", "text": "", "image": "/images/apprecalc/atomic3.png" },
-      { "label": "C", "value": "C", "text": "", "image": "/images/apprecalc/atomic4.png" },
-      { "label": "D", "value": "D", "text": "", "image": "/images/apprecalc/atomic5.png" }
+      { "label": "A", "value": "A", "text": "", "image": "/images/chemistry/atomic2.png"},
+      { "label": "B", "value": "B", "text": "", "image": "/images/chemistry/atomic3.png" },
+      { "label": "C", "value": "C", "text": "", "image": "/images/chemistry/atomic4.png" },
+      { "label": "D", "value": "D", "text": "", "image": "/images/chemistry/atomic5.png" }
     ],
     "correctAnswer": "C",
     "explanation": "Correct amount of electrons and correct format"
