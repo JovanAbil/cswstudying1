@@ -1,9 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, ExternalLink, Eye, Brain, FileText, BookOpen, ClipboardList } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Eye, Brain, FileText, BookOpen, ClipboardList, Target } from 'lucide-react';
 import { unitStudyResources } from '@/data/study-resources';
 import { unitAssignments } from '@/data/assignments/unit-assignments';
+import usePresets from '@/hooks/usePresets';
 
 const UnitDetail = () => {
   const { subject, unitId } = useParams();
@@ -11,6 +12,8 @@ const UnitDetail = () => {
   const resourceKey = `${subject}-${unitId}`;
   const studyResources = unitStudyResources[resourceKey] || [];
   const unitContent = unitAssignments[resourceKey];
+  const { getPresetsForUnit } = usePresets();
+  const presets = getPresetsForUnit(subject || '', unitId || '');
 
   const getCategoryPath = () => {
     if (!subject) return '/';
@@ -57,6 +60,21 @@ const UnitDetail = () => {
               <div className="flex-1">
                 <h3 className="text-xl font-semibold mb-2">View All Questions</h3>
                 <p className="text-muted-foreground text-sm">Browse all questions with their IDs</p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Custom Preset Builder */}
+          <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-destructive group bg-destructive/5"
+            onClick={() => navigate(`/unit/${subject}/${unitId}/preset-builder`)}>
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-destructive/20 rounded-lg"><Target className="h-8 w-8 text-destructive" /></div>
+              <div className="flex-1">
+                <h3 className="text-xl font-semibold mb-2">Build Custom Practice</h3>
+                <p className="text-muted-foreground text-sm">
+                  Select specific questions & save presets
+                  {presets.length > 0 && <span className="ml-2 text-destructive font-medium">({presets.length} saved)</span>}
+                </p>
               </div>
             </div>
           </Card>

@@ -10,6 +10,7 @@ import Results from "./pages/Results";
 import NotFound from "./pages/NotFound";
 import CourseChallenge from "./pages/CourseChallenge";
 import ViewAllQuestions from "./pages/ViewAllQuestions";
+import PresetBuilder from "./pages/PresetBuilder";
 import MathCategory from "./pages/categories/MathCategory";
 import EnglishCategory from "./pages/categories/EnglishCategory";
 import ScienceCategory from "./pages/categories/ScienceCategory";
@@ -36,6 +37,7 @@ const App = () => {
             <Route path="/category/other" element={<OtherCategory />} />
             <Route path="/unit/:subject/:unitId" element={<UnitDetail />} />
             <Route path="/unit/:subject/:unitId/view-all" element={<ViewAllQuestions />} />
+            <Route path="/unit/:subject/:unitId/preset-builder" element={<PresetBuilder />} />
             <Route path="/unit/:subject/:unitId/quiz/:quizType" element={<Quiz />} />
             <Route path="/course-challenge/:subject" element={<CourseChallenge />} />
             <Route path="/quiz/:subject/:unitId/:quizType" element={<Quiz />} />

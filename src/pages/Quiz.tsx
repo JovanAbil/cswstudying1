@@ -81,6 +81,7 @@ const Quiz = () => {
   
   const selectedUnits = useMemo(() => location.state?.selectedUnits || [], [location.state?.selectedUnits]);
   const wrongQuestions = useMemo(() => location.state?.wrongQuestions || [], [location.state?.wrongQuestions]);
+  const presetQuestions = useMemo(() => location.state?.presetQuestions || [], [location.state?.presetQuestions]);
   
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -124,8 +125,12 @@ const Quiz = () => {
     
     let allQuestions: Question[] = [];
     
+    // Handle preset questions from preset builder
+    if (presetQuestions.length > 0) {
+      allQuestions = [...presetQuestions].sort(() => Math.random() - 0.5);
+    }
     // Handle wrong questions from targeted practice
-    if (wrongQuestions.length > 0) {
+    else if (wrongQuestions.length > 0) {
       allQuestions = [...wrongQuestions].sort(() => Math.random() - 0.5);
     } else if (selectedUnits.length > 0 && quizType === 'test') {
       // Course challenge: distribute 30 questions evenly across selected units
@@ -176,7 +181,7 @@ const Quiz = () => {
       timer.reset();
       timer.start();
     }
-  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, questionMap]);
+  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];
