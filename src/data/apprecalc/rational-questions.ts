@@ -255,7 +255,7 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-20",
     "type": "multiple-choice",
-    "question": "[Calculator] Find the average rate of change of the function r(x) = (0.5x^2+2)/(0.7x^3-1) over the interval -2 <= x <= 1.",
+    "question": "[Calculator] Find the average rate of change of the function $r(x) = \\frac{0.5x^2+2}{0.7x^3-1}$ over the interval $-2 \\leq x \\leq 1$.",
     "options": [
       { "label": "A", "value": "A", "text": "2.578" },
       { "label": "B", "value": "B", "text": "-2.578" },
@@ -272,9 +272,9 @@ export const rationalQuestions: Question[] = [
     "image": "/images/apprecalc/rational5.png",
     "options": [
       { "label": "A", "value": "A", "text": "The function is quadratic because second differences are a nonzero constant" },
-      { "label": "B", "value": "B", "text": "The function is quadratice because third differences are a nonzero constant" },
+      { "label": "B", "value": "B", "text": "The function is quadratic because third differences are a nonzero constant" },
       { "label": "C", "value": "C", "text": "The function is cubic because second differences are a nonzero constant" },
-      { "label": "D", "value": "D", "text": "The function is cubic third differences are a nonzero constant" }
+      { "label": "D", "value": "D", "text": "The function is cubic because third differences are a nonzero constant" }
     ],
     "correctAnswer": "D",
     "explanation": "Math"
@@ -282,29 +282,29 @@ export const rationalQuestions: Question[] = [
   {
     "id": "rational-22",
     "type": "free-response",
-    "question": "Let g be a rational function defined as g(x) = (f(x))/(x^2+4x-12), where f(x) is a polynomial. Write one possible expression for f(x) such that the graph of g has a hole at x = 2 and zero at x = 1",
-    "correctAnswer": "f(x) = (x-1)(x-2)",
+    "question": "Let g be a rational function defined as $g(x) = \\frac{f(x)}{x^2+4x-12}$, where f(x) is a polynomial. Write one possible expression for f(x) such that the graph of g has a hole at x = 2 and zero at x = 1.",
+    "correctAnswer": "$f(x) = (x-1)(x-2)$",
     "explanation": "Logic"
   },
   {
     "id": "rational-23",
     "type": "free-response",
-    "question": "Let g be a rational function defined as g(x) = (f(x))/(x^2+4x-12), where f(x) is a polynomial. Write one possible expression for f(x) such that the graph of g has a horizontal asymptote of y = 2.",
-    "correctAnswer": "f(x) = 2(x-1)(x+2)",
+    "question": "Let g be a rational function defined as $g(x) = \\frac{f(x)}{x^2+4x-12}$, where f(x) is a polynomial. Write one possible expression for f(x) such that the graph of g has a horizontal asymptote of y = 2.",
+    "correctAnswer": "$f(x) = 2(x-1)(x+2)$",
     "explanation": "Logic"
   },
   {
     "id": "rational-25",
     "type": "free-response",
-    "question": "If f(x) = (x+6)(x+4), identify any vertical asymptotes for the graph of g as g(x) = (x^2+4x-12), or state that the graph of g has no vertical asymptotes.",
-    "correctAnswer": "If f(x) = (x+6)(x+4), there is a vertical asymptote at x=2.",
+    "question": "If $f(x) = (x+6)(x+4)$, identify any vertical asymptotes for the graph of g where $g(x) = \\frac{f(x)}{x^2+4x-12}$, or state that the graph of g has no vertical asymptotes.",
+    "correctAnswer": "If $f(x) = (x+6)(x+4)$, there is a vertical asymptote at x = 2.",
     "explanation": "Logic"
   },
   {
     "id": "rational-26",
     "type": "free-response",
-    "question": "If g(x) = -3(x+1)^5(x-3)^2, evaluate the following limits: a) lim_x-->-∞ g(x) =  b) lim_x-->∞ g(x) = ",
-    "correctAnswer": "a) ∞ b) -∞",
+    "question": "If $g(x) = -3(x+1)^5(x-3)^2$, evaluate the following limits: a) $\\lim_{x \\to -\\infty} g(x) = $ b) $\\lim_{x \\to \\infty} g(x) = $",
+    "correctAnswer": "a) $\\infty$ b) $-\\infty$",
     "explanation": "Finding the vertical asymptote using the highest degree numerator and the denominator"
   },
   {
