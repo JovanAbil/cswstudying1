@@ -49,10 +49,35 @@ import { generalQuestions } from '@/data/memory/general-questions';
 import { general2Questions } from '@/data/memory/general2-questions';
 import { general3Questions } from '@/data/memory/general3-questions';
 
-// Truncate question text for display
+// Truncate question text for display - LaTeX aware
 const truncateQuestion = (text: string, maxLength: number = 100): string => {
   if (text.length <= maxLength) return text;
-  return text.substring(0, maxLength) + '...';
+  
+  // Find a safe truncation point that doesn't break LaTeX
+  let truncateAt = maxLength;
+  const textToCheck = text.substring(0, maxLength + 50);
+  
+  // Count $ signs to ensure we don't cut in the middle of LaTeX
+  let dollarCount = 0;
+  for (let i = 0; i < Math.min(maxLength, text.length); i++) {
+    if (text[i] === '$') dollarCount++;
+  }
+  
+  // If odd number of $, we're inside LaTeX - find the closing $
+  if (dollarCount % 2 === 1) {
+    const nextDollar = text.indexOf('$', maxLength);
+    if (nextDollar !== -1 && nextDollar < maxLength + 80) {
+      truncateAt = nextDollar + 1;
+    } else {
+      // Find the last $ before maxLength and truncate before it
+      const lastDollar = text.lastIndexOf('$', maxLength);
+      if (lastDollar > 20) {
+        truncateAt = lastDollar;
+      }
+    }
+  }
+  
+  return text.substring(0, truncateAt) + '...';
 };
 
 const CourseChallengePresetBuilder = () => {
