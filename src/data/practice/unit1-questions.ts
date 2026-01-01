@@ -1,9 +1,9 @@
 import { Question } from '@/types/quiz';
 
-export const unit1Questions: Question[] = [
+// Questions array - IDs will be generated dynamically
+const rawQuestions = [
   {
-    id: '',
-    type: 'multiple-choice',
+    type: 'multiple-choice' as const,
     question: 'What does Assuage mean?',
     options: [
       { label: 'A', value: 'A', text: '(v.) To cause to be less harsh, violent, or severe' },
@@ -1053,3 +1053,8 @@ export const unit1Questions: Question[] = [
   },  
 ];
 
+// Export with auto-generated IDs
+export const unit1Questions: Question[] = rawQuestions.map((q, i) => ({
+  ...q,
+  id: `eng-unit1-${i + 1}`,
+})) as Question[];

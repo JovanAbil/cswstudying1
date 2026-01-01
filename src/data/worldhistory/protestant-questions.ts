@@ -1,9 +1,9 @@
 import { Question } from '@/types/quiz';
 
-export const protestantQuestions: Question[] = [
+// Questions array - IDs will be generated dynamically
+const rawQuestions = [
   {
-    id: '',
-    type: 'free-response',
+    type: 'free-response' as const,
     question: 'Find the word based on information: To set aside or declare legally invalid',
     correctAnswer: 'Annul',
     explanation: '.'
@@ -515,3 +515,9 @@ export const protestantQuestions: Question[] = [
     explanation: '.'
   },
 ];
+
+// Export with auto-generated IDs
+export const protestantQuestions: Question[] = rawQuestions.map((q, i) => ({
+  ...q,
+  id: `protestant-${i + 1}`,
+})) as Question[];

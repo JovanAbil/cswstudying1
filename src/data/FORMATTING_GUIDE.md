@@ -103,6 +103,32 @@ This guide shows how to properly format math expressions in question data files 
 
 ---
 
+## Logarithms
+
+### ❌ WRONG
+```typescript
+"question": "Simplify log(3)-log(x)"
+"question": "Evaluate log_5(25)"
+"question": "Simplify 2log(x)+(1/2)log(y)"
+"question": "What is ln(e^6)?"
+```
+
+### ✅ CORRECT
+```typescript
+"question": "Simplify $\\log(3)-\\log(x)$"
+"question": "Evaluate $\\log_5(25)$"
+"question": "Simplify $2\\log(x)+\\frac{1}{2}\\log(y)$"
+"question": "What is $\\ln(e^6)$?"
+```
+
+**Syntax:**
+- `\\log(x)` for common log (base 10)
+- `\\log_b(x)` for log base b (e.g., `\\log_2(x)`, `\\log_5(25)`)
+- `\\ln(x)` for natural log (base e)
+- Use `\\frac{}{}` for coefficients like `\\frac{1}{2}\\log(x)`
+
+---
+
 ## Function Definitions
 
 ### ❌ WRONG
@@ -224,6 +250,9 @@ This guide shows how to properly format math expressions in question data files 
 | Greater/equal | `\\geq` | `$x \\geq 3$` |
 | Union | `\\cup` | `$(0,1) \\cup (2,3)$` |
 | Pi | `\\pi` | `$\\pi r^2$` |
+| Common log | `\\log(x)` | `$\\log(100)$` |
+| Log base b | `\\log_b(x)` | `$\\log_2(8)$` |
+| Natural log | `\\ln(x)` | `$\\ln(e^2)$` |
 
 ---
 
