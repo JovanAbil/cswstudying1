@@ -17,7 +17,12 @@ const UnitDetail = () => {
 
   const getCategoryPath = () => {
     if (!subject) return '/';
-    if (subject === 'precalc' || subject === 'practice') return '/category/math';
+    if (subject === 'precalc') return '/category/math';
+    if (subject === 'practice') {
+      // Route back to English for English practice units
+      if (unitId === 'unit1' || unitId === 'log') return '/category/english';
+      return '/category/math';
+    }
     if (subject.includes('biology') || subject.includes('chemistry')) return '/category/science';
     if (subject === 'world-history') return '/category/social';
     if (subject === 'memory') return '/category/other';
