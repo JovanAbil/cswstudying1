@@ -1,17 +1,13 @@
-import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
 import { ArrowLeft, Trophy, ExternalLink, Wrench, Target } from 'lucide-react';
-import { toast } from 'sonner';
 import { courseChallengeResources } from '@/data/study-resources';
 import { useWrongAnswers } from '@/hooks/useWrongAnswers';
+
 const CourseChallenge = () => {
   const { subject } = useParams();
   const navigate = useNavigate();
-  const [selectedUnits, setSelectedUnits] = useState<string[]>([]);
   const { getAllWrongQuestionsForSubject, getWrongAnswerCount } = useWrongAnswers();
   
   const wrongAnswers = getAllWrongQuestionsForSubject(subject || '');
@@ -103,47 +99,11 @@ const CourseChallenge = () => {
   // Get study resources for this course challenge
   const studyResources = courseChallengeResources[subject || ''] || [];
 
-  const handleUnitToggle = (unitId: string) => {
-    setSelectedUnits(prev =>
-      prev.includes(unitId)
-        ? prev.filter(id => id !== unitId)
-        : [...prev, unitId]
-    );
-  };
-
-  const handleStartChallenge = () => {
-    if (selectedUnits.length === 0) {
-      toast.error('Please select at least one unit');
-      return;
-    }
-    navigate(`/quiz/${subject}/challenge/test`, { state: { selectedUnits } });
-  };
-
   const handleStartCramMode = () => {
     const allUnitIds = units.map(u => u.id);
     navigate(`/quiz/${subject}/challenge/cram`, { state: { selectedUnits: allUnitIds } });
   };
 
-  const handleSelectAll = () => {
-    if (selectedUnits.length === units.length) {
-      setSelectedUnits([]);
-    } else {
-      setSelectedUnits(units.map(u => u.id));
-    }
-  };
-
-  const getSubjectColor = () => {
-    switch (subject) {
-      case 'precalc': return 'primary';
-      case 'biology': return 'success';
-      case 'chemistry': return 'accent';
-      case 'world-history': return 'destructive';
-      case 'memory': return 'purple-500';
-      default: return 'primary';
-    }
-  };
-
-  const color = getSubjectColor();
 
   return (
     <div className="min-h-screen bg-background">
@@ -170,7 +130,7 @@ const CourseChallenge = () => {
             {' '}Course Challenge
           </h1>
           <p className="text-muted-foreground text-lg">
-            Select units to test your knowledge with 30 random questions
+            Test your knowledge with all questions from every unit
           </p>
         </div>
 
@@ -198,60 +158,14 @@ const CourseChallenge = () => {
           </Card>
         )}
 
-        <Card className="p-8 mb-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold">Select Units</h2>
-            <Button
-              onClick={handleSelectAll}
-              variant="outline"
-              size="sm"
-            >
-              {selectedUnits.length === units.length ? 'Deselect All' : 'Select All'}
-            </Button>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {units.map((unit) => (
-              <div
-                key={unit.id}
-                className={`flex items-center space-x-3 p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                  selectedUnits.includes(unit.id)
-                    ? 'border-primary bg-primary/5'
-                    : 'border-border hover:border-muted-foreground'
-                }`}
-                onClick={() => handleUnitToggle(unit.id)}
-              >
-                <Checkbox
-                  id={unit.id}
-                  checked={selectedUnits.includes(unit.id)}
-                  onCheckedChange={() => handleUnitToggle(unit.id)}
-                />
-                <Label htmlFor={unit.id} className="flex-1 cursor-pointer">
-                  {unit.name}
-                </Label>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        <div className="flex flex-wrap gap-4">
-          <Button
-            onClick={handleStartChallenge}
-            className="flex-1"
-            size="lg"
-            disabled={selectedUnits.length === 0}
-          >
-            Start Challenge ({selectedUnits.length} {selectedUnits.length === 1 ? 'unit' : 'units'} selected)
-          </Button>
-          <Button
-            onClick={handleStartCramMode}
-            variant="outline"
-            size="lg"
-          >
-            <Trophy className="mr-2 h-4 w-4" />
-            Cram Mode (All Units)
-          </Button>
-        </div>
+        <Button
+          onClick={handleStartCramMode}
+          className="w-full"
+          size="lg"
+        >
+          <Trophy className="mr-2 h-4 w-4" />
+          Cram Mode (All Units)
+        </Button>
 
         {/* Custom Practice & Targeted Practice */}
         <div className="grid md:grid-cols-2 gap-4 mt-6">
@@ -293,7 +207,6 @@ const CourseChallenge = () => {
         <Card className="mt-8 p-6 bg-muted">
           <h3 className="font-semibold mb-2">📝 Challenge Details</h3>
           <ul className="text-sm text-muted-foreground space-y-1">
-            <li>• <strong>Challenge Mode:</strong> 30 random questions from selected units</li>
             <li>• <strong>Cram Mode:</strong> All questions from every unit for comprehensive review</li>
             <li>• Questions are randomized each time</li>
             <li>• Review shows wrong answers first, then correct answers</li>
