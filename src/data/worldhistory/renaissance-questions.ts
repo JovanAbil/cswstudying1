@@ -342,13 +342,13 @@ export const renaissanceQuestions: Question[] = [
   {
     id: 'renaissance-39',
     type: 'multiple-choice',
-    question: 'Raphael\'s painting, "Then School of Athens", was sponsored by Pope Julius II',
+    question: 'Raphael\'s painting, "The School of Athens", was sponsored by Pope Julius II',
     options: [
       { label: 'A', value: 'A', text: 'True' },
       { label: 'B', value: 'B', text: 'False' },
     ],
-    correctAnswer: 'B',
-    explanation: 'The correct title is *The School of Athens*, and it *was* sponsored by Pope Julius II — the statement is wrong due to the typo in the title.'
+    correctAnswer: 'A',
+    explanation: '*The School of Athens*, and it was sponsored by Pope Julius II.'
   },
   {
     id: 'renaissance-40',
