@@ -399,7 +399,7 @@ export const logQuestions: Question[] = [
   {
     id: "log-54",
     type: "free-response",
-    question: "(Calculator) The formula $A = Pe^{rt}$ represents the amount of money invested (P) in an account that accrues interest (r) compounded continuously over t years. If Mr. Damiani invests \\$250,000 in his retirement that earns him 8.5% interest, how long will it take him to earn at least \\$1,000,000?",
+    question: "(Calculator) The formula $A = Pe^{rt}$ represents the amount of money invested (P) in an account that accrues interest (r) compounded continuously over t years. If Mr. Damiani invests 250,000 in his retirement that earns him 8.5% interest, how long will it take him to earn at least 1,000,000?",
     correctAnswer: "It would take approximately 16.31 years to earn \\$1,000,000",
     explanation: "."
   },
