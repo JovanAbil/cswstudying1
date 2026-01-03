@@ -65,6 +65,10 @@ const convertComplexFraction = (text: string): { result: string; found: boolean 
 const preprocessMath = (text: string, enableChemistry: boolean = false): string => {
   let processed = String(text);
 
+  // Handle escaped dollar signs (literal $) - replace with placeholder
+  const DOLLAR_PLACEHOLDER = '__ESCAPED_DOLLAR__';
+  processed = processed.replace(/\\\$/g, DOLLAR_PLACEHOLDER);
+
   // Protect existing LaTeX blocks
   const latexBlocks: string[] = [];
   processed = processed.replace(/\$\$[\s\S]*?\$\$|\$[^$]*?\$/g, (match) => {
@@ -206,6 +210,9 @@ const preprocessMath = (text: string, enableChemistry: boolean = false): string 
 
   // Clean up consecutive dollar signs from multiple replacements
   processed = processed.replace(/\$\s*\$/g, ' ');
+
+  // Restore escaped dollar signs as literal $
+  processed = processed.replace(/__ESCAPED_DOLLAR__/g, '$');
 
   return processed;
 };

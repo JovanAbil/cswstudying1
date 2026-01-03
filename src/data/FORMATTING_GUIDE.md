@@ -237,6 +237,24 @@ This guide shows how to properly format math expressions in question data files 
 
 ---
 
+## Dollar Signs (Currency)
+
+To display a literal dollar sign without triggering LaTeX, escape it with a backslash.
+
+### ❌ WRONG (triggers LaTeX)
+```typescript
+"question": "The stock costs $50"
+```
+
+### ✅ CORRECT (escaped dollar sign)
+```typescript
+"question": "The stock costs \\$50"
+```
+
+**Syntax:** Use `\\$` for a literal dollar sign in currency values
+
+---
+
 ## Quick Reference Table
 
 | Math Element | LaTeX Syntax | Example |
