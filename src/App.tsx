@@ -18,6 +18,7 @@ import EnglishCategory from "./pages/categories/EnglishCategory";
 import ScienceCategory from "./pages/categories/ScienceCategory";
 import SocialCategory from "./pages/categories/SocialCategory";
 import OtherCategory from "./pages/categories/OtherCategory";
+import CustomTopicEditor from "./pages/CustomTopicEditor";
 import StockPage from "./pages/StockPage";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => {
             <Route path="/category/science" element={<ScienceCategory />} />
             <Route path="/category/social" element={<SocialCategory />} />
             <Route path="/category/other" element={<OtherCategory />} />
+            <Route path="/custom-topic/:unitId/:topicId" element={<CustomTopicEditor />} />
             <Route path="/unit/:subject/:unitId" element={<UnitDetail />} />
             <Route path="/unit/:subject/:unitId/view-all" element={<ViewAllQuestions />} />
             <Route path="/unit/:subject/:unitId/preset-builder" element={<PresetBuilder />} />
