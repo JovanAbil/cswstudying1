@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown } from 'lucide-react';
+import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown, FolderPlus, Download, Upload, AlertTriangle } from 'lucide-react';
 
 const categories = [
   {
@@ -174,9 +174,84 @@ const Index = () => {
                 <span className="font-semibold text-foreground">Start Practicing</span> - Choose "Cram Study" for all questions or "View All Questions" to browse
               </li>
               <li className="leading-relaxed">
-                <span className="font-semibold text-foreground">Review Mistakes</span> - Use "Targeted Practice" to review questions you got wrong
+              <span className="font-semibold text-foreground">Review Mistakes</span> - Use "Targeted Practice" to review questions you got wrong
               </li>
             </ol>
+          </Card>
+        </div>
+
+        {/* Custom Units Section */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <Card className="p-8 border-2 border-other/20 bg-other/5">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-other/20 rounded-lg">
+                <FolderPlus className="h-6 w-6 text-other" />
+              </div>
+              <h2 className="text-2xl font-display font-bold">Custom Units & Topics</h2>
+            </div>
+            <p className="text-muted-foreground mb-6">
+              Create your own question banks for any subject! Custom units are stored locally in your browser.
+            </p>
+            
+            <div className="space-y-6">
+              {/* Creating Custom Content */}
+              <div className="p-4 bg-background rounded-lg border">
+                <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <FolderPlus className="h-5 w-5 text-other" />
+                  Creating Custom Content
+                </h3>
+                <ol className="space-y-2 text-sm text-muted-foreground list-decimal list-inside">
+                  <li>Navigate to the <span className="font-medium text-foreground">Other</span> category</li>
+                  <li>Click <span className="font-medium text-foreground">"+ Add Unit"</span> to create a new unit</li>
+                  <li>Click <span className="font-medium text-foreground">"+ Add topic"</span> within your unit</li>
+                  <li>Use the Topic Editor to add questions (MCQ or FRQ)</li>
+                  <li>Enable <span className="font-medium text-foreground">"Math Mode"</span> for LaTeX rendering (fractions, exponents, etc.)</li>
+                  <li>Upload images for questions using the image upload button</li>
+                </ol>
+              </div>
+
+              {/* Import/Export */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-4 bg-background rounded-lg border">
+                  <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Download className="h-5 w-5 text-science" />
+                    Exporting
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li>• <span className="font-medium text-foreground">Download Unit</span> - Exports as a .zip file with all topics</li>
+                    <li>• <span className="font-medium text-foreground">Download Topic</span> - Exports as a single .ts file</li>
+                    <li>• Share files with classmates or back up your content</li>
+                  </ul>
+                </div>
+                <div className="p-4 bg-background rounded-lg border">
+                  <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Upload className="h-5 w-5 text-math" />
+                    Importing
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li>• <span className="font-medium text-foreground">Import Unit</span> - Upload a .zip file to add a full unit</li>
+                    <li>• <span className="font-medium text-foreground">Import Topic</span> - Upload a .ts file to add to an existing unit</li>
+                    <li>• Imported content merges with your existing custom units</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Browser Cache Warning */}
+              <div className="p-4 bg-destructive/10 rounded-lg border border-destructive/30">
+                <h3 className="font-semibold text-destructive mb-3 flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5" />
+                  Browser Storage Limitations
+                </h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Custom units are stored in your browser's <span className="font-medium text-foreground">localStorage</span></li>
+                  <li>• <span className="font-medium text-destructive">Clearing browser data will delete all custom content</span></li>
+                  <li>• Storage limit is approximately <span className="font-medium text-foreground">5-10 MB</span> depending on browser</li>
+                  <li>• Images are stored as Base64, which increases storage usage significantly</li>
+                  <li>• <span className="font-medium text-foreground">Regularly export your units as backups!</span></li>
+                  <li>• Custom content is <span className="font-medium text-foreground">device-specific</span> - not synced across browsers</li>
+                </ul>
+              </div>
+            </div>
           </Card>
         </div>
       </div>
