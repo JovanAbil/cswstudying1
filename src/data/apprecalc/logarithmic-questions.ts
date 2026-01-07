@@ -1,9 +1,5 @@
 import { Question } from '@/types/quiz';
 
-// Topic: Logarithmic
-// Math Enabled: true
-// Questions: 30
-
 export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-1",
@@ -12,8 +8,7 @@ export const logarithmicQuestions: Question[] = [
     options: [{"label":"A","value":"A","text":"$k$ is best modeled by a logarithmic function because the outputs over consecutive equal-length input value intervals are proportional."},{"label":"B","value":"B","text":"$k$ is best modeled by a logarithmic function because the inputs over consecutive equal-length output value intervals are proportional."},{"label":"C","value":"C","text":"$k$ is best modeled by a exponential function because the outputs over consecutive equal-length input value intervals are proportional."},{"label":"D","value":"D","text":"$k$ is best modeled by a exponential function because the inputs over consecutive equal-length output value intervals are proportional."}],
     correctAnswer: "B",
     explanation: "Only one that states the inputs are proportional to the output values instead of the usual outputs proportional to the inputs.",
-    // Note: Base64 image was embedded - move to public folder and update path
-    image: "/images/random-useless-midterm-prep/logarithmic-logarithmic-1.png",
+    image: "/images/apprecalc/logarithmic1.png",
   },
   {
     id: "logarithmic-2",
@@ -103,7 +98,7 @@ export const logarithmicQuestions: Question[] = [
     correctAnswer: "B",
     explanation: "",
     // Note: Base64 image was embedded - move to public folder and update path
-    image: "/images/random-useless-midterm-prep/logarithmic-logarithmic-12.png",
+    image: "/images/apprecalc/logarithmic3.png",
   },
   {
     id: "logarithmic-13",
@@ -191,12 +186,12 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-24",
     type: "multiple-choice",
-    question: "(Calculator) Four equally rated professional weightlifers agreed to participate in an experiment where they would have different amounts of time to train for a deadlift competition. The amount of time trained, in months, and the maximum deadlifts, in pounds are listed above. A logarithmic function of the form $f(x) = a + b\\ln(x)$ can be used to predict the maximum deadlift based on months training. Based on the regression, how long would an equally rated weightlifter theoretically need to train to deadlift $1,000$ pounds? ",
+    question: "(Calculator) Four equally rated professional weightlifters agreed to participate in an experiment where they would have different amounts of time to train for a deadlift competition. The amount of time trained, in months, and the maximum deadlifts, in pounds are listed above. A logarithmic function of the form $f(x) = a + b\\ln(x)$ can be used to predict the maximum deadlift based on months training. Based on the regression, how long would an equally rated weightlifter theoretically need to train to deadlift $1,000$ pounds? ",
     options: [{"label":"A","value":"A","text":"28.161 months"},{"label":"B","value":"B","text":"145.573 months"},{"label":"C","value":"C","text":"1438.263 months"},{"label":"D","value":"D","text":"2177.489 months"}],
     correctAnswer: "A",
     explanation: "",
     // Note: Base64 image was embedded - move to public folder and update path
-    image: "/images/random-useless-midterm-prep/logarithmic-logarithmic-24.png",
+    image: "/images/apprecalc/logarithmic2.png",
   },
   {
     id: "logarithmic-25",
@@ -206,7 +201,7 @@ export const logarithmicQuestions: Question[] = [
     correctAnswer: "B",
     explanation: "",
     // Note: Base64 image was embedded - move to public folder and update path
-    image: "/images/random-useless-midterm-prep/logarithmic-logarithmic-25.png",
+    image: "/images/apprecalc/logarithmic4.png",
   },
   {
     id: "logarithmic-26",
