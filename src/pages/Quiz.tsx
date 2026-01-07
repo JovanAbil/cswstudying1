@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
 import useQuizTimer from '@/hooks/useQuizTimer';
 import QuizTimer from '@/components/QuizTimer';
+import useCustomUnits from '@/hooks/useCustomUnits';
 //AP Precalc
 import { polynomialQuestions } from '@/data/apprecalc/polynomial-questions';
 import { rationalQuestions } from '@/data/apprecalc/rational-questions';
@@ -78,10 +79,15 @@ const Quiz = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const timer = useQuizTimer();
+  const { getTopicQuestions, isLoaded: customUnitsLoaded } = useCustomUnits();
   
   const selectedUnits = useMemo(() => location.state?.selectedUnits || [], [location.state?.selectedUnits]);
   const wrongQuestions = useMemo(() => location.state?.wrongQuestions || [], [location.state?.wrongQuestions]);
   const presetQuestions = useMemo(() => location.state?.presetQuestions || [], [location.state?.presetQuestions]);
+  
+  // Check if this is a custom topic quiz
+  const isCustomTopic = subject?.startsWith('custom-');
+  const customUnitId = isCustomTopic ? subject.replace('custom-', '') : null;
   
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -120,6 +126,11 @@ const Quiz = () => {
   }), []);
 
   useEffect(() => {
+    // Wait for custom units to load if this is a custom topic
+    if (isCustomTopic && !customUnitsLoaded) {
+      return;
+    }
+    
     const totalQuestions = 30;
     const questionCount = quizType === 'daily' ? 10 : quizType === 'cram' ? Infinity : totalQuestions;
     
@@ -132,7 +143,14 @@ const Quiz = () => {
     // Handle wrong questions from targeted practice
     else if (wrongQuestions.length > 0) {
       allQuestions = [...wrongQuestions].sort(() => Math.random() - 0.5);
-    } else if (selectedUnits.length > 0 && quizType === 'test') {
+    } 
+    // Handle custom topic quiz
+    else if (isCustomTopic && customUnitId && unitId) {
+      const customQuestions = getTopicQuestions(customUnitId, unitId);
+      const shuffled = [...customQuestions].sort(() => Math.random() - 0.5);
+      allQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
+    }
+    else if (selectedUnits.length > 0 && quizType === 'test') {
       // Course challenge: distribute 30 questions evenly across selected units
       const numUnits = selectedUnits.length;
       const baseQuestionsPerUnit = Math.floor(totalQuestions / numUnits);
@@ -181,7 +199,7 @@ const Quiz = () => {
       timer.reset();
       timer.start();
     }
-  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap]);
+  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap, isCustomTopic, customUnitId, customUnitsLoaded, getTopicQuestions]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];
