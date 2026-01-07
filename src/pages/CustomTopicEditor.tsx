@@ -46,7 +46,7 @@ const CustomTopicEditor = () => {
   const [searchParams] = useSearchParams();
   const isNew = searchParams.get('new') === 'true';
   
-  const { getTopic, updateTopic, addTopic, getUnit, isLoaded } = useCustomUnits();
+  const { updateTopic, addTopic, getUnit } = useCustomUnits();
   const { toast } = useToast();
 
   const [topicName, setTopicName] = useState('');
@@ -61,19 +61,29 @@ const CustomTopicEditor = () => {
   const [editingQuestion, setEditingQuestion] = useState<EditingQuestion | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
-  // Load existing topic data
+  // Load existing topic data - read directly from localStorage to avoid stale closures
   useEffect(() => {
-    if (!isLoaded || !unitId) return;
+    if (!unitId) return;
     
     if (!isNew && topicId) {
-      const topic = getTopic(unitId, topicId);
-      if (topic) {
-        setTopicName(topic.name);
-        setMathEnabled(topic.mathEnabled);
-        setQuestions(topic.questions);
+      // Read directly from localStorage to get fresh data
+      const stored = localStorage.getItem('custom-units-data');
+      if (stored) {
+        try {
+          const parsedData = JSON.parse(stored);
+          const unit = parsedData.units?.find((u: any) => u.id === unitId);
+          const topic = unit?.topics?.find((t: any) => t.id === topicId);
+          if (topic) {
+            setTopicName(topic.name);
+            setMathEnabled(topic.mathEnabled);
+            setQuestions(topic.questions || []);
+          }
+        } catch (e) {
+          console.error('Failed to load topic data:', e);
+        }
       }
     }
-  }, [isLoaded, unitId, topicId, isNew, getTopic]);
+  }, [unitId, topicId, isNew]);
 
   const handleMathToggle = (enabled: boolean) => {
     if (!enabled && mathEnabled) {
