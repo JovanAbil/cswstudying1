@@ -108,7 +108,7 @@ export const compoundsQuestions: Question[] = [
     id: "compounds-5d",
     type: "multiple-choice",
     question: "Which intermolecular forces (IMFs) are experienced by SF4",
-    image: "images/chemistry/compounds1.png",
+    image: "/images/chemistry/compounds1.png",
     options: [
       { label: "A", value: "A", text: "London Dispersion only" },
       { label: "B", value: "B", text: "London dispersion and dipole-dipole" },
@@ -122,7 +122,7 @@ export const compoundsQuestions: Question[] = [
     id: "compounds-5e",
     type: "multiple-choice",
     question: "What is the molecular geometry of SF4",
-    image: "images/chemistry/compounds1.png",
+    image: "/images/chemistry/compounds1.png",
     options: [
       { label: "A", value: "A", text: "Tetrahedral" },
       { label: "B", value: "B", text: "Linear" },
@@ -149,7 +149,7 @@ export const compoundsQuestions: Question[] = [
     id: "compounds-5g",
     type: "multiple-choice",
     question: "What type of bond is represented by the diagram?",
-    image: "images/chemistry/compounds2.png",
+    image: "/images/chemistry/compounds2.png",
     options: [
       { label: "A", value: "A", text: "Ionic because electrons are transferred from the C to the Cl atoms" },
       { label: "B", value: "B", text: "Covalent because electrons are transferred from the C to the Cl atoms" },
@@ -345,7 +345,7 @@ export const compoundsQuestions: Question[] = [
     id: "compounds-38",
     type: "free-response",
     question: "Propane and propyl bromide have similar structures, but very different boiling points. Their structures are shown below. Propse and explanation for the difference in boiling point using intermolecular forces.",
-    image: "images/chemistry/compounds3.png",
+    image: "/images/chemistry/compounds3.png",
     correctAnswer: "Bromine is heavier, so london dispersion has more force because it depends on the size so it has more of a boiling point",
     explanation: "."
   },
