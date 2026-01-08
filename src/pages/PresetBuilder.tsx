@@ -3,9 +3,10 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Save, Play, Edit2, Trash2, Check } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
 import usePresets, { Preset } from '@/hooks/usePresets';
+import useCustomUnits from '@/hooks/useCustomUnits';
 import MathText from '@/components/MathText';
 import {
   Dialog,
@@ -104,6 +105,11 @@ const PresetBuilder = () => {
   const location = useLocation();
   
   const { createPreset, updatePreset, deletePreset, getPresetsForUnit, getPreset } = usePresets();
+  const { data: customUnitsData, isLoaded: customUnitsLoaded } = useCustomUnits();
+  
+  // Check if this is a custom topic
+  const isCustomTopic = subject?.startsWith('custom-');
+  const customUnitId = isCustomTopic ? subject.replace('custom-', '') : null;
   
   // Check if editing an existing preset
   const editingPresetId = location.state?.editingPresetId;
@@ -114,6 +120,16 @@ const PresetBuilder = () => {
   );
   const [presetName, setPresetName] = useState(editingPreset?.name || '');
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [customQuestions, setCustomQuestions] = useState<Question[]>([]);
+
+  // Load custom questions
+  useEffect(() => {
+    if (isCustomTopic && customUnitsLoaded && customUnitId && unitId) {
+      const unit = customUnitsData.units.find(u => u.id === customUnitId);
+      const topic = unit?.topics.find(t => t.id === unitId);
+      setCustomQuestions(topic?.questions || []);
+    }
+  }, [isCustomTopic, customUnitsLoaded, customUnitId, unitId, customUnitsData]);
 
   const questionMap: Record<string, Question[]> = useMemo(() => ({
     'precalc-polynomial': polynomialQuestions, 'precalc-rational': rationalQuestions,
@@ -143,7 +159,7 @@ const PresetBuilder = () => {
     'stock-basics': basicsQuestions,
   }), []);
 
-  const questions = questionMap[`${subject}-${unitId}`] || [];
+  const questions = isCustomTopic ? customQuestions : (questionMap[`${subject}-${unitId}`] || []);
   const unitPresets = getPresetsForUnit(subject || '', unitId || '');
 
   const toggleQuestion = (id: string) => {
@@ -220,6 +236,27 @@ const PresetBuilder = () => {
     });
   };
 
+  // Get topic name for custom topics
+  const getTopicName = () => {
+    if (isCustomTopic && customUnitId) {
+      const unit = customUnitsData.units.find(u => u.id === customUnitId);
+      const topic = unit?.topics.find(t => t.id === unitId);
+      return topic?.name || unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+    return unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  if (isCustomTopic && !customUnitsLoaded) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center animate-fade-in">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-lg text-muted-foreground">Loading questions...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
@@ -233,7 +270,7 @@ const PresetBuilder = () => {
               {editingPreset ? `Editing: ${editingPreset.name}` : 'Build Custom Practice'}
             </h1>
             <p className="text-muted-foreground">
-              {unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())} • {questions.length} questions available
+              {getTopicName()} • {questions.length} questions available
             </p>
           </div>
           <div className="flex gap-2 flex-wrap">

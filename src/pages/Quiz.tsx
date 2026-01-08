@@ -79,7 +79,7 @@ const Quiz = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const timer = useQuizTimer();
-  const { getTopicQuestions, isLoaded: customUnitsLoaded } = useCustomUnits();
+  const { data: customUnitsData, isLoaded: customUnitsLoaded } = useCustomUnits();
   
   const selectedUnits = useMemo(() => location.state?.selectedUnits || [], [location.state?.selectedUnits]);
   const wrongQuestions = useMemo(() => location.state?.wrongQuestions || [], [location.state?.wrongQuestions]);
@@ -146,7 +146,10 @@ const Quiz = () => {
     } 
     // Handle custom topic quiz
     else if (isCustomTopic && customUnitId && unitId) {
-      const customQuestions = getTopicQuestions(customUnitId, unitId);
+      // Get questions directly from customUnitsData to avoid stale closures
+      const unit = customUnitsData.units.find(u => u.id === customUnitId);
+      const topic = unit?.topics.find(t => t.id === unitId);
+      const customQuestions = topic?.questions || [];
       const shuffled = [...customQuestions].sort(() => Math.random() - 0.5);
       allQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
     }
@@ -199,7 +202,8 @@ const Quiz = () => {
       timer.reset();
       timer.start();
     }
-  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap, isCustomTopic, customUnitId, customUnitsLoaded, getTopicQuestions]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap, isCustomTopic, customUnitId, customUnitsLoaded]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];

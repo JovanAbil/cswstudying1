@@ -20,7 +20,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Sparkles, Trophy, Brain, Target, Plus, Trash2, Pencil, Download, Upload } from 'lucide-react';
+import { ArrowLeft, Sparkles, Trophy, Brain, Target, Plus, Trash2, Pencil, Download, Upload, AlertTriangle, FolderPlus } from 'lucide-react';
 import useWrongAnswers from '@/hooks/useWrongAnswers';
 import useCustomUnits, { CustomTopic } from '@/hooks/useCustomUnits';
 import { useToast } from '@/hooks/use-toast';
@@ -434,6 +434,67 @@ const OtherCategory = () => {
               ))}
             </div>
           )}
+
+          {/* Custom Units Info & Warnings */}
+          <Card className="p-6 mt-8 border-2 border-other/20 bg-other/5">
+            <div className="space-y-6">
+              {/* Creating Custom Content */}
+              <div className="p-4 bg-background rounded-lg border">
+                <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <FolderPlus className="h-5 w-5 text-other" />
+                  Creating Custom Content
+                </h3>
+                <ol className="space-y-2 text-sm text-muted-foreground list-decimal list-inside">
+                  <li>Click <span className="font-medium text-foreground">"+ Add Unit"</span> above to create a new unit</li>
+                  <li>Click <span className="font-medium text-foreground">"+ Add topic"</span> within your unit</li>
+                  <li>Use the Topic Editor to add questions (MCQ or FRQ)</li>
+                  <li>Enable <span className="font-medium text-foreground">"Math Mode"</span> for LaTeX rendering</li>
+                  <li>Upload images for questions using the image upload button</li>
+                </ol>
+              </div>
+
+              {/* Import/Export */}
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-4 bg-background rounded-lg border">
+                  <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Download className="h-5 w-5 text-science" />
+                    Exporting
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li>• <span className="font-medium text-foreground">Download Unit</span> - Exports as .zip with all topics</li>
+                    <li>• <span className="font-medium text-foreground">Download Topic</span> - Exports as a single .ts file</li>
+                    <li>• Share files with classmates or back up your content</li>
+                  </ul>
+                </div>
+                <div className="p-4 bg-background rounded-lg border">
+                  <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Upload className="h-5 w-5 text-math" />
+                    Importing
+                  </h3>
+                  <ul className="space-y-2 text-sm text-muted-foreground">
+                    <li>• <span className="font-medium text-foreground">Import Unit</span> - Upload .zip for full unit</li>
+                    <li>• <span className="font-medium text-foreground">Import Topic</span> - Upload .ts to add to unit</li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Browser Cache Warning */}
+              <div className="p-4 bg-destructive/10 rounded-lg border border-destructive/30">
+                <h3 className="font-semibold text-destructive mb-3 flex items-center gap-2">
+                  <AlertTriangle className="h-5 w-5" />
+                  Browser Storage Limitations
+                </h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Custom units are stored in your browser's <span className="font-medium text-foreground">localStorage</span></li>
+                  <li>• <span className="font-medium text-destructive">Clearing browser data will delete all custom content</span></li>
+                  <li>• Storage limit is approximately <span className="font-medium text-foreground">5-10 MB</span></li>
+                  <li>• Images are stored as Base64, increasing storage usage</li>
+                  <li>• <span className="font-medium text-foreground">Regularly export your units as backups!</span></li>
+                  <li>• Custom content is <span className="font-medium text-foreground">device-specific</span></li>
+                </ul>
+              </div>
+            </div>
+          </Card>
         </div>
       </div>
 
