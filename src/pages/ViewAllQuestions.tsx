@@ -2,10 +2,11 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, Copy, CheckCircle2 } from 'lucide-react';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
 import MathText from '@/components/MathText';
 import QuestionTable from '@/components/QuestionTable';
+import useCustomUnits from '@/hooks/useCustomUnits';
 
 // Import all question sets from existing paths
 import { polynomialQuestions } from '@/data/apprecalc/polynomial-questions';
@@ -63,6 +64,21 @@ const ViewAllQuestions = () => {
   const { subject, unitId } = useParams();
   const navigate = useNavigate();
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [customQuestions, setCustomQuestions] = useState<Question[]>([]);
+  const { data: customUnitsData, isLoaded: customUnitsLoaded } = useCustomUnits();
+
+  // Check if this is a custom topic
+  const isCustomTopic = subject?.startsWith('custom-');
+  const customUnitId = isCustomTopic ? subject.replace('custom-', '') : null;
+
+  // Load custom questions
+  useEffect(() => {
+    if (isCustomTopic && customUnitsLoaded && customUnitId && unitId) {
+      const unit = customUnitsData.units.find(u => u.id === customUnitId);
+      const topic = unit?.topics.find(t => t.id === unitId);
+      setCustomQuestions(topic?.questions || []);
+    }
+  }, [isCustomTopic, customUnitsLoaded, customUnitId, unitId, customUnitsData]);
 
   const questionMap: Record<string, Question[]> = useMemo(() => ({
     'precalc-polynomial': polynomialQuestions, 'precalc-rational': rationalQuestions,
@@ -91,7 +107,7 @@ const ViewAllQuestions = () => {
     'practice-unit1': unit1Questions, 'practice-gases': gasQuestions, 'practice-log': logQuestions,
   }), []);
 
-  const questions = questionMap[`${subject}-${unitId}`] || [];
+  const questions = isCustomTopic ? customQuestions : (questionMap[`${subject}-${unitId}`] || []);
 
   const copyId = (id: string) => {
     navigator.clipboard.writeText(id);
@@ -100,13 +116,34 @@ const ViewAllQuestions = () => {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
+  // Get topic name for custom topics
+  const getTopicName = () => {
+    if (isCustomTopic && customUnitId) {
+      const unit = customUnitsData.units.find(u => u.id === customUnitId);
+      const topic = unit?.topics.find(t => t.id === unitId);
+      return topic?.name || unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+    }
+    return unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+  };
+
+  if (isCustomTopic && !customUnitsLoaded) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center animate-fade-in">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-lg text-muted-foreground">Loading questions...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <Button variant="ghost" onClick={() => navigate(`/unit/${subject}/${unitId}`)} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Unit
         </Button>
-        <h1 className="text-3xl font-display font-bold mb-2">All Questions - {unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</h1>
+        <h1 className="text-3xl font-display font-bold mb-2">All Questions - {getTopicName()}</h1>
         <p className="text-muted-foreground mb-8">{questions.length} questions total</p>
         <div className="space-y-6">
           {questions.map((question, index) => (
