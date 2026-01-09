@@ -129,7 +129,7 @@ export const gasesQuestions: Question[] = [
   {
     id: "gases-18",
     type: "free-response",
-    question: "An unknown gas is collected over water at 25 °C with a volume of 168 mL and pressure of 755.9 torr. Vapor pressure of water is 23.77 torr. The gas contains only bromine and oxygen. Determine its formula.",
+    question: "An unknown gas is collected over water at 25 °C with a volume of 168 mL and pressure of 755.9 torr. Vapor pressure of water is 23.77 torr. If the mass of the gas weighs 0.952 g and the gas contains only bromine and oxygen. Determine its formula.",
     correctAnswer: "BrO4",
     explanation: "Correct pressure for water vapor, then use Ideal Gas Law and molar mass."
   },
