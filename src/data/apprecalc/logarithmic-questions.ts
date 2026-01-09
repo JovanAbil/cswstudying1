@@ -37,7 +37,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-5",
     type: "multiple-choice",
-    question: "An exponential function k demonstrates exponential decay. Which of the following statements about $k^{-1}$ is correctt?",
+    question: "An exponential function k demonstrates exponential decay. Which of the following statements about $k^{-1}$ is correct?",
     options: [{"label":"A","value":"A","text":"The rate of change of $k^{-1}$ is positive and increasing"},{"label":"B","value":"B","text":"The rate of change of $k^{-1}$ is positive and decreasing"},{"label":"C","value":"C","text":"The rate of change of $k^{-1}$ is negative and increasing"},{"label":"D","value":"D","text":"The rate of change of $k^{-1}$ is negative and decreasing"}],
     correctAnswer: "C",
     explanation: "",
@@ -157,7 +157,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-20",
     type: "free-response",
-    question: "The functions $j$ and $k$ are given: $j(x) = \\frac{1}{2}\\ln(x) + 5\\ln(x) + \\ln(4)$ and $k(x) = \\log_{5}(\\frac{x^2}{125})$. $k(x)$ can be rewritten in the form $a + b\\log_{5}(x)$, where $a$ and $b$ are nonzero constants. Find the value of $a$ and $b$ and describe how the values of $a$ and $b$ transform the graph of $k$ from the function $y = \\log_{2}(x)$.",
+    question: "The functions $j$ and $k$ are given: $j(x) = \\frac{1}{2}\\ln(x) + 5\\ln(x) + \\ln(4)$ and $k(x) = \\log_{5}(\\frac{x^2}{125})$. $k(x)$ can be rewritten in the form $a + b\\log_{5}(x)$, where $a$ and $b$ are nonzero constants. Find the value of $a$ and $b$ and describe how the values of $a$ and $b$ transform the graph of $k$ from the function $y = \\log_{5}(x)$.",
     correctAnswer: "$a$ moves the function $k(x)$ by $-3$ vertically while $b$ in function $k(x)$ dialates by a factor of $2$ vertically.",
     explanation: "",
   },
@@ -206,7 +206,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-26",
     type: "free-response",
-    question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, wjere $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Use the given data to write 2 equations that can be used to find the values of constants $a$ and $b$ in the expression for $R(t)$.",
+    question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, where $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Use the given data to write 2 equations that can be used to find the values of constants $a$ and $b$ in the expression for $R(t)$.",
     correctAnswer: "$23 = a + b\\ln(t)$ and $38 = a + b\\ln(20+1)$",
     explanation: "",
   },
