@@ -1,5 +1,9 @@
 import { Question } from '@/types/quiz';
 
+// Topic: gases
+// Math Enabled: true
+// Questions: 22
+
 export const gasesQuestions: Question[] = [
   {
     id: "gases-1",
@@ -53,13 +57,6 @@ export const gasesQuestions: Question[] = [
   },
   {
     id: "gases-8",
-    type: "free-response",
-    question: "9.5 × 10⁻⁷ Gg of CO2 is produced at 24 °C and 34.05 psi. What is the volume?",
-    correctAnswer: "226.9707079",
-    explanation: "Convert mass to moles, then apply the Ideal Gas Law.",
-  },
-  {
-    id: "gases-9",
     type: "multiple-choice",
     question: "Calculate the molar mass of cobalt (III) acetate - Co(C2H3O2)3",
     options: [{"label":"A","value":"A","text":"235.46 g/mol"},{"label":"B","value":"B","text":"234.04 g/mol"},{"label":"C","value":"C","text":"117.37 g/mol"},{"label":"D","value":"D","text":"352.12 g/mol"}],
@@ -67,7 +64,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-10",
+    id: "gases-9",
     type: "multiple-choice",
     question: "Calculate the mass of oxygen in 200.0 g of ZnSO4.",
     options: [{"label":"A","value":"A","text":"1.24 g"},{"label":"B","value":"B","text":"19.82 g"},{"label":"C","value":"C","text":"79.27 g"},{"label":"D","value":"D","text":"4.95 g"}],
@@ -75,7 +72,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-11",
+    id: "gases-10",
     type: "multiple-choice",
     question: "How many grams of Fe2O3 are present in a 1.285 mol sample?  ",
     options: [{"label":"A","value":"A","text":"205.2 g"},{"label":"B","value":"B","text":"133.38 g"},{"label":"C","value":"C","text":"200.81 g"},{"label":"D","value":"D","text":"124.27 g"}],
@@ -83,7 +80,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-12",
+    id: "gases-11",
     type: "multiple-choice",
     question: "How many molecules are in 3.50 mg of sweetener aspartame - C14H18N2O5?",
     options: [{"label":"A","value":"A","text":"7.16E24"},{"label":"B","value":"B","text":"1.41E22"},{"label":"C","value":"C","text":"1.41E19"},{"label":"D","value":"D","text":"7.16E18"}],
@@ -91,7 +88,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-13",
+    id: "gases-12",
     type: "multiple-choice",
     question: "A metal piston contains 2.0 moles of gas at a constant temperature. If you double the volume, what would happen to the pressure?",
     options: [{"label":"A","value":"A","text":"no change"},{"label":"B","value":"B","text":"cut in half"},{"label":"C","value":"C","text":"doubles"},{"label":"D","value":"D","text":"cut by $\\frac{1}{4}$"}],
@@ -99,7 +96,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-14",
+    id: "gases-13",
     type: "multiple-choice",
     question: "A sealed flash contains a fixed amount of Argon at a constant volume. Initially, the temperature in the flask in 25°C and the pressure is 1.85 atm. What will the pressure be in the flask is cooled down to -28°C",
     options: [{"label":"A","value":"A","text":"0.66 atm"},{"label":"B","value":"B","text":"2.07 atm"},{"label":"C","value":"C","text":"2.25 atm"},{"label":"D","value":"D","text":"1.52 atm"}],
@@ -107,7 +104,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-15",
+    id: "gases-14",
     type: "multiple-choice",
     question: "A balloon contains 0.715 moles of Helium at a constant temperature and pressure. If the intial volume is 9.6 L, what will be the final volume if 0.220 moles of gas are released from the balloon?",
     options: [{"label":"A","value":"A","text":"13.87 L"},{"label":"B","value":"B","text":"6.65 L"},{"label":"C","value":"C","text":"2.95 L"},{"label":"D","value":"D","text":"0.04L"}],
@@ -115,7 +112,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-16",
+    id: "gases-15",
     type: "multiple-choice",
     question: "A syringe contains a fixed amount of air at a constant temperature. The initial volume of the air is 25.0 mL and the pressure is 101.3 kPa. What will the volume become if the pressure is increased to 110.3 kPa.",
     options: [{"label":"A","value":"A","text":"0.023 L"},{"label":"B","value":"B","text":"0.027 L"},{"label":"C","value":"C","text":"0.23 L"},{"label":"D","value":"D","text":"0.27 L"}],
@@ -123,7 +120,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-17",
+    id: "gases-16",
     type: "multiple-choice",
     question: "A gas tank contains 1.05 moles of Ar gas and 1.65 moles of He gas at 20.5 atm and 35°C . Calculate the volume of the tank?\n",
     options: [{"label":"A","value":"A","text":"3.33 L"},{"label":"B","value":"B","text":"0.378 L"},{"label":"C","value":"C","text":"2.03 L"},{"label":"D","value":"D","text":"1.29 L"}],
@@ -131,7 +128,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-18",
+    id: "gases-17",
     type: "multiple-choice",
     question: "A can contains 5.05 moles of Ne and 11.25 moles of CO2 and has a total pressure of 3.95 atm, what is the partial pressure of the Ne gas in the can?",
     options: [{"label":"A","value":"A","text":"1.77 atm"},{"label":"B","value":"B","text":"1.22 atm"},{"label":"C","value":"C","text":"2.73 atm"},{"label":"D","value":"D","text":"0.56 atm"}],
@@ -139,7 +136,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-19",
+    id: "gases-18",
     type: "multiple-choice",
     question: "A balloon contains 0.095 moles of air at a volume of 8050 mL and a pressure of 460 mmHg. What is the temperature in of the air?",
     options: [{"label":"A","value":"A","text":"351 K"},{"label":"B","value":"B","text":"897 K"},{"label":"C","value":"C","text":"351 C"},{"label":"D","value":"D","text":"624 C"}],
@@ -147,7 +144,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-20",
+    id: "gases-19",
     type: "multiple-choice",
     question: "Which of the following is NOT an assumption made about ideal gases?",
     options: [{"label":"A","value":"A","text":"They have no mass"},{"label":"B","value":"B","text":"They collide only with the walls of the container"},{"label":"C","value":"C","text":"They have no volume"},{"label":"D","value":"D","text":"They experience neither attractive nor repulsize forces with other molecules."}],
@@ -155,15 +152,15 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-21",
+    id: "gases-20",
     type: "multiple-choice",
-    question: "A scuba tank holds 226 atm of a mixture of helium and oxygen gases. If the mixxture is 79% helium (by moles) what is the partial pressure of oxygen.",
+    question: "A scuba tank holds 226 atm of a mixture of helium and oxygen gases. If the mixture is 79% helium (by moles) what is the partial pressure of oxygen.",
     options: [{"label":"A","value":"A","text":"178.54 atm"},{"label":"B","value":"B","text":"47.46 atm"},{"label":"C","value":"C","text":"79.0 atm"},{"label":"D","value":"D","text":"21.0 atm"}],
     correctAnswer: "B",
     explanation: "",
   },
   {
-    id: "gases-22",
+    id: "gases-21",
     type: "multiple-choice",
     question: "What is the percent by mass of oxygen in H3PO4?",
     options: [{"label":"A","value":"A","text":"65.3%"},{"label":"B","value":"B","text":"31.6%"},{"label":"C","value":"C","text":"3.1%"},{"label":"D","value":"D","text":"34.7%"}],
@@ -171,7 +168,7 @@ export const gasesQuestions: Question[] = [
     explanation: "",
   },
   {
-    id: "gases-23",
+    id: "gases-22",
     type: "free-response",
     question: "In a reaction 9.5E-7 Gg CO2(g) is produced and dried to remove any water vapor. If it has a pressure of 34.05 PSI and a temperature of 24C, what is the volume of the CO2(g).",
     correctAnswer: "226.97 Liters of CO2(gas).",
