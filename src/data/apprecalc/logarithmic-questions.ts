@@ -207,7 +207,7 @@ export const logarithmicQuestions: Question[] = [
     id: "logarithmic-26",
     type: "free-response",
     question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, where $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Use the given data to write 2 equations that can be used to find the values of constants $a$ and $b$ in the expression for $R(t)$.",
-    correctAnswer: "$23 = a + b\\ln(t)$ and $38 = a + b\\ln(20+1)$",
+    correctAnswer: "$23 = a + b\\ln(0+1)$ and $38 = a + b\\ln(20+1)$",
     explanation: "",
   },
   {
