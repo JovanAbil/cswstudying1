@@ -134,7 +134,9 @@ const mathFunctions: MathFunction[] = [
 
 const MathBuilderSidebar = ({ isOpen, onClose, onInsert }: MathBuilderSidebarProps) => {
   const [builderText, setBuilderText] = useState('');
+  const [sidebarWidth, setSidebarWidth] = useState(384); // 24rem = 384px
   const inputRef = useRef<HTMLInputElement>(null);
+  const isResizing = useRef(false);
 
   // Focus input when sidebar opens
   useEffect(() => {
@@ -142,6 +144,37 @@ const MathBuilderSidebar = ({ isOpen, onClose, onInsert }: MathBuilderSidebarPro
       inputRef.current.focus();
     }
   }, [isOpen]);
+
+  // Handle resize
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizing.current) return;
+      const newWidth = window.innerWidth - e.clientX;
+      // Min 320px, max 80% of screen
+      const clampedWidth = Math.min(Math.max(newWidth, 320), window.innerWidth * 0.8);
+      setSidebarWidth(clampedWidth);
+    };
+
+    const handleMouseUp = () => {
+      isResizing.current = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
+
+  const startResize = () => {
+    isResizing.current = true;
+    document.body.style.cursor = 'ew-resize';
+    document.body.style.userSelect = 'none';
+  };
 
   const handleSymbolClick = (symbol: MathSymbol) => {
     setBuilderText(prev => prev + symbol.latex);
@@ -155,7 +188,6 @@ const MathBuilderSidebar = ({ isOpen, onClose, onInsert }: MathBuilderSidebarPro
 
   const handleInsert = () => {
     if (builderText.trim()) {
-      // Wrap in $$ for the user
       onInsert(`$${builderText}$`);
       setBuilderText('');
     }
@@ -169,7 +201,15 @@ const MathBuilderSidebar = ({ isOpen, onClose, onInsert }: MathBuilderSidebarPro
   if (!isOpen) return null;
 
   return (
-    <div className="fixed right-0 top-0 h-full w-96 bg-background border-l shadow-lg z-50 flex flex-col">
+    <div 
+      className="fixed right-0 top-0 h-full bg-background border-l shadow-lg z-50 flex flex-col"
+      style={{ width: sidebarWidth }}
+    >
+      {/* Resize Handle */}
+      <div
+        className="absolute left-0 top-0 h-full w-1.5 cursor-ew-resize hover:bg-primary/30 active:bg-primary/50 transition-colors"
+        onMouseDown={startResize}
+      />
       {/* Header */}
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
