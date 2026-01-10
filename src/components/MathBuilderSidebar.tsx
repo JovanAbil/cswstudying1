@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
-import { X, Divide, Superscript, Radical, ArrowRight, Calculator } from 'lucide-react';
+import { X, Calculator, Info } from 'lucide-react';
 
 interface MathBuilderSidebarProps {
   isOpen: boolean;
@@ -12,131 +12,164 @@ interface MathBuilderSidebarProps {
   onInsert: (latex: string) => void;
 }
 
-interface MathTemplate {
+interface MathSymbol {
+  display: string;
+  latex: string;
   name: string;
-  icon: React.ReactNode;
-  fields: { name: string; placeholder: string }[];
-  buildLatex: (values: string[]) => string;
 }
 
-const mathTemplates: MathTemplate[] = [
+interface MathFunction {
+  name: string;
+  syntax: string;
+  example: string;
+  template: string;
+}
+
+const mathSymbols: MathSymbol[] = [
+  { display: '°', latex: '^\\circ', name: 'Degrees' },
+  { display: '∞', latex: '\\infty', name: 'Infinity' },
+  { display: 'π', latex: '\\pi', name: 'Pi' },
+  { display: '±', latex: '\\pm', name: 'Plus/Minus' },
+  { display: '≤', latex: '\\leq', name: 'Less or Equal' },
+  { display: '≥', latex: '\\geq', name: 'Greater or Equal' },
+  { display: '≠', latex: '\\neq', name: 'Not Equal' },
+  { display: '≈', latex: '\\approx', name: 'Approximately' },
+  { display: '√', latex: '\\sqrt{}', name: 'Square Root' },
+  { display: 'θ', latex: '\\theta', name: 'Theta' },
+  { display: 'α', latex: '\\alpha', name: 'Alpha' },
+  { display: 'β', latex: '\\beta', name: 'Beta' },
+  { display: '→', latex: '\\to', name: 'Arrow' },
+  { display: '∪', latex: '\\cup', name: 'Union' },
+  { display: '∩', latex: '\\cap', name: 'Intersection' },
+  { display: '∈', latex: '\\in', name: 'Element of' },
+];
+
+const mathFunctions: MathFunction[] = [
   {
-    name: 'Logarithm',
-    icon: <span className="font-mono text-sm">log</span>,
-    fields: [
-      { name: 'Base', placeholder: '10' },
-      { name: 'Argument', placeholder: 'x' },
-    ],
-    buildLatex: (values) => {
-      const base = values[0] || '10';
-      const arg = values[1] || 'x';
-      if (base === 'e') return `$\\ln(${arg})$`;
-      if (base === '10') return `$\\log(${arg})$`;
-      return `$\\log_{${base}}(${arg})$`;
-    },
+    name: 'Fraction',
+    syntax: '\\frac{numerator}{denominator}',
+    example: '\\frac{1}{2}',
+    template: '\\frac{}{}',
   },
   {
     name: 'Exponent',
-    icon: <Superscript className="h-4 w-4" />,
-    fields: [
-      { name: 'Base', placeholder: 'x' },
-      { name: 'Power', placeholder: '2' },
-    ],
-    buildLatex: (values) => {
-      const base = values[0] || 'x';
-      const power = values[1] || '2';
-      return `$${base}^{${power}}$`;
-    },
+    syntax: 'base^{power}',
+    example: 'x^{2}',
+    template: '^{}',
   },
   {
-    name: 'Fraction',
-    icon: <Divide className="h-4 w-4" />,
-    fields: [
-      { name: 'Numerator', placeholder: '1' },
-      { name: 'Denominator', placeholder: 'x' },
-    ],
-    buildLatex: (values) => {
-      const num = values[0] || '1';
-      const den = values[1] || 'x';
-      return `$\\frac{${num}}{${den}}$`;
-    },
+    name: 'Subscript',
+    syntax: 'base_{subscript}',
+    example: 'x_{1}',
+    template: '_{}',
   },
   {
     name: 'Square Root',
-    icon: <Radical className="h-4 w-4" />,
-    fields: [
-      { name: 'Radicand', placeholder: 'x' },
-    ],
-    buildLatex: (values) => {
-      const rad = values[0] || 'x';
-      return `$\\sqrt{${rad}}$`;
-    },
+    syntax: '\\sqrt{expression}',
+    example: '\\sqrt{x}',
+    template: '\\sqrt{}',
   },
   {
     name: 'Nth Root',
-    icon: <span className="font-mono text-xs">ⁿ√</span>,
-    fields: [
-      { name: 'Index (n)', placeholder: '3' },
-      { name: 'Radicand', placeholder: 'x' },
-    ],
-    buildLatex: (values) => {
-      const n = values[0] || '3';
-      const rad = values[1] || 'x';
-      return `$\\sqrt[${n}]{${rad}}$`;
-    },
+    syntax: '\\sqrt[n]{expression}',
+    example: '\\sqrt[3]{x}',
+    template: '\\sqrt[]{}',
+  },
+  {
+    name: 'Logarithm (base 10)',
+    syntax: '\\log(argument)',
+    example: '\\log(x)',
+    template: '\\log()',
+  },
+  {
+    name: 'Natural Log',
+    syntax: '\\ln(argument)',
+    example: '\\ln(x)',
+    template: '\\ln()',
+  },
+  {
+    name: 'Log with Base',
+    syntax: '\\log_{base}(argument)',
+    example: '\\log_{2}(x)',
+    template: '\\log_{}()',
   },
   {
     name: 'Limit',
-    icon: <span className="font-mono text-xs">lim</span>,
-    fields: [
-      { name: 'Variable', placeholder: 'x' },
-      { name: 'Approaches', placeholder: '∞' },
-      { name: 'Expression', placeholder: 'f(x)' },
-    ],
-    buildLatex: (values) => {
-      const variable = values[0] || 'x';
-      let approaches = values[1] || '∞';
-      const expr = values[2] || 'f(x)';
-      if (approaches === '∞' || approaches === 'infinity') approaches = '\\infty';
-      if (approaches === '-∞' || approaches === '-infinity') approaches = '-\\infty';
-      return `$\\lim_{${variable} \\to ${approaches}} ${expr}$`;
-    },
+    syntax: '\\lim_{x \\to value} expression',
+    example: '\\lim_{x \\to \\infty} f(x)',
+    template: '\\lim_{x \\to } ',
+  },
+  {
+    name: 'Summation',
+    syntax: '\\sum_{i=start}^{end} expression',
+    example: '\\sum_{i=1}^{n} i',
+    template: '\\sum_{i=}^{} ',
+  },
+  {
+    name: 'Integral',
+    syntax: '\\int_{a}^{b} expression \\, dx',
+    example: '\\int_{0}^{1} x \\, dx',
+    template: '\\int_{}^{} \\, dx',
+  },
+  {
+    name: 'Sine',
+    syntax: '\\sin(angle)',
+    example: '\\sin(\\theta)',
+    template: '\\sin()',
+  },
+  {
+    name: 'Cosine',
+    syntax: '\\cos(angle)',
+    example: '\\cos(\\theta)',
+    template: '\\cos()',
+  },
+  {
+    name: 'Tangent',
+    syntax: '\\tan(angle)',
+    example: '\\tan(\\theta)',
+    template: '\\tan()',
   },
 ];
 
 const MathBuilderSidebar = ({ isOpen, onClose, onInsert }: MathBuilderSidebarProps) => {
-  const [selectedTemplate, setSelectedTemplate] = useState<MathTemplate | null>(null);
-  const [fieldValues, setFieldValues] = useState<string[]>([]);
+  const [builderText, setBuilderText] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSelectTemplate = (template: MathTemplate) => {
-    setSelectedTemplate(template);
-    setFieldValues(new Array(template.fields.length).fill(''));
+  // Focus input when sidebar opens
+  useEffect(() => {
+    if (isOpen && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
+
+  const handleSymbolClick = (symbol: MathSymbol) => {
+    setBuilderText(prev => prev + symbol.latex);
+    inputRef.current?.focus();
   };
 
-  const handleFieldChange = (index: number, value: string) => {
-    const newValues = [...fieldValues];
-    newValues[index] = value;
-    setFieldValues(newValues);
+  const handleFunctionClick = (func: MathFunction) => {
+    setBuilderText(prev => prev + func.template);
+    inputRef.current?.focus();
   };
 
   const handleInsert = () => {
-    if (selectedTemplate) {
-      const latex = selectedTemplate.buildLatex(fieldValues);
-      onInsert(latex);
-      setSelectedTemplate(null);
-      setFieldValues([]);
+    if (builderText.trim()) {
+      // Wrap in $$ for the user
+      onInsert(`$${builderText}$`);
+      setBuilderText('');
     }
   };
 
-  const handleBack = () => {
-    setSelectedTemplate(null);
-    setFieldValues([]);
+  const handleClear = () => {
+    setBuilderText('');
+    inputRef.current?.focus();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed right-0 top-0 h-full w-80 bg-background border-l shadow-lg z-50 flex flex-col">
+    <div className="fixed right-0 top-0 h-full w-96 bg-background border-l shadow-lg z-50 flex flex-col">
+      {/* Header */}
       <div className="flex items-center justify-between p-4 border-b">
         <div className="flex items-center gap-2">
           <Calculator className="h-5 w-5 text-primary" />
@@ -147,67 +180,107 @@ const MathBuilderSidebar = ({ isOpen, onClose, onInsert }: MathBuilderSidebarPro
         </Button>
       </div>
 
-      <ScrollArea className="flex-1 p-4">
-        {!selectedTemplate ? (
-          <div className="space-y-2">
-            <p className="text-sm text-muted-foreground mb-4">
-              Select a math function to insert:
-            </p>
-            {mathTemplates.map((template) => (
+      <ScrollArea className="flex-1">
+        {/* Instructions Section */}
+        <div className="p-4 bg-muted/50 border-b">
+          <div className="flex items-start gap-2">
+            <Info className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
+            <div className="text-sm space-y-2">
+              <p className="font-medium">How to use:</p>
+              <p className="text-muted-foreground">
+                Math expressions must be enclosed in <code className="bg-muted px-1 py-0.5 rounded text-primary font-mono">$$</code> symbols.
+              </p>
+              <p className="text-muted-foreground">
+                Example: <code className="bg-muted px-1 py-0.5 rounded font-mono">$\frac{"{1}{2}"}$</code> renders as ½
+              </p>
+              <p className="text-muted-foreground">
+                Click symbols or functions below to add them to the builder, then click Insert.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Symbols Section */}
+        <div className="p-4">
+          <Label className="text-sm font-semibold mb-3 block">Symbols</Label>
+          <div className="grid grid-cols-4 gap-2">
+            {mathSymbols.map((symbol) => (
               <Button
-                key={template.name}
+                key={symbol.name}
                 variant="outline"
-                className="w-full justify-start gap-3"
-                onClick={() => handleSelectTemplate(template)}
+                size="sm"
+                className="h-10 text-lg font-mono hover:bg-primary/10 hover:border-primary"
+                onClick={() => handleSymbolClick(symbol)}
+                title={`${symbol.name}: ${symbol.latex}`}
               >
-                <span className="w-8 flex justify-center">{template.icon}</span>
-                {template.name}
+                {symbol.display}
               </Button>
             ))}
           </div>
-        ) : (
-          <div className="space-y-4">
-            <Button variant="ghost" size="sm" onClick={handleBack} className="mb-2">
-              <ArrowRight className="h-4 w-4 mr-2 rotate-180" />
-              Back to templates
-            </Button>
-            
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-8 flex justify-center">{selectedTemplate.icon}</span>
-              <h3 className="font-medium">{selectedTemplate.name}</h3>
-            </div>
+        </div>
 
-            <Separator />
+        <Separator />
 
-            <div className="space-y-4 mt-4">
-              {selectedTemplate.fields.map((field, index) => (
-                <div key={field.name} className="space-y-2">
-                  <Label htmlFor={`field-${index}`}>{field.name}</Label>
-                  <Input
-                    id={`field-${index}`}
-                    placeholder={field.placeholder}
-                    value={fieldValues[index] || ''}
-                    onChange={(e) => handleFieldChange(index, e.target.value)}
-                  />
+        {/* Math Functions Section */}
+        <div className="p-4">
+          <Label className="text-sm font-semibold mb-3 block">Math Functions</Label>
+          <div className="space-y-2">
+            {mathFunctions.map((func) => (
+              <Button
+                key={func.name}
+                variant="outline"
+                className="w-full justify-start text-left h-auto py-2 px-3 hover:bg-primary/10 hover:border-primary"
+                onClick={() => handleFunctionClick(func)}
+              >
+                <div className="flex flex-col items-start gap-0.5 w-full">
+                  <span className="font-medium text-sm">{func.name}</span>
+                  <code className="text-xs text-muted-foreground font-mono truncate w-full">
+                    {func.syntax}
+                  </code>
                 </div>
-              ))}
-            </div>
-
-            <Separator />
-
-            <div className="space-y-2">
-              <Label>Preview</Label>
-              <div className="p-3 bg-muted rounded-md font-mono text-sm break-all">
-                {selectedTemplate.buildLatex(fieldValues)}
-              </div>
-            </div>
-
-            <Button className="w-full" onClick={handleInsert}>
-              Insert Math
-            </Button>
+              </Button>
+            ))}
           </div>
-        )}
+        </div>
       </ScrollArea>
+
+      {/* Builder Section - Fixed at bottom */}
+      <div className="border-t p-4 bg-background space-y-3">
+        <Label className="text-sm font-semibold block">Math Builder</Label>
+        <div className="space-y-2">
+          <Input
+            ref={inputRef}
+            value={builderText}
+            onChange={(e) => setBuilderText(e.target.value)}
+            placeholder="Build your math expression here..."
+            className="font-mono text-sm"
+          />
+          <div className="p-2 bg-muted rounded-md min-h-[40px]">
+            <p className="text-xs text-muted-foreground mb-1">Preview:</p>
+            <code className="text-sm font-mono break-all">
+              {builderText ? `$${builderText}$` : 'Empty'}
+            </code>
+          </div>
+        </div>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={handleClear}
+            className="flex-1"
+          >
+            Clear
+          </Button>
+          <Button 
+            size="sm" 
+            onClick={handleInsert}
+            className="flex-1"
+            disabled={!builderText.trim()}
+          >
+            Insert
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
