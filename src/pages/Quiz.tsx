@@ -459,6 +459,7 @@ const Quiz = () => {
                   inputRef={frqInputRef}
                   value={currentAnswer}
                   onChange={setCurrentAnswer}
+                  useUnicode={true}
                 />
               )}
             </div>
