@@ -186,7 +186,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-24",
     type: "multiple-choice",
-    question: "(Calculator) Four equally rated professional weightlifters agreed to participate in an experiment where they would have different amounts of time to train for a deadlift competition. The amount of time trained, in months, and the maximum deadlifts, in pounds are listed above. A logarithmic function of the form $f(x) = a + b\\ln(x)$ can be used to predict the maximum deadlift based on months training. Based on the regression, how long would an equally rated weightlifter theoretically need to train to deadlift $1,000$ pounds? ",
+    question: "(Calculator) Four equally rated professional weightlifters agreed to participate in an experiment where they would have different amounts of time to train for a deadlift competition. The amount of time trained, in months, and the maximum deadlifts, in pounds are listed above. A logarithmic function of the form $f(x) = a + b\\ln(x)$ can be used to predict the maximum deadlift based on months training. Based on the regression, how long would an equally rated weightlifter theoretically need to train to deadlift $1,100$ pounds? ",
     options: [{"label":"A","value":"A","text":"28.161 months"},{"label":"B","value":"B","text":"145.573 months"},{"label":"C","value":"C","text":"1438.263 months"},{"label":"D","value":"D","text":"2177.489 months"}],
     correctAnswer: "A",
     explanation: "",
