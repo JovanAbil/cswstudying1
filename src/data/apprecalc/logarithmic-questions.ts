@@ -62,7 +62,7 @@ export const logarithmicQuestions: Question[] = [
     id: "logarithmic-8",
     type: "multiple-choice",
     question: "Which of the following is equivalent to $\\log_{3}(36)$?",
-    options: [{"label":"A","value":"A","text":"$\\frac{\\log(3)}{\\log(36)}$"},{"label":"B","value":"B","text":"$\\frac_{2\\log(6)}(\\log(3))$"},{"label":"C","value":"C","text":"$\\frac_{2\\log(3)}(\\log(6))$"},{"label":"D","value":"D","text":"$\\ln(12)$"}],
+    options: [{"label":"A","value":"A","text":"$\\frac{\\log(3)}{\\log(36)}$"},{"label":"B","value":"B","text":"$\\frac_{2\\log(6)}{\\log(3)}$"},{"label":"C","value":"C","text":"$\\frac_{2\\log(3)}{\\log(6)}$"},{"label":"D","value":"D","text":"$\\ln(12)$"}],
     correctAnswer: "B",
     explanation: "",
   },
