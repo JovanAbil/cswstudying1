@@ -87,7 +87,7 @@ export const logarithmicQuestions: Question[] = [
     type: "multiple-choice",
     question: "Let $f(x) = \\log_{a}(x)$, where $a$ is a constant. If $0 < a < 1$, which of the following functions has the same end behavior as $f$ as $x$ increases without bound?",
     options: [{"label":"A","value":"A","text":"$y = 3(2)^{x}$"},{"label":"B","value":"B","text":"$y = -3(2)^{x}$"},{"label":"C","value":"C","text":"$y = 3(\\frac{1}{2})^{x}$"},{"label":"D","value":"D","text":"$y = -3(\\frac{1}{2})^{x}$"}],
-    correctAnswer: "B",
+    correctAnswer: "C",
     explanation: "",
   },
   {
