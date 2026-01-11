@@ -65,7 +65,7 @@ const Index = () => {
               Master your classes at CSW with interactive practice tests and daily exercises. 
               Choose a subject category to get started.
             </p>
-            <p className="text-sm text-muted-foreground/70 mb-4">If you want to add courses, make a subject in "Other" and send the files to abilash.jovan@charterschool.org to add them! Any questions you can also email abilash.jovan@charterschool.org!</p>
+            <p className="text-sm text-muted-foreground/70 mb-4">If you want to add courses, make a subject in "Other" and send the files to abilash.jovan@charterschool.org to add them! Any questions you can also email abilash.jovan@charterschool.org! ALSO NOTE: Any custom units that are downloaded or uploaded are saved on the browser, MEANING, it will get deleted if you clear browser cache. ALWAYS SAVE YOUR CUSTOM UNITS, or send me an email to add it permanently to the website.</p>
             <div className="flex items-center justify-center gap-2 text-primary font-medium animate-bounce">
               <ArrowDown className="h-5 w-5" />
               <span>Scroll down to see how to use the website</span>
