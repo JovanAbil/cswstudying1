@@ -3,6 +3,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Landmark, Trophy, Brain, Target } from 'lucide-react';
 import useWrongAnswers from '@/hooks/useWrongAnswers';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 const SocialCategory = () => {
   const navigate = useNavigate();
@@ -37,8 +39,8 @@ const SocialCategory = () => {
   const memoryUnits: { id: string; name: string; subject: string }[] = [];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
@@ -137,7 +139,13 @@ const SocialCategory = () => {
             </Card>
           )}
         </div>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -3,6 +3,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Eye, Brain, Lock, Trophy, Target } from 'lucide-react';
 import useWrongAnswers from '@/hooks/useWrongAnswers';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 // Import question files
 import { basicsQuestions } from '@/data/stock/basics-questions';
@@ -29,8 +31,8 @@ const StockPage = () => {
   const wrongCount = getWrongAnswerCount('stock');
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
@@ -126,7 +128,13 @@ const StockPage = () => {
             <li>Add the mapping in <code className="bg-background px-1 rounded">Quiz.tsx</code> questionMap: <code className="bg-background px-1 rounded">'stock-myunit': myUnitQuestions</code></li>
           </ol>
         </Card>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

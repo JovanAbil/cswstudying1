@@ -9,6 +9,8 @@ import { Question, QuizAttempt } from '@/types/quiz';
 import QuestionTable from '@/components/QuestionTable';
 import MathText from '@/components/MathText';
 import useWrongAnswers from '@/hooks/useWrongAnswers';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 interface ExtendedAttempt extends QuizAttempt {
   question: Question;
@@ -72,8 +74,8 @@ const Results = () => {
   const extendedAttempts = attempts as ExtendedAttempt[];
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4">
-      <div className="container mx-auto max-w-4xl">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="py-8 px-4 flex-1">
         <Card className="p-8 md:p-12 mb-8 animate-fade-in">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6">
@@ -234,7 +236,12 @@ const Results = () => {
           </div>
         </Card>
 
-        <div className="flex justify-center">
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
+
+        <div className="flex justify-center mt-8">
           <Button
             onClick={() => navigate('/')}
             size="lg"
@@ -245,6 +252,7 @@ const Results = () => {
           </Button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

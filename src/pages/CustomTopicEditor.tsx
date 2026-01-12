@@ -24,6 +24,8 @@ import { Question, MultipleChoiceQuestion, FreeResponseQuestion } from '@/types/
 import MathBuilderSidebar from '@/components/MathBuilderSidebar';
 import MathQuickInput from '@/components/MathQuickInput';
 import { useToast } from '@/hooks/use-toast';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 interface EditingQuestion {
   type: 'mcq' | 'frq';
@@ -340,8 +342,8 @@ const CustomTopicEditor = () => {
   const unit = unitId ? getUnit(unitId) : undefined;
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
         <Button variant="ghost" onClick={() => navigate('/category/other')} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Other
@@ -597,6 +599,12 @@ const CustomTopicEditor = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Bottom Ad Placeholder */}
+      <div className="container mx-auto px-4 pb-8">
+        <AdPlaceholder position="bottom" />
+      </div>
+      <Footer />
     </div>
   );
 };

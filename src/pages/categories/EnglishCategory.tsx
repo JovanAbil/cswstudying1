@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, BookOpen, Trophy, Lock, Brain } from 'lucide-react';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 const EnglishCategory = () => {
   const navigate = useNavigate();
@@ -22,8 +24,8 @@ const EnglishCategory = () => {
   const memoryUnits: { id: string; name: string; subject: string }[] = [];
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <Button variant="ghost" onClick={() => navigate('/')} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home
         </Button>
@@ -79,7 +81,13 @@ const EnglishCategory = () => {
             <p className="text-muted-foreground">No memory training units available yet</p>
           </Card>
         </div>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

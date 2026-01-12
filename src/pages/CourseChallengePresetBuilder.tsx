@@ -9,6 +9,8 @@ import { Question } from '@/types/quiz';
 import { usePresets, Preset } from '@/hooks/usePresets';
 import MathText from '@/components/MathText';
 import { getImportedQuestions, ImportedQuestionSet } from '@/utils/customUnitsExport';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 // Import all question sets
 import { polynomialQuestions } from '@/data/apprecalc/polynomial-questions';
@@ -307,8 +309,8 @@ const CourseChallengePresetBuilder = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 max-w-6xl flex-1">
         <Button
           variant="ghost"
           onClick={() => navigate(`/course-challenge/${subject}`)}
@@ -442,7 +444,13 @@ const CourseChallengePresetBuilder = () => {
             </div>
           </Card>
         ))}
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

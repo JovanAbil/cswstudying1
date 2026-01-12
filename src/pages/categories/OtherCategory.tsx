@@ -26,6 +26,8 @@ import useCustomUnits, { CustomTopic } from '@/hooks/useCustomUnits';
 import { useToast } from '@/hooks/use-toast';
 import { downloadUnit, downloadTopic, parseTopicFile, parseUnitMetadata } from '@/utils/customUnitsExport';
 import JSZip from 'jszip';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 const OtherCategory = () => {
   const navigate = useNavigate();
@@ -220,8 +222,8 @@ const OtherCategory = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
@@ -575,6 +577,12 @@ const OtherCategory = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Bottom Ad Placeholder */}
+      <div className="container mx-auto px-4 pb-8">
+        <AdPlaceholder position="bottom" />
+      </div>
+      <Footer />
     </div>
   );
 };

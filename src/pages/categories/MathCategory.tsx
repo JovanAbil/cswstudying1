@@ -3,6 +3,8 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calculator, Trophy, Brain, Target } from 'lucide-react';
 import useWrongAnswers from '@/hooks/useWrongAnswers';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 const MathCategory = () => {
   const navigate = useNavigate();
@@ -36,8 +38,8 @@ const MathCategory = () => {
   const wrongCount = getWrongAnswerCount('precalc');
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
@@ -145,7 +147,13 @@ const MathCategory = () => {
             ))}
           </div>
         </div>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

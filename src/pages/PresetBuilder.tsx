@@ -7,6 +7,8 @@ import { useState, useMemo, useEffect } from 'react';
 import { toast } from 'sonner';
 import usePresets, { Preset } from '@/hooks/usePresets';
 import useCustomUnits from '@/hooks/useCustomUnits';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 import MathText from '@/components/MathText';
 import {
   Dialog,
@@ -258,8 +260,8 @@ const PresetBuilder = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-1">
         <Button variant="ghost" onClick={() => navigate(`/unit/${subject}/${unitId}`)} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Unit
         </Button>
@@ -390,7 +392,13 @@ const PresetBuilder = () => {
             ))}
           </div>
         </Card>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

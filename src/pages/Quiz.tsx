@@ -8,6 +8,8 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import MathQuickInput from '@/components/MathQuickInput';
 import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 import useQuizTimer from '@/hooks/useQuizTimer';
 import QuizTimer from '@/components/QuizTimer';
 import useCustomUnits from '@/hooks/useCustomUnits';
@@ -359,8 +361,8 @@ const Quiz = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
         <div className="flex items-center justify-between mb-6">
           <Button
             variant="ghost"
@@ -520,14 +522,20 @@ const Quiz = () => {
                 size="lg"
                 disabled={currentQuestion.type === 'free-response' && showGrading}
               >
-                {currentIndex < questions.length - 1 ? 'Next Question' : 'See Results'}
-              </Button>
-            )}
-          </div>
-        </Card>
-      </div>
+              {currentIndex < questions.length - 1 ? 'Next Question' : 'See Results'}
+            </Button>
+          )}
+        </div>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
+      </Card>
     </div>
-  );
+    <Footer />
+  </div>
+);
 };
 
 export default Quiz;

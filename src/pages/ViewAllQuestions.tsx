@@ -7,6 +7,8 @@ import { toast } from 'sonner';
 import MathText from '@/components/MathText';
 import QuestionTable from '@/components/QuestionTable';
 import useCustomUnits from '@/hooks/useCustomUnits';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 // Import all question sets from existing paths
 import { polynomialQuestions } from '@/data/apprecalc/polynomial-questions';
@@ -138,8 +140,8 @@ const ViewAllQuestions = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
         <Button variant="ghost" onClick={() => navigate(`/unit/${subject}/${unitId}`)} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Unit
         </Button>
@@ -182,7 +184,13 @@ const ViewAllQuestions = () => {
             </Card>
           ))}
         </div>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };

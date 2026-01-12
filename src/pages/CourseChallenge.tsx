@@ -7,6 +7,8 @@ import { courseChallengeResources } from '@/data/study-resources';
 import { useWrongAnswers } from '@/hooks/useWrongAnswers';
 import { parseTopicFile, getImportedQuestions, saveImportedQuestions, removeImportedQuestions, ImportedQuestionSet } from '@/utils/customUnitsExport';
 import { toast } from 'sonner';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 
 const CourseChallenge = () => {
   const { subject } = useParams();
@@ -165,8 +167,8 @@ const CourseChallenge = () => {
   const totalImportedQuestions = importedSets.reduce((sum, s) => sum + s.questions.length, 0);
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-4xl">
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
@@ -331,7 +333,13 @@ const CourseChallenge = () => {
             <li>• <strong>Import:</strong> Upload .ts files from downloaded topics to add custom questions</li>
           </ul>
         </Card>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-8">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>
   );
 };
