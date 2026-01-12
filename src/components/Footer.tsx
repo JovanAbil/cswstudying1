@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom';
-
 export const Footer = () => {
-  return (
-    <footer className="w-full border-t bg-muted/30">
+  return <footer className="w-full border-t bg-muted/30">
       <div className="container mx-auto px-4 py-4">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <span>Credits:</span>
+            <span>This website was made with the help of Lovable</span>
             {/* Add credits manually here */}
-            <span className="font-medium">Abilash Jovan</span>
+            <span className="font-medium">
+          </span>
             {/* Example: <span className="font-medium">• Name Here</span> */}
           </div>
           <div className="flex items-center gap-4">
@@ -18,6 +17,5 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
