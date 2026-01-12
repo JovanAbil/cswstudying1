@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown, FolderPlus } from 'lucide-react';
+import { Footer } from '@/components/Footer';
+import { AdPlaceholder } from '@/components/AdPlaceholder';
 const categories = [{
   id: 'math',
   name: 'Mathematics',
@@ -52,7 +54,7 @@ const controls = [{
 }];
 const Index = () => {
   const navigate = useNavigate();
-  return <div className="min-h-screen bg-background">
+  return <div className="min-h-screen bg-background flex flex-col">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
@@ -187,7 +189,13 @@ const Index = () => {
             </p>
           </Card>
         </div>
+
+        {/* Bottom Ad Placeholder */}
+        <div className="mt-16 max-w-4xl mx-auto">
+          <AdPlaceholder position="bottom" />
+        </div>
       </div>
+      <Footer />
     </div>;
 };
 export default Index;

@@ -1,0 +1,69 @@
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Footer } from '@/components/Footer';
+
+const PrivacyPolicy = () => {
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <div className="container mx-auto px-4 py-8 flex-1">
+        <Button variant="ghost" asChild className="mb-6">
+          <Link to="/">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </Link>
+        </Button>
+
+        <div className="max-w-3xl mx-auto">
+          <h1 className="text-4xl font-display font-bold mb-8">Privacy Policy</h1>
+          
+          <Card className="p-8 space-y-6">
+            <section>
+              <h2 className="text-2xl font-display font-semibold mb-4">Third-Party Advertising</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                We use third-party advertising companies, including Google, to serve ads when you visit our website. 
+                These companies may use information about your visits to this and other websites in order to provide 
+                advertisements about goods and services of interest to you.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-display font-semibold mb-4">Cookies</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                Cookies may be used by us and our advertising partners to collect non-personally identifiable information 
+                about your browsing activities. This helps us understand how visitors use our site and allows advertisers 
+                to show you more relevant ads.
+              </p>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-display font-semibold mb-4">Opt-Out Options</h2>
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                You have the right to opt out of personalized advertising. You can do this by:
+              </p>
+              <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
+                <li>Visiting Google's Ads Settings at <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">adssettings.google.com</a></li>
+                <li>Using the Network Advertising Initiative opt-out page at <a href="https://optout.networkadvertising.org" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">optout.networkadvertising.org</a></li>
+                <li>Adjusting your browser settings to block or delete cookies</li>
+              </ul>
+            </section>
+
+            <section>
+              <h2 className="text-2xl font-display font-semibold mb-4">Contact</h2>
+              <p className="text-muted-foreground leading-relaxed">
+                If you have any questions about this Privacy Policy, please contact us at{' '}
+                <a href="mailto:abilash.jovan@charterschool.org" className="text-primary hover:underline">
+                  abilash.jovan@charterschool.org
+                </a>
+              </p>
+            </section>
+          </Card>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+export default PrivacyPolicy;

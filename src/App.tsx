@@ -4,6 +4,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { DebugModeToggle } from "@/components/DebugModeToggle";
+import { AdPlaceholder } from "@/components/AdPlaceholder";
 import Index from "./pages/Index";
 import UnitDetail from "./pages/UnitDetail";
 import Quiz from "./pages/Quiz";
@@ -20,6 +22,7 @@ import SocialCategory from "./pages/categories/SocialCategory";
 import OtherCategory from "./pages/categories/OtherCategory";
 import CustomTopicEditor from "./pages/CustomTopicEditor";
 import StockPage from "./pages/StockPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 const queryClient = new QueryClient();
 
@@ -28,11 +31,15 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <ThemeToggle />
+        <DebugModeToggle />
+        <AdPlaceholder position="sidebar-left" />
+        <AdPlaceholder position="sidebar-right" />
         <Toaster />
         <Sonner />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/stock" element={<StockPage />} />
             <Route path="/category/math" element={<MathCategory />} />
             <Route path="/category/english" element={<EnglishCategory />} />
