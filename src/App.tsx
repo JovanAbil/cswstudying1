@@ -37,8 +37,8 @@ const App = () => {
         <AdPlaceholder position="sidebar-right" />
         <Toaster />
         <Sonner />
-        <CookieConsentBanner />
         <BrowserRouter>
+          <CookieConsentBanner />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
