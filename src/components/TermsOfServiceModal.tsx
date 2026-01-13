@@ -43,10 +43,16 @@ const TermsOfServiceModal = () => {
             <p>
               {/* PLACEHOLDER: Add your terms of service text here */}
               [- This Website was made for studying to be more efficient]
+            </p>
               [- More than just using this website, please share to anyone you know!]
+            <p>
               [- You can also add your own guides as well in OTHER!]
+            </p>
               [- Since Tests are directly taken from teachers, following the rules is necessary; don't ask to post tests that everyone hasn't taken]
+            <p>
               [- Building off of acedemic dishonesty, all tests questions will be changed year end to have similar content but not questions ripped off of tests to ensure teachers don't have to worry about cheating next year]
+            </p>
+            <p>
               [- Have fun using this website and good luck on your test!]
             </p>
           </div>
