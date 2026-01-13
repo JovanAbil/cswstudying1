@@ -42,7 +42,12 @@ const TermsOfServiceModal = () => {
           <div className="space-y-4 text-sm text-muted-foreground">
             <p>
               {/* PLACEHOLDER: Add your terms of service text here */}
-              [Terms of Service content will go here - user will add the text]
+              [- This Website was made for studying to be more efficient]
+              [- More than just using this website, please share to anyone you know!]
+              [- You can also add your own guides as well in OTHER!]
+              [- Since Tests are directly taken from teachers, following the rules is necessary; don't ask to post tests that everyone hasn't taken]
+              [- Building off of acedemic dishonesty, all tests questions will be changed year end to have similar content but not questions ripped off of tests to ensure teachers don't have to worry about cheating next year]
+              [- Have fun using this website and good luck on your test!]
             </p>
           </div>
         </ScrollArea>
