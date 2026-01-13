@@ -224,16 +224,25 @@ const Quiz = () => {
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      // Number keys 1-9 for selecting options
+      // Number keys 1-9 for selecting options - don't prevent default, just select answer
       if (!isSubmitted && currentQuestion?.type === 'multiple-choice') {
         const keyNum = parseInt(e.key);
         if (keyNum >= 1 && keyNum <= shuffledOptions.length) {
+          e.preventDefault(); // Prevent the number from being typed
           setCurrentAnswer(shuffledOptions[keyNum - 1].value);
+          // Remove focus from any button that might be focused (like Skip)
+          if (document.activeElement instanceof HTMLButtonElement) {
+            document.activeElement.blur();
+          }
           return;
         }
       }
 
       if (e.key === 'Enter') {
+        // Prevent Enter from triggering focused buttons
+        if (document.activeElement instanceof HTMLButtonElement) {
+          e.preventDefault();
+        }
         if (!isSubmitted) {
           handleSubmit();
         } else if (currentQuestion.type === 'multiple-choice' || currentAttempt.isCorrect !== null) {
@@ -290,17 +299,40 @@ const Quiz = () => {
     newAttempts[currentIndex] = {
       ...newAttempts[currentIndex],
       userAnswer: 'SKIPPED',
-      isCorrect: false
+      isCorrect: false,
+      skipped: true
     };
     setAttempts(newAttempts);
     
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setCurrentAnswer('');
-      setIsSubmitted(false);
-      setShowGrading(false);
-      setShuffledOptions([]);
-    } else {
+    // Find next non-skipped question, or go to first skipped question if at end
+    let nextIndex = currentIndex + 1;
+    
+    // Try to find next unanswered question
+    while (nextIndex < questions.length && newAttempts[nextIndex].userAnswer !== null) {
+      nextIndex++;
+    }
+    
+    // If we've gone through all questions, check if there are skipped questions to revisit
+    if (nextIndex >= questions.length) {
+      const firstSkippedIndex = newAttempts.findIndex(a => a.skipped && a.userAnswer === 'SKIPPED');
+      if (firstSkippedIndex !== -1 && firstSkippedIndex !== currentIndex) {
+        // Reset the skipped question so it can be answered
+        newAttempts[firstSkippedIndex] = {
+          ...newAttempts[firstSkippedIndex],
+          userAnswer: null,
+          isCorrect: null,
+          skipped: true // Keep the skipped tag for display
+        };
+        setAttempts(newAttempts);
+        setCurrentIndex(firstSkippedIndex);
+        setCurrentAnswer('');
+        setIsSubmitted(false);
+        setShowGrading(false);
+        setShuffledOptions([]);
+        return;
+      }
+      
+      // No more questions to answer, go to results
       const finalTime = timer.stop();
       const score = newAttempts.filter(a => a.isCorrect).length;
       const total = newAttempts.length;
@@ -318,7 +350,14 @@ const Quiz = () => {
           }))
         } 
       });
+      return;
     }
+    
+    setCurrentIndex(nextIndex);
+    setCurrentAnswer('');
+    setIsSubmitted(false);
+    setShowGrading(false);
+    setShuffledOptions([]);
   };
 
   const handleNext = () => {
@@ -399,6 +438,11 @@ const Quiz = () => {
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-sm font-medium text-muted-foreground">
               Question {currentIndex + 1} of {questions.length}
+              {attempts[currentIndex]?.skipped && (
+                <span className="ml-2 px-2 py-0.5 bg-warning/20 text-warning text-xs rounded-full font-medium">
+                  [Skipped]
+                </span>
+              )}
             </h2>
             <span className="text-sm font-medium text-primary">
               {Math.round(progress)}% Complete

@@ -7,6 +7,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { DebugModeToggle } from "@/components/DebugModeToggle";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
+import TermsOfServiceModal from "@/components/TermsOfServiceModal";
 import Index from "./pages/Index";
 import UnitDetail from "./pages/UnitDetail";
 import Quiz from "./pages/Quiz";
@@ -39,6 +40,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <CookieConsentBanner />
+          <TermsOfServiceModal />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

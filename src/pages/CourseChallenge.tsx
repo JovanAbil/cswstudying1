@@ -2,21 +2,23 @@ import { useState, useRef, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, Trophy, ExternalLink, Wrench, Target, Upload, X, FileText } from 'lucide-react';
+import { ArrowLeft, Trophy, ExternalLink, Wrench, Target, Upload, X, FileText, Download } from 'lucide-react';
 import { courseChallengeResources } from '@/data/study-resources';
 import { useWrongAnswers } from '@/hooks/useWrongAnswers';
-import { parseTopicFile, getImportedQuestions, saveImportedQuestions, removeImportedQuestions, ImportedQuestionSet } from '@/utils/customUnitsExport';
+import { parseTopicFile, getImportedQuestions, saveImportedQuestions, removeImportedQuestions, ImportedQuestionSet, generateBuiltInTopicFile } from '@/utils/customUnitsExport';
 import { toast } from 'sonner';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
+import RemoveConfirmDialog from '@/components/RemoveConfirmDialog';
 
 const CourseChallenge = () => {
   const { subject } = useParams();
   const navigate = useNavigate();
   const { getAllWrongQuestionsForSubject, getWrongAnswerCount } = useWrongAnswers();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  
   const [importedSets, setImportedSets] = useState<ImportedQuestionSet[]>([]);
+  const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
+  const [setToRemove, setSetToRemove] = useState<{ id: string; name: string } | null>(null);
   
   // Load imported question sets
   useEffect(() => {
@@ -150,7 +152,28 @@ const CourseChallenge = () => {
   const handleRemoveImported = (setId: string) => {
     removeImportedQuestions(subject || '', setId);
     setImportedSets(prev => prev.filter(s => s.id !== setId));
+    setRemoveDialogOpen(false);
+    setSetToRemove(null);
     toast.success('Removed imported questions');
+  };
+
+  const handleDownloadImported = (set: ImportedQuestionSet) => {
+    const content = generateBuiltInTopicFile(set.questions, set.name, false);
+    const filename = `${set.name.replace(/\s+/g, '-').toLowerCase()}-questions.ts`;
+    
+    const blob = new Blob([content], { type: 'text/typescript' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success(`Downloaded ${filename}`);
+  };
+
+  const openRemoveDialog = (setId: string, setName: string) => {
+    setSetToRemove({ id: setId, name: setName });
+    setRemoveDialogOpen(true);
   };
 
   const totalImportedQuestions = importedSets.reduce((sum, s) => sum + s.questions.length, 0);
@@ -259,14 +282,26 @@ const CourseChallenge = () => {
                         <span className="text-sm font-medium capitalize">{set.name}</span>
                         <span className="text-xs text-muted-foreground">({set.questions.length} questions)</span>
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleRemoveImported(set.id)}
-                        className="h-8 w-8 p-0 text-destructive hover:text-destructive"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
+                      <div className="flex items-center gap-1">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDownloadImported(set)}
+                          className="h-8 w-8 p-0 text-primary hover:text-primary"
+                          title="Download file"
+                        >
+                          <Download className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => openRemoveDialog(set.id, set.name)}
+                          className="h-8 w-8 p-0 text-destructive hover:text-destructive"
+                          title="Remove file"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -338,6 +373,17 @@ const CourseChallenge = () => {
         </div>
       </div>
       <Footer />
+      
+      {/* Remove Confirmation Dialog */}
+      <RemoveConfirmDialog
+        isOpen={removeDialogOpen}
+        onClose={() => {
+          setRemoveDialogOpen(false);
+          setSetToRemove(null);
+        }}
+        onConfirm={() => setToRemove && handleRemoveImported(setToRemove.id)}
+        fileName={setToRemove?.name || ''}
+      />
     </div>
   );
 };

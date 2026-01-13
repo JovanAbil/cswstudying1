@@ -36,6 +36,9 @@
     
     --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
+    
+    --warning: 45 93% 47%;
+    --warning-foreground: 0 0% 100%;
 
     --math: 252 100% 67%;
     --math-foreground: 0 0% 100%;
@@ -106,6 +109,9 @@
     
     --success: 160 84% 35%;
     --success-foreground: 0 0% 100%;
+    
+    --warning: 45 93% 52%;
+    --warning-foreground: 0 0% 0%;
 
     --math: 252 100% 70%;
     --math-foreground: 0 0% 100%;
