@@ -289,6 +289,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-24",
     type: "multiple-choice",
+    calculator: "True",
     question: "[Calculator] The growth of a bacteria in a culture is modeled by $y = 2.3e^{1.5t}$, where $t$ is measured in days. At what time $t$ is the number of bacteria approximately 210?",
     options: [
       { "label": "A", "value": "A", "text": "$t = 3.009$ days" },
@@ -302,6 +303,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-25",
     type: "multiple-choice",
+    calculator: "True",
     question: "[Calculator] During flu season at one school, Administrators feared that the flu was spreading exponentially. Ten students had the flu three days after the initial flu case, and 20 students had the flu one week after the initial flu case. If an exponential regression function $F(t)$ is used to model the number of students $F$ who have the flu $t$ days after the initial flu case, what is the predicted number of students who will have the flu two weeks after the initial case?",
     options: [
       { "label": "A", "value": "A", "text": "28" },
@@ -315,6 +317,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-26",
     type: "multiple-choice",
+    calculator: "True",
     image: "/images/apprecalc/exponential1.png",
     question: "[Calculator] The function $i$ gives the total number of iPhones sold worldwide yearly from 2007-2012. The table above gives the number of iPhones sold, in millions, for the years 2007 - 2012. A quadratic regression $y = at^2 + bt + c$ is used to model the function $i$. What is the residual for the number of iPhones sold (in millions) in year 2009?",
     options: [
@@ -329,6 +332,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-27",
     type: "multiple-choice",
+    calculator: "True",
     question: "[Calculator] The population of deer in a forest is modeled by a team of wildlife biologists. Two function models are created: $D(t) = 0.21t^2 + 1.72t + 6.18$ and $E(t) = 5.02(1.19)^t$, where $t = 0$ represents 2020 and $0 \\leq t \\leq 20$. What is the earliest calendar year that the population predicted by the exponential model exceeds that predicted by the quadratic model?",
     options: [
       { "label": "A", "value": "A", "text": "2034" },
@@ -342,6 +346,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-28",
     type: "multiple-choice",
+    calculator: "True",
     question: "[Calculator] A geometric sequence $g_n$ has known terms $g_4 = 9$ and $g_7 = 30.375$. What is the value of $g_{12}$?",
     options: [
       { "label": "A", "value": "A", "text": "$66.000$" },
@@ -355,6 +360,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-29",
     type: "multiple-choice",
+    calculator: "True",
     image: "/images/apprecalc/exponential2.png",
     question: "[Calculator] The table above gives values of the function $y = f(x)$ for selected values of $x$. Which of the following input-output pairs describes $f^{-1}$?",
     options: [
@@ -369,6 +375,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-30",
     type: "free-response",
+    calculator: "True",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. The number of subscribers can be modeled by the function $S$ given by $S(p) = ab^p$, where $S(p)$ is the number of subscribers, in thousands, for a subscription price of $p$ dollars. Use the given data to find the average rate of change, in thousands of subscribers per dollar, from $p=0$ to $p=13.5$. Express your answer as a decimal approximation. Show the computations that lead to your answer.",
     correctAnswer: "$-6.6267$",
@@ -377,6 +384,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-31",
     type: "free-response",
+    calculator: "True",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. The number of subscribers can be modeled by the function $S$ given by $S(p) = ab^p$, where $S(p)$ is the number of subscribers, in thousands, for a subscription price of $p$ dollars. Use the given data to find the average rate of change, in thousands of subscribers per dollar, from $p=0$ to $p=13.5$. Using the average rate of change, interpret the meaning in the context of the problem.",
     correctAnswer: "On the interval from \\$0 in price to \\$13.5 in price, the amount of subscribers decreased by an average rate of 6.6267 thousands of subscribers per dollar.",
@@ -385,6 +393,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-32",
     type: "free-response",
+    calculator: "True",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. Use the given data to write two equations that can be used to find the values for the constants $a$ and $b$.",
     correctAnswer: "$a(b)^{12} = 66.96$, $a(b)^0 = 150$",
@@ -393,6 +402,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-33",
     type: "free-response",
+    calculator: "True",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. Use the given data to write two equations and find the values of $a$ and $b$.",
     correctAnswer: "$a = 150$, $b = 0.935$",
@@ -401,6 +411,7 @@ export const exponentialQuestions: Question[] = [
   {
     id: "exponential-34",
     type: "free-response",
+    calculator: "True",
     image: "/images/apprecalc/exponential7.png",
     question: "[Calculator] An online newspaper has tried adjusting its prices to deal with rising inflation without losing so many customers as to make the price increase counterproductive. The newspaper started out free and then tried two different prices in two different months and looked at the number of subscribers, in thousands, in each month. The table shows the subscriber and price data. Use the given data to write two equations and find the values of $a$ and $b$, and does the function $S(p)$ model exponential growth or exponential decay? Explain your answer based on your values of $a$ and $b$.",
     correctAnswer: "The function $S(p)$ models exponential decay because the value $b$ is less than 1 and greater than 0, which means it decreases. Since the starting value is $a=150$ which is high, it will decrease.",
