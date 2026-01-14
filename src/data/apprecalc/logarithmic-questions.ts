@@ -178,7 +178,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-23",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "(Calculator) Find all values of $x$ that satisfy $\\log_{3}(x+4) >= 2^{x-2}$. ",
     options: [{"label":"A","value":"A","text":"x <= -2.964"},{"label":"B","value":"B","text":"x >= 2.804"},{"label":"C","value":"C","text":"-2.964 <= x <= 2.804"},{"label":"D","value":"D","text":"x > 2.804"}],
     correctAnswer: "C",
@@ -187,7 +187,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-24",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "(Calculator) Four equally rated professional weightlifters agreed to participate in an experiment where they would have different amounts of time to train for a deadlift competition. The amount of time trained, in months, and the maximum deadlifts, in pounds are listed above. A logarithmic function of the form $f(x) = a + b\\ln(x)$ can be used to predict the maximum deadlift based on months training. Based on the regression, how long would an equally rated weightlifter theoretically need to train to deadlift $1,100$ pounds? ",
     options: [{"label":"A","value":"A","text":"28.161 months"},{"label":"B","value":"B","text":"145.573 months"},{"label":"C","value":"C","text":"1438.263 months"},{"label":"D","value":"D","text":"2177.489 months"}],
     correctAnswer: "A",
@@ -208,7 +208,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-26",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, where $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Use the given data to write 2 equations that can be used to find the values of constants $a$ and $b$ in the expression for $R(t)$.",
     correctAnswer: "$23 = a + b\\ln(0+1)$ and $38 = a + b\\ln(20+1)$",
     explanation: "",
@@ -216,7 +216,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-27",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, where $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Find the values of $a$ and $b$. Express your answers as decimal approximations.",
     correctAnswer: "a = 23\nb = 4.927",
     explanation: "",
@@ -224,7 +224,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-28",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, where $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Use the given data to find the average rate of change of the number of representatives in the US Congress from California, in representatives per year, from $t = 0$ to $t = 20$ years. Express your answer as a decimal approximation. ",
     correctAnswer: "0.75 is the AROC",
     explanation: "",
@@ -232,7 +232,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-29",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, where $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Use the given data to find the average rate of change of the number of representatives in the US Congress from California, in representatives per year, from $t = 0$ to $t = 20$ years. Express your answer as a decimal approximation. Interpret the meaning of your answer in the context ofthe problem.",
     correctAnswer: "On the interval 1940 (t = 0) to 1960 (t = 20), the number of representatives in the US congress from California increased by a rate of 0.75 representatives per year.",
     explanation: "",
@@ -240,7 +240,7 @@ export const logarithmicQuestions: Question[] = [
   {
     id: "logarithmic-30",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "(Calculator) Each state in the United States has representation in the US government. The number of representatives each state has is proportional to the population of the state. In 1940 $(t = 0)$, the state of California has 23 representatives in the United States Congress. In 1960 $(t= 20)$, California has 38 representatives in the US Congress. The number of representatives from California in the US Congress can be modeled by the function $R$ give by $R(t) = a + b\\ln(t+1)$, where $R(t)$ is the number of representatives in the US Congress during year $t$, and $t$ is the number of years since 1940. Use the given data to find the average rate of change of the number of representatives in the US Congress from California, in representatives per year, from $t = 0$ to $t = 20$ years. Express your answer as a decimal approximation. Use the average rate of change found to estimate the number of representatives in the US Congress in the year 1988.",
     correctAnswer: "The number of representatives in the US Congress in the year 1988 would be 59 representatives.",
     explanation: "",

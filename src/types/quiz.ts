@@ -12,6 +12,7 @@ export interface MultipleChoiceQuestion {
   explanation?: string;
   table?: TableData;
   image?: string;
+  calculator?: boolean; // Whether this question requires a calculator
 }
 
 export interface FreeResponseQuestion {
@@ -23,6 +24,7 @@ export interface FreeResponseQuestion {
   table?: TableData;
   image?: string;
   displayAs?: 'paragraph';
+  calculator?: boolean; // Whether this question requires a calculator
 }
 
 export type Question = MultipleChoiceQuestion | FreeResponseQuestion;

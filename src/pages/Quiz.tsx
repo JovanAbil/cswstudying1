@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useParams, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -84,8 +84,12 @@ const Quiz = () => {
   const { subject, unitId, quizType } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+  const [searchParams] = useSearchParams();
   const timer = useQuizTimer();
   const { data: customUnitsData, isLoaded: customUnitsLoaded } = useCustomUnits();
+  
+  // Calculator section parameter - when true, puts calculator questions at the end
+  const calculatorSectionEnabled = searchParams.get('calculatorSection') === 'true';
   
   const selectedUnits = useMemo(() => location.state?.selectedUnits || [], [location.state?.selectedUnits]);
   const wrongQuestions = useMemo(() => location.state?.wrongQuestions || [], [location.state?.wrongQuestions]);
@@ -196,6 +200,13 @@ const Quiz = () => {
       allQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
     }
     
+    // If calculator section is enabled, reorder questions so calculator questions are at the end
+    if (calculatorSectionEnabled) {
+      const nonCalcQuestions = allQuestions.filter(q => !q.calculator);
+      const calcQuestions = allQuestions.filter(q => q.calculator === true);
+      allQuestions = [...nonCalcQuestions, ...calcQuestions];
+    }
+    
     if (allQuestions.length > 0) {
       setQuestions(allQuestions);
       setAttempts(allQuestions.map(q => ({
@@ -209,7 +220,7 @@ const Quiz = () => {
       timer.start();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap, isCustomTopic, customUnitId, customUnitsLoaded]);
+  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap, isCustomTopic, customUnitId, customUnitsLoaded, calculatorSectionEnabled]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];

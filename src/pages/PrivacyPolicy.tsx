@@ -1,10 +1,26 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Copy, Check, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Footer } from '@/components/Footer';
+import TermsOfServiceModal from '@/components/TermsOfServiceModal';
 
 const PrivacyPolicy = () => {
+  const [copied, setCopied] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
+  const contactEmail = 'abilash.jovan@charterschool.org';
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(contactEmail);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1">
@@ -51,17 +67,63 @@ const PrivacyPolicy = () => {
 
             <section>
               <h2 className="text-2xl font-display font-semibold mb-4">Contact</h2>
-              <p className="text-muted-foreground leading-relaxed">
-                If you have any questions about this Privacy Policy, please contact us at{' '}
-                <a href="mailto:abilash.jovan@charterschool.org" className="text-primary hover:underline">
-                  abilash.jovan@charterschool.org
-                </a>
+              <p className="text-muted-foreground leading-relaxed mb-3">
+                If you have any questions about this Privacy Policy, please contact us:
               </p>
+              <div className="flex items-center gap-2">
+                <code className="px-3 py-2 bg-muted rounded-md text-sm font-mono">
+                  {contactEmail}
+                </code>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={copyEmail}
+                  className="flex items-center gap-2"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-4 w-4 text-green-500" />
+                      <span className="text-green-500">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4" />
+                      Copy
+                    </>
+                  )}
+                </Button>
+              </div>
             </section>
+          </Card>
+
+          {/* View Terms of Service Button */}
+          <Card className="p-6 mt-6 bg-muted/30 border-dashed">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <FileText className="h-5 w-5 text-primary" />
+                <div>
+                  <h3 className="font-medium">Terms of Service</h3>
+                  <p className="text-sm text-muted-foreground">
+                    View the website terms and guidelines
+                  </p>
+                </div>
+              </div>
+              <Button variant="outline" onClick={() => setShowTerms(true)}>
+                View Terms
+              </Button>
+            </div>
           </Card>
         </div>
       </div>
       <Footer />
+      
+      {/* Terms of Service Modal - externally controlled */}
+      {showTerms && (
+        <TermsOfServiceModal 
+          externalOpen={true} 
+          onExternalClose={() => setShowTerms(false)} 
+        />
+      )}
     </div>
   );
 };

@@ -203,7 +203,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-16",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] An aquarium is building a tank for a shark and has determined that the function V(x) = -x^3 + 2.5x^2 + 5.5x - 7 will model the volume, V, in hundreds of gallons, based on the width of x of the tank. Which of the following is a reasonable domain for V(x)?",
     options: [
       { "label": "A", "value": "A", "text": "-2 < x < 3.5" },
@@ -217,7 +217,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-17",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The current I (in amperes) in an electrical conductor is inversely proportional to the resistance R (in ohms) of the conductor. If the current is 6 amperes when the resistance is 341 ohms, what is the current when the resistance if 737 ohms?",
     options: [
       { "label": "A", "value": "A", "text": "2.8 amps" },
@@ -231,7 +231,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-18",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] A car rental company charges a flat fee of $45 to rent a car and $30 per day for the first five days it is rented. Afterwards, the company charges $45 per day for every day over the first five days. Which of the following functions C(x) gives the cost C, in dollars, of the car rental after x days?",
     options: [
       { "label": "A", "value": "A", "text": "C(x) = { 30x {0 <= x <= 5}, 45x {x > 5}" },
@@ -245,7 +245,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-19",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] An artisan who sells her crafts online has found that, if she spends t hours on a craft, the average consumer satisfaction rating out of 5 can be modeled by the function S(t) = 0.11t^3 - 0.98t^2 + 2.81t + 1.5. For 1 <= t <= 5, which of the following is true?",
     options: [
       { "label": "A", "value": "A", "text": "The range of S(t) is [1.5, 4.8]. This means the artisan typically spends between 1.5 and 4.8 hours on crafts." },
@@ -259,7 +259,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-20",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] Find the average rate of change of the function $r(x) = \\frac{0.5x^2+2}{0.7x^3-1}$ over the interval $-2 \\leq x \\leq 1$.",
     options: [
       { "label": "A", "value": "A", "text": "2.578" },
@@ -273,7 +273,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-21",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] Selected values of x are displayed above for the polynomial function f(x). Which of the following statements is true?",
     image: "/images/apprecalc/rational5.png",
     options: [
@@ -316,7 +316,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-27",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of active accounts on the social media app Instagram has grown drastically since 2013. The table gives the number of active Instagram accounts, in billions, for selected years since 2013. The quadratic function A models the number of active Instagram accounts, in billions, as a function of time t in years since 2013. A quadratic model A(t) = at^2 + bt + c can be used to model the relationship of the quantities. Write the equation for A(t)",
     image: "/images/apprecalc/rational6.png",
     correctAnswer: "A(t) = 0.0172261t^2 + 0.0753753t + 0.118392",
@@ -325,7 +325,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-28",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of active accounts on the social media app Instagram has grown drastically since 2013. The table gives the number of active Instagram accounts, in billions, for selected years since 2013. The quadratic function A models the number of active Instagram accounts, in billions, as a function of time t in years since 2013. A quadratic model A(t) = at^2 + bt + c can be used to model the relationship of the quantities. Using the function A(t), predict the number of active Instagram accounts for the year 2025.",
     image: "/images/apprecalc/rational6.png",
     correctAnswer: "The number of active Instagram accounts for the year 2025 is predicted to be around 3.50345 billion accounts.",
@@ -334,7 +334,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-29",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of active accounts on the social media app Instagram has grown drastically since 2013. The table gives the number of active Instagram accounts, in billions, for selected years since 2013. The quadratic function A models the number of active Instagram accounts, in billions, as a function of time t in years since 2013. A quadratic model A(t) = at^2 + bt + c can be used to model the relationship of the quantities. Using the function A(t), predict the year the number of active Instagram accounts reach 10 billion.",
     image: "/images/apprecalc/rational6.png",
     correctAnswer: "The year the number of active Instagram accounts reach 10 billion is predicted to be 2034.86271 or during 2034",
@@ -343,7 +343,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-30",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of active accounts on the social media app Instagram has grown drastically since 2013. The table gives the number of active Instagram accounts, in billions, for selected years since 2013. The quadratic function A models the number of active Instagram accounts, in billions, as a function of time t in years since 2013. Using the given data to find the average rate of change in the number of accounts, in accounts per year, from t = 2 to t = 7. Express your answer a decimal approximation.",
     image: "/images/apprecalc/rational6.png",
     correctAnswer: "0.186",
@@ -352,7 +352,7 @@ export const rationalQuestions: Question[] = [
   {
     id: "rational-31",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of active accounts on the social media app Instagram has grown drastically since 2013. The table gives the number of active Instagram accounts, in billions, for selected years since 2013. The quadratic function A models the number of active Instagram accounts, in billions, as a function of time t in years since 2013. Using the given data to find the average rate of change in the number of accounts, in accounts per year, from t = 2 to t = 7. Then use the average rate of change to estimate the number of accounts for the year 2018.",
     image: "/images/apprecalc/rational6.png",
     correctAnswer: "y = 0.186x + 0.118392, It will be around 1.048392 billion accounts for the year 2018 according to the 0.186 rate of change",

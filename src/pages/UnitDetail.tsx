@@ -1,14 +1,16 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, ExternalLink, Eye, Brain, FileText, BookOpen, ClipboardList, Target, Download } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
+import { ArrowLeft, ExternalLink, Eye, Brain, FileText, BookOpen, ClipboardList, Target, Download, Calculator } from 'lucide-react';
 import { unitStudyResources } from '@/data/study-resources';
 import { unitAssignments } from '@/data/assignments/unit-assignments';
 import usePresets from '@/hooks/usePresets';
 import { Question } from '@/types/quiz';
 import { downloadBuiltInTopic } from '@/utils/customUnitsExport';
 import { toast } from 'sonner';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 
@@ -101,6 +103,15 @@ const UnitDetail = () => {
 
   const questions = questionMap[resourceKey] || [];
   const mathEnabled = subject === 'precalc' || subject === 'chemistry' || subject === 'chemistryDarone';
+  const isMathSubject = subject === 'precalc';
+  
+  // Calculator section toggle - when ON, puts calculator questions at the end
+  const [calculatorSectionEnabled, setCalculatorSectionEnabled] = useState(false);
+  
+  // Check if there are any calculator questions
+  const hasCalculatorQuestions = useMemo(() => {
+    return questions.some(q => q.calculator === true);
+  }, [questions]);
 
   const handleDownload = () => {
     if (questions.length === 0) {
@@ -197,8 +208,31 @@ const UnitDetail = () => {
 
           {/* Cram Study */}
           <h2 className="text-2xl font-display font-bold mb-4 mt-8">Practice Modes</h2>
+          
+          {/* Calculator Section Toggle - Only show for math topics with calculator questions */}
+          {isMathSubject && hasCalculatorQuestions && (
+            <Card className="p-4 mb-4 bg-muted/30 border-dashed">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <Calculator className="h-5 w-5 text-primary" />
+                  <div>
+                    <Label htmlFor="calculator-toggle" className="font-medium">Calculator Section</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Put all calculator questions at the end
+                    </p>
+                  </div>
+                </div>
+                <Switch
+                  id="calculator-toggle"
+                  checked={calculatorSectionEnabled}
+                  onCheckedChange={setCalculatorSectionEnabled}
+                />
+              </div>
+            </Card>
+          )}
+          
           <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary mb-8"
-            onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/cram`)}>
+            onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/cram${calculatorSectionEnabled ? '?calculatorSection=true' : ''}`)}>
             <div className="flex items-start gap-4">
               <div className="p-3 bg-primary/20 rounded-lg"><Brain className="h-8 w-8 text-primary" /></div>
               <div className="flex-1">
@@ -206,6 +240,9 @@ const UnitDetail = () => {
                 <p className="text-muted-foreground mb-4">Practice ALL questions</p>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <span>⏱️ Variable</span><span>📝 All questions</span>
+                  {calculatorSectionEnabled && hasCalculatorQuestions && (
+                    <span className="text-primary">🧮 Calculator section at end</span>
+                  )}
                 </div>
               </div>
             </div>

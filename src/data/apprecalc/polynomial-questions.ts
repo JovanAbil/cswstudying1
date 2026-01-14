@@ -243,7 +243,7 @@ export const polynomialQuestions: Question[] = [
   {
     id: "polynomial-21",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The function f(x) = 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. Which of the following values of x is a zero of f?",
     options: [
       { "label": "A", "value": "A", "text": "0.248", },
@@ -257,7 +257,7 @@ export const polynomialQuestions: Question[] = [
   {
     id: "polynomial-22",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The function f(x) = 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. On which of the following intervals is f decreasing?",
     options: [
       { "label": "A", "value": "A", "text": "(-0.381, 1.210)", },
@@ -271,7 +271,7 @@ export const polynomialQuestions: Question[] = [
   {
     id: "polynomial-23",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The function f(x) = 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. Which of the following statements about the graph of f is correct?",
     options: [
       { "label": "A", "value": "A", "text": "The graph of f has one distinct real zero and one local extremum on the interval -1 < x < 3.", },
@@ -285,7 +285,7 @@ export const polynomialQuestions: Question[] = [
   {
     id: "polynomial-24",
     type: "multiple-choice",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The function f(x) = 1.962x^3 - 5.672x^2 + 2.451x + 1.864, where -1 <= x <= 3. Which of the following values of x is an inflection point of f?",
     options: [
       { "label": "A", "value": "A", "text": "-8.221", },
@@ -299,7 +299,7 @@ export const polynomialQuestions: Question[] = [
   {
     id: "polynomial-25",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of cars in the parking lot of a gym can be modeled by the quartic polynomial C(t) = -0.016t^4+0.52t^3-5.4t^2+19t+20 where t is the number of hours since the gym opened at 6 a.m (t = 0 is 6 a.m). At 6 a.m 20 people were at the gym, find the average rate of change of C from t = 2 to t = 5",
     correctAnswer: "-1.768",
     explanation: "(C(5) - C(2))/5-2 = -1.768"
@@ -307,7 +307,7 @@ export const polynomialQuestions: Question[] = [
   {
     id: "polynomial-26",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of cars in the parking lot of a gym can be modeled by the quartic polynomial C(t) = -0.016t^4+0.52t^3-5.4t^2+19t+20 where t is the number of hours since the gym opened at 6 a.m (t = 0 is 6 a.m). At 6 a.m 20 people were at the gym, find the average rate of change of C from t = 2 to t = 5, interpret your average rate of change in the context of the problem",
     correctAnswer: "On the interval 2 hours since 6 a.m to 5 hours since 6 a.m, the cars in the parking lot decreased by 1.768 cars per hour since 6 a.m.",
     explanation: "(C(5) - C(2))/5-2 = -1.768"
@@ -315,7 +315,7 @@ export const polynomialQuestions: Question[] = [
   {
     id: "polynomial-27",
     type: "free-response",
-    calculator: "True",
+    calculator: true,
     question: "[Calculator] The number of cars in the parking lot of a gym can be modeled by the quartic polynomial C(t) = -0.016t^4+0.52t^3-5.4t^2+19t+20 where t is the number of hours since the gym opened at 6 a.m (t = 0 is 6 a.m). At 6 a.m 20 people were at the gym, find all the values of t, as decimal approximations, for which C(t) = 41, or indicate that there are no such values.",
     correctAnswer: "When C(t) = 41, t ~ 2.292, 3.114",
     explanation: "Calculator"

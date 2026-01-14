@@ -13,28 +13,65 @@ import { Link } from 'react-router-dom';
 
 const TERMS_ACCEPTED_KEY = 'terms-accepted';
 
-const TermsOfServiceModal = () => {
+interface TermsOfServiceModalProps {
+  /** If true, the modal can be opened manually (from privacy policy page) */
+  externalOpen?: boolean;
+  /** Callback when the external modal closes */
+  onExternalClose?: () => void;
+}
+
+const TermsOfServiceModal = ({ externalOpen = false, onExternalClose }: TermsOfServiceModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const hasAccepted = localStorage.getItem(TERMS_ACCEPTED_KEY);
-    if (!hasAccepted) {
+    // Only auto-open on first visit if not being controlled externally
+    if (!externalOpen) {
+      const hasAccepted = localStorage.getItem(TERMS_ACCEPTED_KEY);
+      if (!hasAccepted) {
+        setIsOpen(true);
+      }
+    }
+  }, [externalOpen]);
+
+  // Handle external open state
+  useEffect(() => {
+    if (externalOpen) {
       setIsOpen(true);
     }
-  }, []);
+  }, [externalOpen]);
 
   const handleAccept = () => {
     localStorage.setItem(TERMS_ACCEPTED_KEY, 'true');
     setIsOpen(false);
+    if (onExternalClose) {
+      onExternalClose();
+    }
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    if (onExternalClose) {
+      onExternalClose();
+    }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-lg" onPointerDownOutside={(e) => e.preventDefault()}>
+    <Dialog open={isOpen} onOpenChange={(open) => {
+      // Allow closing only if it was externally opened (viewing from privacy policy)
+      if (!open && externalOpen) {
+        handleClose();
+      }
+    }}>
+      <DialogContent className="sm:max-w-lg" onPointerDownOutside={(e) => {
+        // Prevent closing on first visit, allow if viewing from privacy policy
+        if (!externalOpen) {
+          e.preventDefault();
+        }
+      }}>
         <DialogHeader>
           <DialogTitle className="text-2xl">Welcome to CSW Studying!</DialogTitle>
           <DialogDescription>
-            Please review our terms before continuing
+            {externalOpen ? 'Viewing Terms of Service' : 'Please review our terms before continuing'}
           </DialogDescription>
         </DialogHeader>
         
@@ -73,11 +110,13 @@ const TermsOfServiceModal = () => {
         </ScrollArea>
 
         <DialogFooter className="flex-col sm:flex-row gap-2">
-          <Link to="/privacy" className="text-sm text-primary hover:underline">
-            View Privacy Policy
-          </Link>
+          {!externalOpen && (
+            <Link to="/privacy" className="text-sm text-primary hover:underline">
+              View Privacy Policy
+            </Link>
+          )}
           <Button onClick={handleAccept} className="w-full sm:w-auto">
-            I Accept
+            {externalOpen ? 'Close' : 'I Accept'}
           </Button>
         </DialogFooter>
       </DialogContent>
