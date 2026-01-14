@@ -1,7 +1,5 @@
 import { Card } from '@/components/ui/card';
-import { Mail, Users, Heart, Copy, Check } from 'lucide-react';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { Mail, Users, Heart } from 'lucide-react';
 
 /**
  * =============================================================================
@@ -46,19 +44,6 @@ const contributors = [
 const contactEmail = 'abilash.jovan@charterschool.org';
 
 export const CreditsSection = () => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopyEmail = async () => {
-    try {
-      await navigator.clipboard.writeText(contactEmail);
-      setCopied(true);
-      toast.success('Email copied to clipboard!');
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      toast.error('Failed to copy email');
-    }
-  };
-
   return (
     <div className="mt-16 max-w-4xl mx-auto">
       <div className="grid md:grid-cols-2 gap-6">
@@ -106,33 +91,18 @@ export const CreditsSection = () => {
             Have questions, suggestions, or want to contribute? Reach out!
           </p>
           <div className="space-y-4">
-            <button 
-              onClick={handleCopyEmail}
-              className="w-full flex items-center justify-between p-4 bg-background rounded-lg border hover:border-primary transition-colors group"
+            <a 
+              href={`mailto:${contactEmail}`}
+              className="flex items-center gap-3 p-4 bg-background rounded-lg border hover:border-primary transition-colors group"
             >
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                  <Mail className="h-5 w-5 text-primary" />
-                </div>
-                <div className="text-left">
-                  <p className="font-medium text-sm">Email Us</p>
-                  <p className="text-sm text-muted-foreground">{contactEmail}</p>
-                </div>
+              <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                <Mail className="h-5 w-5 text-primary" />
               </div>
-              <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md transition-all ${copied ? 'bg-green-500/20 text-green-600' : 'bg-muted text-muted-foreground'}`}>
-                {copied ? (
-                  <>
-                    <Check className="h-4 w-4" />
-                    <span className="text-xs font-medium">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="h-4 w-4" />
-                    <span className="text-xs font-medium">Copy</span>
-                  </>
-                )}
+              <div>
+                <p className="font-medium text-sm">Email Us</p>
+                <p className="text-sm text-muted-foreground">{contactEmail}</p>
               </div>
-            </button>
+            </a>
             <div className="text-xs text-muted-foreground text-center pt-2">
               Response time: Usually within 24-48 hours
             </div>
