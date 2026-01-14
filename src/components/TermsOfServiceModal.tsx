@@ -45,7 +45,7 @@ const TermsOfServiceModal = () => {
               <p className="text-muted-foreground">This website was made for studying to be more efficient</p>
             </div>
             
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-secondary/50 border border-border">
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10">
               <span className="text-lg">🔗</span>
               <p className="text-muted-foreground">More than just using this website, please share to anyone you know!</p>
             </div>
@@ -59,10 +59,10 @@ const TermsOfServiceModal = () => {
               <span className="text-lg">⚠️</span>
               <p className="text-muted-foreground">Since tests are directly taken from teachers, following the rules is necessary; don't ask to post tests that everyone hasn't taken</p>
             </div>
-            
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-secondary/50 border border-border">
-              <span className="text-lg">🔄</span>
-              <p className="text-muted-foreground">Building off of academic dishonesty concerns, all test questions will be changed year-end to have similar content but not questions ripped off of tests to ensure teachers don't have to worry about cheating next year</p>
+
+            <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5 border border-destructive/20">
+              <span className="text-lg">⚠️</span>
+              <p className="text-muted-foreground">Building off of academic dishonesty concerns, all test questions will be changed year-end to have similar content that was learned off of tests to ensure teachers don't have to worry about cheating next year</p>
             </div>
             
             <div className="flex items-start gap-3 p-3 rounded-lg bg-accent/10 border border-accent/20">
