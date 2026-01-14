@@ -34,6 +34,7 @@ interface EditingQuestion {
   explanation: string;
   image: string;
   options: { label: string; text: string }[];
+  calculator: boolean;
 }
 
 const defaultMcqOptions = [
@@ -119,6 +120,7 @@ const CustomTopicEditor = () => {
       explanation: '',
       image: '',
       options: type === 'mcq' ? [...defaultMcqOptions] : [],
+      calculator: false,
     });
     setEditingIndex(null);
   };
@@ -133,6 +135,7 @@ const CustomTopicEditor = () => {
         explanation: q.explanation || '',
         image: q.image || '',
         options: q.options.map(o => ({ label: o.label, text: o.text })),
+        calculator: q.calculator || false,
       });
     } else {
       setEditingQuestion({
@@ -142,6 +145,7 @@ const CustomTopicEditor = () => {
         explanation: q.explanation || '',
         image: q.image || '',
         options: [],
+        calculator: q.calculator || false,
       });
     }
     setEditingIndex(index);
@@ -247,6 +251,7 @@ const CustomTopicEditor = () => {
         correctAnswer: editingQuestion.answer,
         explanation: editingQuestion.explanation || undefined,
         image: editingQuestion.image || undefined,
+        calculator: editingQuestion.calculator || undefined,
       } as MultipleChoiceQuestion;
     } else {
       newQuestion = {
@@ -256,6 +261,7 @@ const CustomTopicEditor = () => {
         correctAnswer: editingQuestion.answer,
         explanation: editingQuestion.explanation || undefined,
         image: editingQuestion.image || undefined,
+        calculator: editingQuestion.calculator || undefined,
       } as FreeResponseQuestion;
     }
 
@@ -402,6 +408,11 @@ const CustomTopicEditor = () => {
                   <span className="text-xs font-medium px-2 py-1 rounded bg-muted flex-shrink-0">
                     {q.type === 'multiple-choice' ? 'MCQ' : 'FRQ'}
                   </span>
+                  {q.calculator && (
+                    <span title="Calculator question">
+                      <Calculator className="h-4 w-4 text-primary flex-shrink-0" />
+                    </span>
+                  )}
                   <span className="truncate text-sm">{q.question}</span>
                 </div>
                 <div className="flex gap-2 flex-shrink-0">
@@ -553,6 +564,26 @@ const CustomTopicEditor = () => {
                   rows={2}
                 />
               </div>
+
+              {/* Calculator Toggle - only show if math is enabled */}
+              {mathEnabled && (
+                <div className="flex items-center justify-between p-3 rounded-lg border bg-muted/30">
+                  <div className="flex items-center gap-3">
+                    <Calculator className="h-5 w-5 text-primary" />
+                    <div>
+                      <Label htmlFor="calc-toggle" className="font-medium">Calculator Question</Label>
+                      <p className="text-sm text-muted-foreground">
+                        Mark this question as requiring a calculator
+                      </p>
+                    </div>
+                  </div>
+                  <Switch
+                    id="calc-toggle"
+                    checked={editingQuestion.calculator}
+                    onCheckedChange={(checked) => setEditingQuestion({ ...editingQuestion, calculator: checked })}
+                  />
+                </div>
+              )}
 
               <div className="flex gap-2 pt-4">
                 <Button onClick={saveQuestion}>

@@ -61,6 +61,11 @@ export const generateBuiltInTopicFile = (questions: Question[], topicName: strin
       lines.push(`${indent}  image: ${JSON.stringify(q.image)},`);
     }
     
+    // Include calculator field if true
+    if (q.calculator) {
+      lines.push(`${indent}  calculator: true,`);
+    }
+    
     lines.push(`${indent}},`);
     return lines.join('\n');
   };
@@ -109,8 +114,8 @@ const toVariableName = (name: string): string => {
   return safe.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
 };
 
-// Generate TypeScript content for a topic
-export const generateTopicFileContent = (topic: CustomTopic, unitName: string): string => {
+// Generate TypeScript content for a topic (with optional image path rewriting for unit export)
+export const generateTopicFileContent = (topic: CustomTopic, unitName: string, rewriteImagePaths: boolean = false): string => {
   const variableName = `${toVariableName(topic.name)}Questions`;
   const topicPrefix = toSafeName(topic.name);
   
@@ -119,7 +124,7 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string): 
     return { ...q, id: newId };
   });
 
-  const formatQuestion = (q: Question, indent: string): string => {
+  const formatQuestion = (q: Question, indent: string, qIndex: number): string => {
     const lines: string[] = [];
     lines.push(`${indent}{`);
     lines.push(`${indent}  id: "${q.id}",`);
@@ -134,13 +139,21 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string): 
     lines.push(`${indent}  explanation: ${JSON.stringify(q.explanation || '')},`);
     
     if (q.image) {
-      // For base64 images, we'll note they need to be moved to public folder
-      if (q.image.startsWith('data:')) {
-        lines.push(`${indent}  // Note: Base64 image was embedded - move to public folder and update path`);
-        lines.push(`${indent}  image: "/images/${toSafeName(unitName)}/${topicPrefix}-${q.id}.png",`);
+      if (rewriteImagePaths && q.image.startsWith('data:')) {
+        // Rewrite to proper public path for unit export
+        lines.push(`${indent}  image: "/images/${toSafeName(unitName)}/${topicPrefix}-q${qIndex + 1}.png",`);
+      } else if (q.image.startsWith('data:')) {
+        // For simple topic download, keep base64 with a note
+        lines.push(`${indent}  // Note: Base64 image embedded - consider moving to public folder`);
+        lines.push(`${indent}  image: ${JSON.stringify(q.image)},`);
       } else {
         lines.push(`${indent}  image: ${JSON.stringify(q.image)},`);
       }
+    }
+    
+    // Include calculator field if true
+    if (q.calculator) {
+      lines.push(`${indent}  calculator: true,`);
     }
     
     lines.push(`${indent}},`);
@@ -154,7 +167,7 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string): 
 // Questions: ${topic.questions.length}
 
 export const ${variableName}: Question[] = [
-${questionsWithIds.map(q => formatQuestion(q, '  ')).join('\n')}
+${questionsWithIds.map((q, i) => formatQuestion(q, '  ', i)).join('\n')}
 ];
 `;
 
@@ -195,23 +208,91 @@ export const downloadTopic = (topic: CustomTopic, unitName: string) => {
   URL.revokeObjectURL(url);
 };
 
-// Download entire unit as a zip folder
+// Helper to extract image extension from base64 data URL
+const getImageExtension = (dataUrl: string): string => {
+  const match = dataUrl.match(/data:image\/([a-zA-Z]+);/);
+  return match ? match[1] : 'png';
+};
+
+// Helper to convert base64 to binary
+const base64ToBlob = (dataUrl: string): Uint8Array => {
+  const base64 = dataUrl.split(',')[1];
+  const binaryString = atob(base64);
+  const bytes = new Uint8Array(binaryString.length);
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  return bytes;
+};
+
+// Download entire unit as a zip folder with proper structure:
+// - public/images/(unit name)/ - for images
+// - src/data/(unit name)/ - for .ts files
 export const downloadUnit = async (unit: CustomUnit) => {
   const zip = new JSZip();
   const folderName = toSafeName(unit.name);
-  const folder = zip.folder(folderName);
   
-  if (!folder) return;
+  // Create folder structure
+  const publicImagesFolder = zip.folder(`public/images/${folderName}`);
+  const srcDataFolder = zip.folder(`src/data/${folderName}`);
   
-  // Add metadata file
-  folder.file('index.ts', generateUnitMetadata(unit));
+  if (!publicImagesFolder || !srcDataFolder) return;
   
-  // Add each topic file
+  // Track if we have any images
+  let hasImages = false;
+  
+  // Process each topic - extract images first
   for (const topic of unit.topics) {
-    const content = generateTopicFileContent(topic, unit.name);
-    const filename = `${toSafeName(topic.name)}-questions.ts`;
-    folder.file(filename, content);
+    const topicPrefix = toSafeName(topic.name);
+    
+    topic.questions.forEach((q, qIndex) => {
+      if (q.image && q.image.startsWith('data:')) {
+        hasImages = true;
+        const ext = getImageExtension(q.image);
+        const filename = `${topicPrefix}-q${qIndex + 1}.${ext}`;
+        const imageData = base64ToBlob(q.image);
+        publicImagesFolder.file(filename, imageData);
+      }
+    });
   }
+  
+  // Add metadata file to src/data/(unit)/
+  srcDataFolder.file('index.ts', generateUnitMetadata(unit));
+  
+  // Add each topic file with rewritten image paths
+  for (const topic of unit.topics) {
+    const content = generateTopicFileContent(topic, unit.name, true); // true = rewrite image paths
+    const filename = `${toSafeName(topic.name)}-questions.ts`;
+    srcDataFolder.file(filename, content);
+  }
+  
+  // Add a README for clarity
+  const readme = `# ${unit.name}
+
+## Folder Structure
+
+This unit export contains:
+
+### src/data/${folderName}/
+- \`index.ts\` - Unit metadata with topic list
+- \`*-questions.ts\` - Question files for each topic
+
+### public/images/${folderName}/
+- Image files referenced by questions
+${!hasImages ? '\n(No images in this unit)' : ''}
+
+## How to Import
+
+1. Copy \`src/data/${folderName}/\` to your project's \`src/data/\` folder
+2. Copy \`public/images/${folderName}/\` to your project's \`public/images/\` folder
+3. Import the questions in your code:
+
+\`\`\`typescript
+import { unitMetadata } from '@/data/${folderName}';
+import { topicNameQuestions } from '@/data/${folderName}/topic-name-questions';
+\`\`\`
+`;
+  zip.file('README.md', readme);
   
   // Generate and download zip
   const blob = await zip.generateAsync({ type: 'blob' });
