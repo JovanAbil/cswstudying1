@@ -33,7 +33,7 @@ interface EditingQuestion {
   answer: string;
   explanation: string;
   image: string;
-  options: { label: string; text: string; image?: string }[];
+  options: { label: string; text: string }[];
   calculator: boolean;
 }
 
@@ -134,7 +134,7 @@ const CustomTopicEditor = () => {
         answer: q.correctAnswer,
         explanation: q.explanation || '',
         image: q.image || '',
-        options: q.options.map(o => ({ label: o.label, text: o.text, image: o.image })),
+        options: q.options.map(o => ({ label: o.label, text: o.text })),
         calculator: q.calculator || false,
       });
     } else {
@@ -212,35 +212,6 @@ const CustomTopicEditor = () => {
     setEditingQuestion({ ...editingQuestion, options: newOptions });
   };
 
-  const handleOptionImageUpload = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file || !editingQuestion) return;
-
-    if (file.size > 2 * 1024 * 1024) {
-      toast({
-        title: 'Image too large',
-        description: 'Please upload an image smaller than 2MB',
-        variant: 'destructive',
-      });
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const newOptions = [...editingQuestion.options];
-      newOptions[index] = { ...newOptions[index], image: event.target?.result as string };
-      setEditingQuestion({ ...editingQuestion, options: newOptions });
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const removeOptionImage = (index: number) => {
-    if (!editingQuestion) return;
-    const newOptions = [...editingQuestion.options];
-    newOptions[index] = { ...newOptions[index], image: undefined };
-    setEditingQuestion({ ...editingQuestion, options: newOptions });
-  };
-
   const saveQuestion = () => {
     if (!editingQuestion) return;
 
@@ -276,7 +247,7 @@ const CustomTopicEditor = () => {
         id: questionId,
         type: 'multiple-choice',
         question: editingQuestion.question,
-        options: editingQuestion.options.map(o => ({ label: o.label, value: o.label, text: o.text, image: o.image })),
+        options: editingQuestion.options.map(o => ({ label: o.label, value: o.label, text: o.text })),
         correctAnswer: editingQuestion.answer,
         explanation: editingQuestion.explanation || undefined,
         image: editingQuestion.image || undefined,
@@ -524,41 +495,19 @@ const CustomTopicEditor = () => {
                     </Button>
                   </div>
                   {editingQuestion.options.map((option, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex items-center gap-2">
-                        <span className="w-8 text-center font-medium">{option.label}</span>
-                        <Input
-                          ref={(el) => { textFieldRefs.current[`option-${index}`] = el; }}
-                          value={option.text}
-                          onChange={(e) => updateOption(index, e.target.value)}
-                          onFocus={() => setActiveTextField(`option-${index}`)}
-                          placeholder={`Option ${option.label}...`}
-                          className="flex-1"
-                        />
-                        <Button variant="ghost" size="icon" asChild className="relative">
-                          <label className="cursor-pointer">
-                            <Image className="h-4 w-4" />
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => handleOptionImageUpload(index, e)}
-                            />
-                          </label>
-                        </Button>
-                        <Button variant="ghost" size="icon" onClick={() => removeOption(index)}>
-                          <Minus className="h-4 w-4" />
-                        </Button>
-                      </div>
-                      {option.image && (
-                        <div className="flex items-center gap-2 ml-10">
-                          <img src={option.image} alt={`Option ${option.label}`} className="h-12 w-12 object-cover rounded border" />
-                          <Button variant="ghost" size="sm" onClick={() => removeOptionImage(index)}>
-                            <Trash2 className="h-3 w-3 mr-1" />
-                            Remove
-                          </Button>
-                        </div>
-                      )}
+                    <div key={index} className="flex items-center gap-2">
+                      <span className="w-8 text-center font-medium">{option.label}</span>
+                      <Input
+                        ref={(el) => { textFieldRefs.current[`option-${index}`] = el; }}
+                        value={option.text}
+                        onChange={(e) => updateOption(index, e.target.value)}
+                        onFocus={() => setActiveTextField(`option-${index}`)}
+                        placeholder={`Option ${option.label}...`}
+                        className="flex-1"
+                      />
+                      <Button variant="ghost" size="icon" onClick={() => removeOption(index)}>
+                        <Minus className="h-4 w-4" />
+                      </Button>
                     </div>
                   ))}
                 </div>
