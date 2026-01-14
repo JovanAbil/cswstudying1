@@ -448,8 +448,8 @@ const OtherCategory = () => {
                 </h3>
                 <p className="text-sm text-muted-foreground mb-3">
                   Want your custom content featured on Practice Hub? Use the form below to submit your unit along with your email. 
-                  <span className="font-medium text-foreground"> If you include your email, I'll review it as soon as possible.</span> 
-                  Otherwise, submissions will be uploaded on my own time.
+                  <span className="font-medium text-foreground"> If you email @abilash.jovan@charterschool.org after sending a submission, I'll review it as soon as possible.</span> 
+                  Otherwise, submissions will be uploaded on my own time when I check (1-7 days).
                 </p>
                 <a
                   href="https://docs.google.com/forms/d/e/1FAIpQLScH4-fL-fvpJMoKAyoPvkCLiDekx7-vp_pbdkm4-Sisc1nqxw/viewform"
