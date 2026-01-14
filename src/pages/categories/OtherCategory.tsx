@@ -20,7 +20,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { ArrowLeft, Sparkles, Trophy, Brain, Target, Plus, Trash2, Pencil, Download, Upload, AlertTriangle, FolderPlus } from 'lucide-react';
+import { ArrowLeft, Sparkles, Trophy, Brain, Target, Plus, Trash2, Pencil, Download, Upload, AlertTriangle, FolderPlus, ExternalLink, Send } from 'lucide-react';
 import useWrongAnswers from '@/hooks/useWrongAnswers';
 import useCustomUnits, { CustomTopic } from '@/hooks/useCustomUnits';
 import { useToast } from '@/hooks/use-toast';
@@ -440,6 +440,28 @@ const OtherCategory = () => {
           {/* Custom Units Info & Warnings */}
           <Card className="p-6 mt-8 border-2 border-other/20 bg-other/5">
             <div className="space-y-6">
+              {/* Submit Content */}
+              <div className="p-4 bg-primary/5 rounded-lg border-2 border-primary/30">
+                <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <Send className="h-5 w-5 text-primary" />
+                  Submit Content to the Website
+                </h3>
+                <p className="text-sm text-muted-foreground mb-3">
+                  Want your custom content featured on Practice Hub? Use the form below to submit your unit along with your email. 
+                  <span className="font-medium text-foreground"> If you include your email, I'll review it as soon as possible.</span> 
+                  Otherwise, submissions will be uploaded on my own time.
+                </p>
+                <a
+                  href="https://docs.google.com/forms/d/e/1FAIpQLScH4-fL-fvpJMoKAyoPvkCLiDekx7-vp_pbdkm4-Sisc1nqxw/viewform"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors text-sm font-medium"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Open Submission Form
+                </a>
+              </div>
+
               {/* Creating Custom Content */}
               <div className="p-4 bg-background rounded-lg border">
                 <h3 className="font-semibold text-foreground mb-3 flex items-center gap-2">
@@ -452,7 +474,6 @@ const OtherCategory = () => {
                   <li>Use the Topic Editor to add questions (MCQ or FRQ)</li>
                   <li>Enable <span className="font-medium text-foreground">"Math Mode"</span> for LaTeX rendering</li>
                   <li>Upload images for questions using the image upload button</li>
-                  <li>Make sure if you want this on the website to add the teacher's name in the Unit Name and email <span className="font-medium text-foreground">"@abilash.jovan@charterschool.org"</span> with the .zip to add it!</li>
                 </ol>
               </div>
 
