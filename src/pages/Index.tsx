@@ -68,7 +68,7 @@ const Index = () => {
               Master your classes at CSW with interactive practice tests and daily exercises. 
               Choose a subject category to get started.
             </p>
-            <p className="text-sm text-muted-foreground/70 mb-4">If you are confused, check the bottom of the main page and the "Other" page for understanding. Further questions can be emailed to me, email down below. Have fun using this!</p>
+            <p className="text-sm text-muted-foreground/70 mb-4">One disclaimer, this website was started using Lovable AI, most of the questions (if test is given) are manually added, if questions wasn't from tests, it was probably ChatGPT. If you are confused, check the bottom of the main page and the "Other" page for understanding. Further questions can be emailed to me, email down below. Have fun using this!</p>
             <div className="flex items-center justify-center gap-2 text-primary font-medium animate-bounce">
               <ArrowDown className="h-5 w-5" />
               <span>Scroll down to see how to use the website</span>
