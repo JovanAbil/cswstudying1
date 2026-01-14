@@ -1,4 +1,5 @@
 import { useDebugMode } from '@/hooks/useDebugMode';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface AdPlaceholderProps {
   position: 'sidebar-left' | 'sidebar-right' | 'bottom' | 'inline';
@@ -7,12 +8,19 @@ interface AdPlaceholderProps {
 
 export const AdPlaceholder = ({ position, className = '' }: AdPlaceholderProps) => {
   const { isDebugMode } = useDebugMode();
+  const isMobile = useIsMobile();
 
   if (!isDebugMode) return null;
 
+  // On mobile, hide sidebar ads completely (they would be unusable)
+  if (isMobile && (position === 'sidebar-left' || position === 'sidebar-right')) {
+    return null;
+  }
+
   const positionStyles = {
-    'sidebar-left': 'fixed left-2 top-1/2 -translate-y-1/2 w-[160px] h-[600px]',
-    'sidebar-right': 'fixed right-2 top-1/2 -translate-y-1/2 w-[160px] h-[600px]',
+    // z-index set to -1 so ads don't block content interaction
+    'sidebar-left': 'fixed left-2 top-1/2 -translate-y-1/2 w-[160px] h-[600px] z-[-1]',
+    'sidebar-right': 'fixed right-2 top-1/2 -translate-y-1/2 w-[160px] h-[600px] z-[-1]',
     'bottom': 'w-full h-[90px]',
     'inline': 'w-full h-[250px]',
   };

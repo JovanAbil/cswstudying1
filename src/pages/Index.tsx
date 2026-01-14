@@ -3,6 +3,7 @@ import { Card } from '@/components/ui/card';
 import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown, FolderPlus } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
+import { CreditsSection } from '@/components/CreditsSection';
 const categories = [{
   id: 'math',
   name: 'Mathematics',
@@ -189,6 +190,9 @@ const Index = () => {
             </p>
           </Card>
         </div>
+
+        {/* Credits Section */}
+        <CreditsSection />
 
         {/* Bottom Ad Placeholder */}
         <div className="mt-16 max-w-4xl mx-auto">
