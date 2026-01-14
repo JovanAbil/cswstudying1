@@ -39,7 +39,7 @@ const MathCategory = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="container mx-auto px-4 py-8 flex-1">
+      <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
         <Button
           variant="ghost"
           onClick={() => navigate('/')}
