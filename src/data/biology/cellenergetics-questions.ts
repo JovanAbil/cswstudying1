@@ -2,15 +2,15 @@ import { Question } from '@/types/quiz';
 
 export const cellenergeticsQuestions: Question[] = [
   {
-  id: 'cellenergetics-1',
-  type: 'multiple-choice',
-  question: 'Which molecule serves as the main energy carrier for cells?',
-  options: [
-    { label: 'A', value: 'A', text: 'Carbon Dioxide' },
-    { label: 'B', value: 'B', text: 'ATP' },
-    { label: 'C', value: 'C', text: 'water' },
-    { label: 'D', value: 'D', text: 'DNA' }
-  ],
+    id: 'cellenergetics-1',
+    type: 'multiple-choice',
+    question: 'Which molecule serves as the main energy carrier for cells?',
+    options: [
+      { label: 'A', value: 'A', text: 'Carbon Dioxide' },
+      { label: 'B', value: 'B', text: 'ATP' },
+      { label: 'C', value: 'C', text: 'water' },
+      { label: 'D', value: 'D', text: 'DNA' }
+    ],
     correctAnswer: 'B',
     explanation: 'ATP stores and releases energy for nearly all cellular processes, making it the primary energy carrier in cells.'
   },
