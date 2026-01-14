@@ -26,7 +26,7 @@ import { Button } from '@/components/ui/button';
 const contributors = [
   // ===== ADD CONTRIBUTORS BELOW THIS LINE =====
   
-  { name: 'Abilash Jovan', role: 'Creator & Developer' },
+  { name: 'Jovan Abilash', role: 'Creator & Developer' },
   // { name: 'Contributor Name', role: 'Their Role' },
   // { name: 'Another Person', role: 'Content Creator' },
   
