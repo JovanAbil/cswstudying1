@@ -7,6 +7,23 @@ interface AllWrongAnswers {
   [subject: string]: SubjectWrongAnswers;
 }
 
+// Export format for target presets
+export interface TargetPresetExport {
+  version: 1;
+  subject: string;
+  exportedAt: number;
+  questionIds: string[];
+  questions: Question[];
+}
+
+// Import validation result
+export interface TargetPresetValidation {
+  valid: boolean;
+  missingQuestionIds: string[];
+  foundQuestionIds: string[];
+  totalImported: number;
+}
+
 export const useWrongAnswers = () => {
   const [wrongAnswers, setWrongAnswers] = useState<AllWrongAnswers>({});
 
@@ -80,12 +97,122 @@ export const useWrongAnswers = () => {
     return getAllWrongQuestionsForSubject(subject).length;
   };
 
+  // Export target preset as JSON
+  const exportTargetPreset = (subject: string): TargetPresetExport | null => {
+    const questions = getAllWrongQuestionsForSubject(subject);
+    if (questions.length === 0) return null;
+
+    return {
+      version: 1,
+      subject,
+      exportedAt: Date.now(),
+      questionIds: questions.map(q => q.id),
+      questions,
+    };
+  };
+
+  // Download target preset as JSON file
+  const downloadTargetPreset = (subject: string) => {
+    const preset = exportTargetPreset(subject);
+    if (!preset) return;
+
+    const content = JSON.stringify(preset, null, 2);
+    const blob = new Blob([content], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `target-preset-${subject}-${Date.now()}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  // Validate imported target preset against available questions
+  const validateTargetPreset = (
+    importedData: TargetPresetExport,
+    availableQuestions: Question[]
+  ): TargetPresetValidation => {
+    const availableIds = new Set(availableQuestions.map(q => q.id));
+    const foundQuestionIds: string[] = [];
+    const missingQuestionIds: string[] = [];
+
+    for (const qId of importedData.questionIds) {
+      if (availableIds.has(qId)) {
+        foundQuestionIds.push(qId);
+      } else {
+        missingQuestionIds.push(qId);
+      }
+    }
+
+    return {
+      valid: missingQuestionIds.length === 0,
+      missingQuestionIds,
+      foundQuestionIds,
+      totalImported: importedData.questionIds.length,
+    };
+  };
+
+  // Import target preset (replaces current wrong answers for the subject)
+  const importTargetPreset = (
+    subject: string,
+    importedData: TargetPresetExport,
+    availableQuestions: Question[]
+  ): TargetPresetValidation => {
+    const validation = validateTargetPreset(importedData, availableQuestions);
+    
+    // Only import if all questions are valid
+    if (validation.valid) {
+      const newWrongAnswers = { ...wrongAnswers };
+      
+      // Create a map of available questions for quick lookup
+      const questionsMap = new Map(availableQuestions.map(q => [q.id, q]));
+      
+      // Create a single unit entry with all imported questions
+      newWrongAnswers[subject] = {
+        'imported': importedData.questionIds.map(qId => ({
+          questionId: qId,
+          question: questionsMap.get(qId)!,
+          timestamp: Date.now(),
+        })),
+      };
+      
+      saveToStorage(newWrongAnswers);
+    }
+
+    return validation;
+  };
+
+  // Parse uploaded JSON file
+  const parseTargetPresetFile = async (file: File): Promise<TargetPresetExport | null> => {
+    try {
+      const content = await file.text();
+      const data = JSON.parse(content);
+      
+      // Basic validation
+      if (
+        data.version === 1 &&
+        typeof data.subject === 'string' &&
+        Array.isArray(data.questionIds) &&
+        Array.isArray(data.questions)
+      ) {
+        return data as TargetPresetExport;
+      }
+      return null;
+    } catch {
+      return null;
+    }
+  };
+
   return {
     addWrongAnswers,
     getSubjectWrongAnswers,
     getAllWrongQuestionsForSubject,
     clearSubjectWrongAnswers,
     getWrongAnswerCount,
+    exportTargetPreset,
+    downloadTargetPreset,
+    validateTargetPreset,
+    importTargetPreset,
+    parseTargetPresetFile,
   };
 };
 

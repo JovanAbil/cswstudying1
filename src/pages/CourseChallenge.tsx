@@ -1,24 +1,75 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, Trophy, ExternalLink, Wrench, Target, Upload, X, FileText, Download } from 'lucide-react';
 import { courseChallengeResources } from '@/data/study-resources';
-import { useWrongAnswers } from '@/hooks/useWrongAnswers';
+import { useWrongAnswers, TargetPresetValidation } from '@/hooks/useWrongAnswers';
 import { parseTopicFile, getImportedQuestions, saveImportedQuestions, removeImportedQuestions, ImportedQuestionSet, generateBuiltInTopicFile } from '@/utils/customUnitsExport';
 import { toast } from 'sonner';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import RemoveConfirmDialog from '@/components/RemoveConfirmDialog';
+import TargetPresetImportDialog from '@/components/TargetPresetImportDialog';
+import { Question } from '@/types/quiz';
+
+// Import all question sets for validation
+import { polynomialQuestions } from '@/data/apprecalc/polynomial-questions';
+import { rationalQuestions } from '@/data/apprecalc/rational-questions';
+import { exponentialQuestions } from '@/data/apprecalc/exponential-questions';
+import { logarithmicQuestions } from '@/data/apprecalc/logarithmic-questions';
+import { trigonometricQuestions } from '@/data/apprecalc/trigonometric-questions';
+import { polarQuestions } from '@/data/apprecalc/polar-questions';
+import { parametricQuestions } from '@/data/apprecalc/parametric-questions';
+import { vectorsMatricesQuestions } from '@/data/apprecalc/vectorsMatrices-questions';
+import { biochemistryQuestions } from '@/data/biology/biochemistry-questions';
+import { cellstructureQuestions } from '@/data/biology/cellstructure-questions';
+import { cellenergeticsQuestions } from '@/data/biology/cellenergetics-questions';
+import { cellgrowthQuestions } from '@/data/biology/cellgrowth-questions';
+import { geneticsQuestions } from '@/data/biology/genetics-questions';
+import { molecularQuestions } from '@/data/biology/molecular-questions';
+import { evolutionQuestions } from '@/data/biology/evolution-questions';
+import { ecologyQuestions } from '@/data/biology/ecology-questions';
+import { metricQuestions } from '@/data/chemistry/metric-questions';
+import { atomicQuestions } from '@/data/chemistry/atomic-questions';
+import { compoundsQuestions } from '@/data/chemistry/compounds-questions';
+import { gasesQuestions } from '@/data/chemistry/gases-questions';
+import { solutionsQuestions } from '@/data/chemistry/solutions-questions';
+import { reactionsQuestions } from '@/data/chemistry/reactions-questions';
+import { stoichiometryQuestions } from '@/data/chemistry/stoichiometry-questions';
+import { acidbasesQuestions } from '@/data/chemistry/acidbases-questions';
+import { religionsQuestions } from '@/data/worldhistory/religions-questions';
+import { islamQuestions } from '@/data/worldhistory/islam-questions';
+import { renaissanceQuestions } from '@/data/worldhistory/renaissance-questions';
+import { protestantQuestions } from '@/data/worldhistory/protestant-questions';
+import { worldHistoryUnit5Questions } from '@/data/worldhistory/world-history-unit5';
+import { worldHistoryUnit6Questions } from '@/data/worldhistory/world-history-unit6';
+import { worldHistoryUnit7Questions } from '@/data/worldhistory/world-history-unit7';
+import { worldHistoryUnit8Questions } from '@/data/worldhistory/world-history-unit8';
+import { worldHistoryUnit9Questions } from '@/data/worldhistory/world-history-unit9';
+import { worldHistoryUnit10Questions } from '@/data/worldhistory/world-history-unit10';
+import { worldHistoryUnit11Questions } from '@/data/worldhistory/world-history-unit11';
+import { generalQuestions } from '@/data/memory/general-questions';
+import { general2Questions } from '@/data/memory/general2-questions';
+import { general3Questions } from '@/data/memory/general3-questions';
 
 const CourseChallenge = () => {
   const { subject } = useParams();
   const navigate = useNavigate();
-  const { getAllWrongQuestionsForSubject, getWrongAnswerCount } = useWrongAnswers();
+  const { 
+    getAllWrongQuestionsForSubject, 
+    getWrongAnswerCount,
+    downloadTargetPreset,
+    importTargetPreset,
+    parseTargetPresetFile,
+  } = useWrongAnswers();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const targetPresetInputRef = useRef<HTMLInputElement>(null);
   const [importedSets, setImportedSets] = useState<ImportedQuestionSet[]>([]);
   const [removeDialogOpen, setRemoveDialogOpen] = useState(false);
   const [setToRemove, setSetToRemove] = useState<{ id: string; name: string } | null>(null);
+  const [importValidation, setImportValidation] = useState<TargetPresetValidation | null>(null);
+  const [importDialogOpen, setImportDialogOpen] = useState(false);
   
   // Load imported question sets
   useEffect(() => {
@@ -27,6 +78,42 @@ const CourseChallenge = () => {
   
   const wrongAnswers = getAllWrongQuestionsForSubject(subject || '');
   const wrongCount = getWrongAnswerCount(subject || '');
+
+  // Get all available questions for the current subject (for validation)
+  const allAvailableQuestions = useMemo((): Question[] => {
+    switch (subject) {
+      case 'precalc':
+        return [
+          ...polynomialQuestions, ...rationalQuestions, ...exponentialQuestions,
+          ...logarithmicQuestions, ...trigonometricQuestions, ...polarQuestions,
+          ...parametricQuestions, ...vectorsMatricesQuestions,
+        ];
+      case 'biology':
+        return [
+          ...biochemistryQuestions, ...cellstructureQuestions, ...cellenergeticsQuestions,
+          ...cellgrowthQuestions, ...geneticsQuestions, ...molecularQuestions,
+          ...evolutionQuestions, ...ecologyQuestions,
+        ];
+      case 'chemistry':
+        return [
+          ...metricQuestions, ...atomicQuestions, ...compoundsQuestions,
+          ...gasesQuestions, ...solutionsQuestions, ...reactionsQuestions,
+          ...stoichiometryQuestions, ...acidbasesQuestions,
+        ];
+      case 'world-history':
+        return [
+          ...religionsQuestions, ...islamQuestions, ...renaissanceQuestions,
+          ...protestantQuestions, ...worldHistoryUnit5Questions, ...worldHistoryUnit6Questions,
+          ...worldHistoryUnit7Questions, ...worldHistoryUnit8Questions,
+          ...worldHistoryUnit9Questions, ...worldHistoryUnit10Questions,
+          ...worldHistoryUnit11Questions,
+        ];
+      case 'memory':
+        return [...generalQuestions, ...general2Questions, ...general3Questions];
+      default:
+        return [];
+    }
+  }, [subject]);
 
   const getUnits = () => {
     switch (subject) {
@@ -174,6 +261,45 @@ const CourseChallenge = () => {
   const openRemoveDialog = (setId: string, setName: string) => {
     setSetToRemove({ id: setId, name: setName });
     setRemoveDialogOpen(true);
+  };
+
+  // Handle downloading target preset
+  const handleDownloadTargetPreset = () => {
+    downloadTargetPreset(subject || '');
+    toast.success('Target preset downloaded!');
+  };
+
+  // Handle uploading target preset
+  const handleTargetPresetUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const importedData = await parseTargetPresetFile(file);
+      
+      if (!importedData) {
+        toast.error('Invalid target preset file format');
+        return;
+      }
+
+      // Validate and import
+      const validation = importTargetPreset(subject || '', importedData, allAvailableQuestions);
+      
+      if (validation.valid) {
+        toast.success(`Imported ${validation.foundQuestionIds.length} questions to target practice!`);
+      } else {
+        // Show error dialog
+        setImportValidation(validation);
+        setImportDialogOpen(true);
+      }
+    } catch (error) {
+      toast.error('Failed to read target preset file');
+    }
+
+    // Reset file input
+    if (targetPresetInputRef.current) {
+      targetPresetInputRef.current.value = '';
+    }
   };
 
   const totalImportedQuestions = importedSets.reduce((sum, s) => sum + s.questions.length, 0);
@@ -337,24 +463,64 @@ const CourseChallenge = () => {
             </div>
           </Card>
 
-          {wrongCount > 0 && (
-            <Card 
-              className="p-6 cursor-pointer hover:border-destructive transition-all border-destructive/50"
-              onClick={() => navigate(`/quiz/${subject}/targeted/cram`, { 
-                state: { wrongQuestions: wrongAnswers } 
-              })}
-            >
+          {/* Target Practice Section */}
+          <Card className={`p-6 transition-all ${wrongCount > 0 ? 'border-destructive/50' : 'border-dashed'}`}>
+            <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
-                <Target className="h-6 w-6 text-destructive" />
+                <Target className={`h-6 w-6 ${wrongCount > 0 ? 'text-destructive' : 'text-muted-foreground'}`} />
                 <div>
                   <h3 className="font-semibold">Targeted Practice</h3>
                   <p className="text-sm text-muted-foreground">
-                    Review {wrongCount} questions you got wrong
+                    {wrongCount > 0 
+                      ? `Review ${wrongCount} questions you got wrong`
+                      : 'Complete some quizzes first to build your target list'
+                    }
                   </p>
                 </div>
               </div>
-            </Card>
-          )}
+              <div className="flex items-center gap-2 flex-shrink-0">
+                {wrongCount > 0 && (
+                  <>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDownloadTargetPreset();
+                      }}
+                      title="Download target preset"
+                    >
+                      <Download className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="bg-destructive hover:bg-destructive/90"
+                      onClick={() => navigate(`/quiz/${subject}/targeted/cram`, { 
+                        state: { wrongQuestions: wrongAnswers } 
+                      })}
+                    >
+                      Practice
+                    </Button>
+                  </>
+                )}
+                <input
+                  ref={targetPresetInputRef}
+                  type="file"
+                  accept=".json"
+                  onChange={handleTargetPresetUpload}
+                  className="hidden"
+                />
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => targetPresetInputRef.current?.click()}
+                  title="Upload target preset"
+                >
+                  <Upload className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </Card>
         </div>
 
         <Card className="mt-8 p-6 bg-muted">
@@ -383,6 +549,16 @@ const CourseChallenge = () => {
         }}
         onConfirm={() => setToRemove && handleRemoveImported(setToRemove.id)}
         fileName={setToRemove?.name || ''}
+      />
+
+      {/* Target Preset Import Error Dialog */}
+      <TargetPresetImportDialog
+        isOpen={importDialogOpen}
+        onClose={() => {
+          setImportDialogOpen(false);
+          setImportValidation(null);
+        }}
+        validation={importValidation}
       />
     </div>
   );
