@@ -109,24 +109,6 @@ const MathCategory = () => {
           </div>
         ))}
 
-        {/* Practice Units */}
-        <div className="mb-12">
-          <h2 className="text-2xl font-display font-bold mb-6">Practice Assignments</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {practiceUnits.map((unit) => (
-              <Card
-                key={unit.id}
-                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-math group bg-math/5"
-                onClick={() => navigate(`/unit/${unit.subject}/${unit.id}`)}
-              >
-                <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                  {unit.name}
-                </p>
-              </Card>
-            ))}
-          </div>
-        </div>
-
         {/* Memory Training */}
         <div className="mb-12">
           <div className="flex items-center gap-2 mb-6">
