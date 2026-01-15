@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown, FolderPlus } from 'lucide-react';
 import { Footer } from '@/components/Footer';
@@ -84,9 +85,9 @@ const Index = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {categories.map((category, index) => {
           const Icon = category.icon;
-          return <a 
+          return <Link 
               key={category.id} 
-              href={category.path}
+              to={category.path}
               className="block"
             >
               <Card 
@@ -105,7 +106,7 @@ const Index = () => {
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Card>
-            </a>;
+            </Link>;
         })}
         </div>
 

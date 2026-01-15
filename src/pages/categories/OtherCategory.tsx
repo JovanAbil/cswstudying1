@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -224,14 +224,12 @@ const OtherCategory = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/')}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
-        </Button>
+        <Link to="/" className="inline-block mb-6">
+          <Button variant="ghost">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </Button>
+        </Link>
 
         <div className="flex items-center gap-4 mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-other/10">
@@ -267,27 +265,28 @@ const OtherCategory = () => {
                       Targeted Practice ({wrongCount})
                     </Button>
                   )}
-                  <Button
-                    onClick={() => navigate(`/course-challenge/${subject.id}`)}
-                    variant="outline"
-                    className="border-other text-other hover:bg-other hover:text-other-foreground"
-                  >
-                    <Trophy className="mr-2 h-4 w-4" />
-                    Course Challenge
-                  </Button>
+                  <Link to={`/course-challenge/${subject.id}`}>
+                    <Button
+                      variant="outline"
+                      className="border-other text-other hover:bg-other hover:text-other-foreground"
+                    >
+                      <Trophy className="mr-2 h-4 w-4" />
+                      Course Challenge
+                    </Button>
+                  </Link>
                 </div>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {subject.units.map((unit) => (
-                  <Card
-                    key={unit.id}
-                    className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-other group"
-                    onClick={() => navigate(`/unit/${subject.id}/${unit.id}`)}
-                  >
-                    <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                      {unit.name}
-                    </p>
-                  </Card>
+                  <Link key={unit.id} to={`/unit/${subject.id}/${unit.id}`}>
+                    <Card
+                      className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-other group"
+                    >
+                      <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                        {unit.name}
+                      </p>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             </div>

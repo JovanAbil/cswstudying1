@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, BookOpen, Trophy, Lock, Brain } from 'lucide-react';
@@ -23,11 +24,11 @@ const EnglishCategory = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
-        <a href="/" className="inline-block mb-6">
+        <Link to="/" className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Home
           </Button>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-4 mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-english/10">
@@ -63,13 +64,13 @@ const EnglishCategory = () => {
           <h2 className="text-2xl font-display font-bold mb-6">Practice Assignments</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {practiceUnits.map((unit) => (
-              <a key={unit.id} href={`/unit/${unit.subject}/${unit.id}`}>
+              <Link key={unit.id} to={`/unit/${unit.subject}/${unit.id}`}>
                 <Card 
                   className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-english group bg-english/5 h-full"
                 >
                   <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">{unit.name}</p>
                 </Card>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

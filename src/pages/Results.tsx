@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
@@ -242,7 +242,7 @@ const Results = () => {
         </div>
 
         <div className="flex justify-center mt-8">
-          <a href="/">
+          <Link to="/">
             <Button
               size="lg"
               className="min-w-[200px]"
@@ -250,7 +250,7 @@ const Results = () => {
               <Home className="mr-2 h-4 w-4" />
               Back to Home
             </Button>
-          </a>
+          </Link>
         </div>
       </div>
       <Footer />

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const Footer = () => {
   return (
     <footer className="w-full border-t bg-muted/30">
@@ -11,9 +13,9 @@ export const Footer = () => {
             {/* Example: <span className="font-medium">• Name Here</span> */}
           </div>
           <div className="flex items-center gap-4">
-            <a href="/privacy" className="hover:text-foreground transition-colors">
+            <Link to="/privacy" className="hover:text-foreground transition-colors">
               Privacy Policy
-            </a>
+            </Link>
           </div>
         </div>
       </div>

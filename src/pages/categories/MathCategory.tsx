@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Calculator, Trophy, Brain, Target } from 'lucide-react';
@@ -40,12 +40,12 @@ const MathCategory = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
-        <a href="/" className="inline-block mb-6">
+        <Link to="/" className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Button>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-4 mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-math/10">
@@ -74,7 +74,7 @@ const MathCategory = () => {
                     Targeted Practice ({wrongCount})
                   </Button>
                 )}
-                <a href={`/course-challenge/${subject.id}`}>
+                <Link to={`/course-challenge/${subject.id}`}>
                   <Button
                     variant="outline"
                     className="border-math text-math hover:bg-math hover:text-math-foreground"
@@ -82,7 +82,7 @@ const MathCategory = () => {
                     <Trophy className="mr-2 h-4 w-4" />
                     Course Challenge
                   </Button>
-                </a>
+                </Link>
               </div>
             </div>
             {wrongCount === 0 && (
@@ -94,7 +94,7 @@ const MathCategory = () => {
             )}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {subject.units.map((unit) => (
-                <a key={unit.id} href={`/unit/${subject.id}/${unit.id}`}>
+                <Link key={unit.id} to={`/unit/${subject.id}/${unit.id}`}>
                   <Card
                     className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-math group h-full"
                   >
@@ -102,7 +102,7 @@ const MathCategory = () => {
                       {unit.name}
                     </p>
                   </Card>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -116,7 +116,7 @@ const MathCategory = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {memoryUnits.map((unit) => (
-              <a key={unit.id} href={`/unit/${unit.subject}/${unit.id}`}>
+              <Link key={unit.id} to={`/unit/${unit.subject}/${unit.id}`}>
                 <Card
                   className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-other group bg-other/5 h-full"
                 >
@@ -124,7 +124,7 @@ const MathCategory = () => {
                     {unit.name}
                   </p>
                 </Card>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

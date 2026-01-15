@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, Trophy, ExternalLink, Wrench, Target, Upload, X, FileText, Download } from 'lucide-react';
@@ -190,12 +190,12 @@ const CourseChallenge = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
-        <a href={getCategoryPath()} className="inline-block mb-6">
+        <Link to={getCategoryPath()} className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Category
           </Button>
-        </a>
+        </Link>
 
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
@@ -319,7 +319,7 @@ const CourseChallenge = () => {
 
         {/* Custom Practice & Targeted Practice */}
         <div className="grid md:grid-cols-2 gap-4 mt-6">
-          <a href={`/course-challenge/${subject}/preset-builder`} className="block">
+          <Link to={`/course-challenge/${subject}/preset-builder`} className="block">
             <Card className="p-6 cursor-pointer hover:border-primary transition-all h-full">
               <div className="flex items-center gap-3">
                 <Wrench className="h-6 w-6 text-primary" />
@@ -332,7 +332,7 @@ const CourseChallenge = () => {
                 </div>
               </div>
             </Card>
-          </a>
+          </Link>
 
           {wrongCount > 0 && (
             <Card 

@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Eye, Brain, Lock, Trophy, Target } from 'lucide-react';
@@ -33,12 +33,12 @@ const StockPage = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1">
-        <a href="/" className="inline-block mb-6">
+        <Link to="/" className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Home
           </Button>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-4 mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10">
@@ -64,7 +64,7 @@ const StockPage = () => {
               Targeted Practice ({wrongCount})
             </Button>
           )}
-          <a href="/course-challenge/stock">
+          <Link to="/course-challenge/stock">
             <Button
               variant="outline"
               className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
@@ -72,7 +72,7 @@ const StockPage = () => {
               <Trophy className="mr-2 h-4 w-4" />
               Course Challenge
             </Button>
-          </a>
+          </Link>
         </div>
 
         {wrongCount === 0 && (
@@ -88,7 +88,7 @@ const StockPage = () => {
           {stockUnits.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {stockUnits.map((unit) => (
-                <a key={unit.id} href={`/unit/stock/${unit.id}`}>
+                <Link key={unit.id} to={`/unit/stock/${unit.id}`}>
                   <Card
                     className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-primary group h-full"
                   >
@@ -104,7 +104,7 @@ const StockPage = () => {
                       </div>
                     </div>
                   </Card>
-                </a>
+                </Link>
               ))}
             </div>
           ) : (

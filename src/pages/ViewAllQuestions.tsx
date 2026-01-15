@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, Copy, CheckCircle2 } from 'lucide-react';
@@ -139,11 +139,11 @@ const ViewAllQuestions = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
-        <a href={`/unit/${subject}/${unitId}`} className="inline-block mb-6">
+        <Link to={`/unit/${subject}/${unitId}`} className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Unit
           </Button>
-        </a>
+        </Link>
         <h1 className="text-3xl font-display font-bold mb-2">All Questions - {getTopicName()}</h1>
         <p className="text-muted-foreground mb-8">{questions.length} questions total</p>
         <div className="space-y-6">

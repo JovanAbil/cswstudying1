@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
@@ -139,11 +139,11 @@ const UnitDetail = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1">
-        <a href={getCategoryPath()} className="inline-block mb-6">
+        <Link to={getCategoryPath()} className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Subject
           </Button>
-        </a>
+        </Link>
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold text-center mb-3 text-primary font-display">
             {unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
@@ -180,7 +180,7 @@ const UnitDetail = () => {
           )}
 
           {/* View All Questions */}
-          <a href={`/unit/${subject}/${unitId}/view-all`} className="block">
+          <Link to={`/unit/${subject}/${unitId}/view-all`} className="block">
             <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-accent group bg-accent/5">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-accent/20 rounded-lg"><Eye className="h-8 w-8 text-accent" /></div>
@@ -190,10 +190,10 @@ const UnitDetail = () => {
                 </div>
               </div>
             </Card>
-          </a>
+          </Link>
 
           {/* Custom Preset Builder */}
-          <a href={`/unit/${subject}/${unitId}/preset-builder`} className="block">
+          <Link to={`/unit/${subject}/${unitId}/preset-builder`} className="block">
             <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-destructive group bg-destructive/5">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-destructive/20 rounded-lg"><Target className="h-8 w-8 text-destructive" /></div>
@@ -206,7 +206,7 @@ const UnitDetail = () => {
                 </div>
               </div>
             </Card>
-          </a>
+          </Link>
 
           {/* Cram Study */}
           <h2 className="text-2xl font-display font-bold mb-4 mt-8">Practice Modes</h2>
@@ -233,7 +233,7 @@ const UnitDetail = () => {
             </Card>
           )}
           
-          <a href={`/unit/${subject}/${unitId}/quiz/cram${calculatorSectionEnabled ? '?calculatorSection=true' : ''}`} className="block">
+          <Link to={`/unit/${subject}/${unitId}/quiz/cram${calculatorSectionEnabled ? '?calculatorSection=true' : ''}`} className="block">
             <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary mb-8">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-primary/20 rounded-lg"><Brain className="h-8 w-8 text-primary" /></div>
@@ -249,7 +249,7 @@ const UnitDetail = () => {
                 </div>
               </div>
             </Card>
-          </a>
+          </Link>
 
           {/* Homework Assignments Section */}
           {unitContent && unitContent.assignments.length > 0 && (
@@ -259,7 +259,7 @@ const UnitDetail = () => {
               </h2>
               <div className="grid gap-4 mb-8">
                 {unitContent.assignments.map((assignment) => (
-                  <a key={assignment.id} href={`/unit/${subject}/${unitId}/assignment/${assignment.id}/quiz/cram`} className="block">
+                  <Link key={assignment.id} to={`/unit/${subject}/${unitId}/assignment/${assignment.id}/quiz/cram`} className="block">
                     <Card className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-english bg-english/5">
                       <div className="flex items-start gap-4">
                         <div className="p-3 bg-english/20 rounded-lg"><FileText className="h-6 w-6 text-english" /></div>
@@ -271,7 +271,7 @@ const UnitDetail = () => {
                         </div>
                       </div>
                     </Card>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </>
@@ -283,7 +283,7 @@ const UnitDetail = () => {
               <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2">
                 <BookOpen className="h-6 w-6" /> Study Notes
               </h2>
-              <a href={`/unit/${subject}/${unitId}/notes`} className="block">
+              <Link to={`/unit/${subject}/${unitId}/notes`} className="block">
                 <Card className="p-6 mb-8 bg-science/5 border-science/20 cursor-pointer hover:shadow-lg">
                   <div className="flex items-start gap-4">
                     <div className="p-3 bg-science/20 rounded-lg"><BookOpen className="h-6 w-6 text-science" /></div>
@@ -293,7 +293,7 @@ const UnitDetail = () => {
                     </div>
                   </div>
                 </Card>
-              </a>
+              </Link>
             </>
           )}
 
