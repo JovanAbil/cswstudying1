@@ -28,7 +28,7 @@ const MathCategory = () => {
   ];
 
   const practiceUnits = [
-    { id: 'log', name: 'Logarithms Practice', subject: 'practice' },
+    
   ];
 
   const memoryUnits = [
