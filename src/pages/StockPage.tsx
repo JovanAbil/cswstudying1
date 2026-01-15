@@ -33,14 +33,12 @@ const StockPage = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/')}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
-        </Button>
+        <a href="/" className="inline-block mb-6">
+          <Button variant="ghost">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </Button>
+        </a>
 
         <div className="flex items-center gap-4 mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-primary/10">
@@ -66,14 +64,15 @@ const StockPage = () => {
               Targeted Practice ({wrongCount})
             </Button>
           )}
-          <Button
-            onClick={() => navigate(`/course-challenge/stock`)}
-            variant="outline"
-            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-          >
-            <Trophy className="mr-2 h-4 w-4" />
-            Course Challenge
-          </Button>
+          <a href="/course-challenge/stock">
+            <Button
+              variant="outline"
+              className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            >
+              <Trophy className="mr-2 h-4 w-4" />
+              Course Challenge
+            </Button>
+          </a>
         </div>
 
         {wrongCount === 0 && (
@@ -89,23 +88,23 @@ const StockPage = () => {
           {stockUnits.length > 0 ? (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {stockUnits.map((unit) => (
-                <Card
-                  key={unit.id}
-                  className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-primary group"
-                  onClick={() => navigate(`/unit/stock/${unit.id}`)}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-primary/20 rounded-lg">
-                      <Brain className="h-5 w-5 text-primary" />
+                <a key={unit.id} href={`/unit/stock/${unit.id}`}>
+                  <Card
+                    className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-primary group h-full"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="p-2 bg-primary/20 rounded-lg">
+                        <Brain className="h-5 w-5 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-sm font-semibold mb-1 group-hover:text-foreground">{unit.name}</h3>
+                        <p className="text-xs text-muted-foreground">
+                          {unit.questionCount} questions
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-sm font-semibold mb-1 group-hover:text-foreground">{unit.name}</h3>
-                      <p className="text-xs text-muted-foreground">
-                        {unit.questionCount} questions
-                      </p>
-                    </div>
-                  </div>
-                </Card>
+                  </Card>
+                </a>
               ))}
             </div>
           ) : (

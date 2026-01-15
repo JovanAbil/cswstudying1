@@ -190,14 +190,12 @@ const CourseChallenge = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
-        <Button
-          variant="ghost"
-          onClick={() => navigate(getCategoryPath())}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Category
-        </Button>
+        <a href={getCategoryPath()} className="inline-block mb-6">
+          <Button variant="ghost">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Category
+          </Button>
+        </a>
 
         <div className="mb-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
@@ -321,21 +319,20 @@ const CourseChallenge = () => {
 
         {/* Custom Practice & Targeted Practice */}
         <div className="grid md:grid-cols-2 gap-4 mt-6">
-          <Card 
-            className="p-6 cursor-pointer hover:border-primary transition-all"
-            onClick={() => navigate(`/course-challenge/${subject}/preset-builder`)}
-          >
-            <div className="flex items-center gap-3">
-              <Wrench className="h-6 w-6 text-primary" />
-              <div>
-                <h3 className="font-semibold">Build Custom Practice</h3>
-                <p className="text-sm text-muted-foreground">
-                  Select specific questions from any unit
-                  {totalImportedQuestions > 0 && ` (includes ${totalImportedQuestions} imported)`}
-                </p>
+          <a href={`/course-challenge/${subject}/preset-builder`} className="block">
+            <Card className="p-6 cursor-pointer hover:border-primary transition-all h-full">
+              <div className="flex items-center gap-3">
+                <Wrench className="h-6 w-6 text-primary" />
+                <div>
+                  <h3 className="font-semibold">Build Custom Practice</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Select specific questions from any unit
+                    {totalImportedQuestions > 0 && ` (includes ${totalImportedQuestions} imported)`}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </a>
 
           {wrongCount > 0 && (
             <Card 

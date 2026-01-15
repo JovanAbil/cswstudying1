@@ -40,14 +40,12 @@ const MathCategory = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
-        <Button
-          variant="ghost"
-          onClick={() => navigate('/')}
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
-        </Button>
+        <a href="/" className="inline-block mb-6">
+          <Button variant="ghost">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Home
+          </Button>
+        </a>
 
         <div className="flex items-center gap-4 mb-8">
           <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-math/10">
@@ -76,14 +74,15 @@ const MathCategory = () => {
                     Targeted Practice ({wrongCount})
                   </Button>
                 )}
-                <Button
-                  onClick={() => navigate(`/course-challenge/${subject.id}`)}
-                  variant="outline"
-                  className="border-math text-math hover:bg-math hover:text-math-foreground"
-                >
-                  <Trophy className="mr-2 h-4 w-4" />
-                  Course Challenge
-                </Button>
+                <a href={`/course-challenge/${subject.id}`}>
+                  <Button
+                    variant="outline"
+                    className="border-math text-math hover:bg-math hover:text-math-foreground"
+                  >
+                    <Trophy className="mr-2 h-4 w-4" />
+                    Course Challenge
+                  </Button>
+                </a>
               </div>
             </div>
             {wrongCount === 0 && (
@@ -95,15 +94,15 @@ const MathCategory = () => {
             )}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {subject.units.map((unit) => (
-                <Card
-                  key={unit.id}
-                  className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-math group"
-                  onClick={() => navigate(`/unit/${subject.id}/${unit.id}`)}
-                >
-                  <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                    {unit.name}
-                  </p>
-                </Card>
+                <a key={unit.id} href={`/unit/${subject.id}/${unit.id}`}>
+                  <Card
+                    className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-math group h-full"
+                  >
+                    <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                      {unit.name}
+                    </p>
+                  </Card>
+                </a>
               ))}
             </div>
           </div>
@@ -117,15 +116,15 @@ const MathCategory = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {memoryUnits.map((unit) => (
-              <Card
-                key={unit.id}
-                className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-other group bg-other/5"
-                onClick={() => navigate(`/unit/${unit.subject}/${unit.id}`)}
-              >
-                <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                  {unit.name}
-                </p>
-              </Card>
+              <a key={unit.id} href={`/unit/${unit.subject}/${unit.id}`}>
+                <Card
+                  className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-other group bg-other/5 h-full"
+                >
+                  <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                    {unit.name}
+                  </p>
+                </Card>
+              </a>
             ))}
           </div>
         </div>

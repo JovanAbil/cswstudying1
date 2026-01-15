@@ -139,9 +139,11 @@ const UnitDetail = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1">
-        <Button variant="ghost" onClick={() => navigate(getCategoryPath())} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Subject
-        </Button>
+        <a href={getCategoryPath()} className="inline-block mb-6">
+          <Button variant="ghost">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Subject
+          </Button>
+        </a>
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold text-center mb-3 text-primary font-display">
             {unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
@@ -178,31 +180,33 @@ const UnitDetail = () => {
           )}
 
           {/* View All Questions */}
-          <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-accent group bg-accent/5"
-            onClick={() => navigate(`/unit/${subject}/${unitId}/view-all`)}>
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-accent/20 rounded-lg"><Eye className="h-8 w-8 text-accent" /></div>
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold mb-2">View All Questions</h3>
-                <p className="text-muted-foreground text-sm">Browse all questions with their IDs</p>
+          <a href={`/unit/${subject}/${unitId}/view-all`} className="block">
+            <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-accent group bg-accent/5">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-accent/20 rounded-lg"><Eye className="h-8 w-8 text-accent" /></div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold mb-2">View All Questions</h3>
+                  <p className="text-muted-foreground text-sm">Browse all questions with their IDs</p>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </a>
 
           {/* Custom Preset Builder */}
-          <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-destructive group bg-destructive/5"
-            onClick={() => navigate(`/unit/${subject}/${unitId}/preset-builder`)}>
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-destructive/20 rounded-lg"><Target className="h-8 w-8 text-destructive" /></div>
-              <div className="flex-1">
-                <h3 className="text-xl font-semibold mb-2">Build Custom Practice</h3>
-                <p className="text-muted-foreground text-sm">
-                  Select specific questions & save presets
-                  {presets.length > 0 && <span className="ml-2 text-destructive font-medium">({presets.length} saved)</span>}
-                </p>
+          <a href={`/unit/${subject}/${unitId}/preset-builder`} className="block">
+            <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-destructive group bg-destructive/5">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-destructive/20 rounded-lg"><Target className="h-8 w-8 text-destructive" /></div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold mb-2">Build Custom Practice</h3>
+                  <p className="text-muted-foreground text-sm">
+                    Select specific questions & save presets
+                    {presets.length > 0 && <span className="ml-2 text-destructive font-medium">({presets.length} saved)</span>}
+                  </p>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </a>
 
           {/* Cram Study */}
           <h2 className="text-2xl font-display font-bold mb-4 mt-8">Practice Modes</h2>
@@ -229,22 +233,23 @@ const UnitDetail = () => {
             </Card>
           )}
           
-          <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary mb-8"
-            onClick={() => navigate(`/unit/${subject}/${unitId}/quiz/cram${calculatorSectionEnabled ? '?calculatorSection=true' : ''}`)}>
-            <div className="flex items-start gap-4">
-              <div className="p-3 bg-primary/20 rounded-lg"><Brain className="h-8 w-8 text-primary" /></div>
-              <div className="flex-1">
-                <h3 className="text-2xl font-semibold mb-2">Cram Study</h3>
-                <p className="text-muted-foreground mb-4">Practice ALL questions</p>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                  <span>⏱️ Variable</span><span>📝 All questions</span>
-                  {calculatorSectionEnabled && hasCalculatorQuestions && (
-                    <span className="text-primary">🧮 Calculator section at end</span>
-                  )}
+          <a href={`/unit/${subject}/${unitId}/quiz/cram${calculatorSectionEnabled ? '?calculatorSection=true' : ''}`} className="block">
+            <Card className="p-8 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary mb-8">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/20 rounded-lg"><Brain className="h-8 w-8 text-primary" /></div>
+                <div className="flex-1">
+                  <h3 className="text-2xl font-semibold mb-2">Cram Study</h3>
+                  <p className="text-muted-foreground mb-4">Practice ALL questions</p>
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>⏱️ Variable</span><span>📝 All questions</span>
+                    {calculatorSectionEnabled && hasCalculatorQuestions && (
+                      <span className="text-primary">🧮 Calculator section at end</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          </a>
 
           {/* Homework Assignments Section */}
           {unitContent && unitContent.assignments.length > 0 && (
@@ -254,18 +259,19 @@ const UnitDetail = () => {
               </h2>
               <div className="grid gap-4 mb-8">
                 {unitContent.assignments.map((assignment) => (
-                  <Card key={assignment.id} className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-english bg-english/5"
-                    onClick={() => navigate(`/unit/${subject}/${unitId}/assignment/${assignment.id}/quiz/cram`)}>
-                    <div className="flex items-start gap-4">
-                      <div className="p-3 bg-english/20 rounded-lg"><FileText className="h-6 w-6 text-english" /></div>
-                      <div className="flex-1">
-                        <h3 className="text-lg font-semibold mb-1">{assignment.name}</h3>
-                        {assignment.notes && (
-                          <p className="text-muted-foreground text-sm">{assignment.notes}</p>
-                        )}
+                  <a key={assignment.id} href={`/unit/${subject}/${unitId}/assignment/${assignment.id}/quiz/cram`} className="block">
+                    <Card className="p-6 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-english bg-english/5">
+                      <div className="flex items-start gap-4">
+                        <div className="p-3 bg-english/20 rounded-lg"><FileText className="h-6 w-6 text-english" /></div>
+                        <div className="flex-1">
+                          <h3 className="text-lg font-semibold mb-1">{assignment.name}</h3>
+                          {assignment.notes && (
+                            <p className="text-muted-foreground text-sm">{assignment.notes}</p>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </Card>
+                    </Card>
+                  </a>
                 ))}
               </div>
             </>
@@ -277,16 +283,17 @@ const UnitDetail = () => {
               <h2 className="text-2xl font-display font-bold mb-4 flex items-center gap-2">
                 <BookOpen className="h-6 w-6" /> Study Notes
               </h2>
-              <Card className="p-6 mb-8 bg-science/5 border-science/20 cursor-pointer hover:shadow-lg"
-                onClick={() => navigate(`/unit/${subject}/${unitId}/notes`)}>
-                <div className="flex items-start gap-4">
-                  <div className="p-3 bg-science/20 rounded-lg"><BookOpen className="h-6 w-6 text-science" /></div>
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-1">View All Notes & Rules</h3>
-                    <p className="text-muted-foreground text-sm">Study guide for this unit</p>
+              <a href={`/unit/${subject}/${unitId}/notes`} className="block">
+                <Card className="p-6 mb-8 bg-science/5 border-science/20 cursor-pointer hover:shadow-lg">
+                  <div className="flex items-start gap-4">
+                    <div className="p-3 bg-science/20 rounded-lg"><BookOpen className="h-6 w-6 text-science" /></div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold mb-1">View All Notes & Rules</h3>
+                      <p className="text-muted-foreground text-sm">Study guide for this unit</p>
+                    </div>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </a>
             </>
           )}
 

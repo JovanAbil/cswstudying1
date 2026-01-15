@@ -242,14 +242,15 @@ const Results = () => {
         </div>
 
         <div className="flex justify-center mt-8">
-          <Button
-            onClick={() => navigate('/')}
-            size="lg"
-            className="min-w-[200px]"
-          >
-            <Home className="mr-2 h-4 w-4" />
-            Back to Home
-          </Button>
+          <a href="/">
+            <Button
+              size="lg"
+              className="min-w-[200px]"
+            >
+              <Home className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+          </a>
         </div>
       </div>
       <Footer />
