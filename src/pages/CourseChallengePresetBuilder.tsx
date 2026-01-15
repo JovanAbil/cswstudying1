@@ -3,7 +3,16 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { ArrowLeft, Save, Play, Pencil, Trash2, Check } from 'lucide-react';
+import { ArrowLeft, Save, Play, Pencil, Trash2, Check, Download, Upload } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogAction,
+} from '@/components/ui/alert-dialog';
 import { toast } from 'sonner';
 import { Question } from '@/types/quiz';
 import { usePresets, Preset } from '@/hooks/usePresets';
@@ -93,6 +102,7 @@ const CourseChallengePresetBuilder = () => {
   const [editingPresetId, setEditingPresetId] = useState<string | null>(null);
   const [showSaveForm, setShowSaveForm] = useState(false);
   const [importedSets, setImportedSets] = useState<ImportedQuestionSet[]>([]);
+  const [importError, setImportError] = useState<{ show: boolean; message: string }>({ show: false, message: '' });
 
   // Load imported question sets
   useEffect(() => {
@@ -264,6 +274,84 @@ const CourseChallengePresetBuilder = () => {
     toast.success('Preset deleted');
   };
 
+  const handleDownloadPreset = (preset: Preset) => {
+    const exportData = {
+      version: 1,
+      preset: {
+        name: preset.name,
+        subject: preset.subject,
+        unitId: preset.unitId,
+        questionIds: preset.questionIds,
+      }
+    };
+    
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${preset.name.replace(/[^a-zA-Z0-9]/g, '_')}_preset.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast.success('Preset downloaded!');
+  };
+
+  const handleImportPreset = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target?.result as string);
+        
+        if (!data.preset || !data.preset.questionIds || !Array.isArray(data.preset.questionIds)) {
+          setImportError({ show: true, message: 'Invalid preset file format.' });
+          return;
+        }
+
+        const importedIds = data.preset.questionIds as string[];
+        const allQuestions: Question[] = [];
+        allQuestionsByUnit.forEach(({ questions }) => {
+          allQuestions.push(...questions);
+        });
+        const availableIds = new Set(allQuestions.map(q => q.id));
+        const missingIds = importedIds.filter(id => !availableIds.has(id));
+        const validIds = importedIds.filter(id => availableIds.has(id));
+
+        if (validIds.length === 0) {
+          setImportError({ 
+            show: true, 
+            message: `Import failed: None of the ${importedIds.length} questions in this preset exist in the current dataset. This preset may be from a different subject or the questions have been updated.`
+          });
+          return;
+        }
+
+        if (missingIds.length > 0) {
+          setImportError({ 
+            show: true, 
+            message: `Import failed: ${missingIds.length} out of ${importedIds.length} questions are missing from the current dataset. The preset cannot be imported because it requires questions that don't exist here.`
+          });
+          return;
+        }
+
+        // All questions exist - create the preset
+        const newPreset = createPreset(
+          data.preset.name || 'Imported Preset',
+          subject || '',
+          'course-challenge',
+          validIds
+        );
+        toast.success(`Preset "${newPreset.name}" imported successfully!`);
+      } catch (err) {
+        setImportError({ show: true, message: 'Failed to parse preset file. Please ensure it\'s a valid JSON file.' });
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  };
+
   const handleUsePreset = (preset: Preset) => {
     // Get the actual question objects from the IDs (imported sets are already in allQuestionsByUnit)
     const allQuestions: Question[] = [];
@@ -379,10 +467,39 @@ const CourseChallengePresetBuilder = () => {
           </Card>
         )}
 
+        {/* Import Error Dialog */}
+        <AlertDialog open={importError.show} onOpenChange={(open) => setImportError({ ...importError, show: open })}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Import Failed</AlertDialogTitle>
+              <AlertDialogDescription>{importError.message}</AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogAction onClick={() => setImportError({ show: false, message: '' })}>
+                OK
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
         {/* Saved Presets */}
-        {subjectPresets.length > 0 && (
-          <Card className="p-6 mb-6">
-            <h3 className="text-lg font-semibold mb-4">Saved Presets</h3>
+        <Card className="p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-lg font-semibold">Saved Presets</h3>
+            <Button variant="outline" size="sm" asChild>
+              <label className="cursor-pointer">
+                <Upload className="mr-2 h-4 w-4" />
+                Import Preset
+                <input
+                  type="file"
+                  accept=".json"
+                  className="hidden"
+                  onChange={handleImportPreset}
+                />
+              </label>
+            </Button>
+          </div>
+          {subjectPresets.length > 0 ? (
             <div className="grid gap-3">
               {subjectPresets.map(preset => (
                 <div key={preset.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
@@ -399,6 +516,9 @@ const CourseChallengePresetBuilder = () => {
                     <Button size="sm" variant="outline" onClick={() => handleEditPreset(preset)}>
                       <Pencil className="h-3 w-3" />
                     </Button>
+                    <Button size="sm" variant="outline" onClick={() => handleDownloadPreset(preset)}>
+                      <Download className="h-3 w-3" />
+                    </Button>
                     <Button size="sm" variant="destructive" onClick={() => handleDeletePreset(preset.id)}>
                       <Trash2 className="h-3 w-3" />
                     </Button>
@@ -406,8 +526,10 @@ const CourseChallengePresetBuilder = () => {
                 </div>
               ))}
             </div>
-          </Card>
-        )}
+          ) : (
+            <p className="text-muted-foreground text-sm">No saved presets yet. Select questions and save them as a preset, or import one.</p>
+          )}
+        </Card>
 
         {/* Question Selection by Unit */}
         {allQuestionsByUnit.map(({ unit, questions }) => (
