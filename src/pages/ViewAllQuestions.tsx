@@ -58,8 +58,6 @@ import { generalQuestions } from '@/data/memory/general-questions';
 import { general2Questions } from '@/data/memory/general2-questions';
 import { general3Questions } from '@/data/memory/general3-questions';
 import { unit1Questions } from '@/data/practice/unit1-questions';
-import { gasQuestions } from '@/data/practice/gas-questions';
-import { logQuestions } from '@/data/practice/log-questions';
 import { Question } from '@/types/quiz';
 
 const ViewAllQuestions = () => {
