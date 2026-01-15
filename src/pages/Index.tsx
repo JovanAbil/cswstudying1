@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
 import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown, FolderPlus } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { CreditsSection } from '@/components/CreditsSection';
+
 const categories = [{
   id: 'math',
   name: 'Mathematics',
@@ -40,6 +40,7 @@ const categories = [{
   color: 'other',
   path: '/category/other'
 }];
+
 const controls = [{
   key: '1-5',
   description: 'Select answer option (1 for first, 2 for second, etc.)'
@@ -53,8 +54,8 @@ const controls = [{
   key: '→ Arrow',
   description: 'Mark free response as correct'
 }];
+
 const Index = () => {
-  const navigate = useNavigate();
   return <div className="min-h-screen bg-background flex flex-col">
       {/* Hero Section */}
       <div className="relative overflow-hidden">
@@ -83,9 +84,17 @@ const Index = () => {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {categories.map((category, index) => {
           const Icon = category.icon;
-          return <Card key={category.id} className={`group relative overflow-hidden p-8 cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] border-2 hover:border-${category.color} animate-fade-in`} style={{
-            animationDelay: `${index * 0.1}s`
-          }} onClick={() => navigate(category.path)}>
+          return <a 
+              key={category.id} 
+              href={category.path}
+              className="block"
+            >
+              <Card 
+                className={`group relative overflow-hidden p-8 cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-[1.02] border-2 hover:border-${category.color} animate-fade-in h-full`} 
+                style={{
+                  animationDelay: `${index * 0.1}s`
+                }}
+              >
                 <div className={`inline-flex items-center justify-center w-14 h-14 rounded-xl bg-${category.color}/10 mb-6 group-hover:scale-110 transition-transform`}>
                   <Icon className={`w-7 h-7 text-${category.color}`} />
                 </div>
@@ -95,7 +104,8 @@ const Index = () => {
                   Explore
                   <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </div>
-              </Card>;
+              </Card>
+            </a>;
         })}
         </div>
 

@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, Copy, CheckCircle2 } from 'lucide-react';
@@ -62,7 +62,6 @@ import { Question } from '@/types/quiz';
 
 const ViewAllQuestions = () => {
   const { subject, unitId } = useParams();
-  const navigate = useNavigate();
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [customQuestions, setCustomQuestions] = useState<Question[]>([]);
   const { data: customUnitsData, isLoaded: customUnitsLoaded } = useCustomUnits();
@@ -140,9 +139,11 @@ const ViewAllQuestions = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
-        <Button variant="ghost" onClick={() => navigate(`/unit/${subject}/${unitId}`)} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back to Unit
-        </Button>
+        <a href={`/unit/${subject}/${unitId}`} className="inline-block mb-6">
+          <Button variant="ghost">
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back to Unit
+          </Button>
+        </a>
         <h1 className="text-3xl font-display font-bold mb-2">All Questions - {getTopicName()}</h1>
         <p className="text-muted-foreground mb-8">{questions.length} questions total</p>
         <div className="space-y-6">
