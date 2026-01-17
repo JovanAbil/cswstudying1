@@ -38,7 +38,7 @@ export const testScheduleConfig: Record<string, TestSchedule> = {
   // ============================================
   // FOR TESTING: testDate is Jan 25, 2026. Current date is Jan 17, 2026.
   // Since we are BEFORE the testDate, FAKE data should show now!
-  'chemistry-atomic': { testDate: '2026-01-25', hasFakeData: true },
+  'chemistry-atomic': { testDate: '2026-01-24', hasFakeData: true },
   // 'chemistry-compounds': { testDate: '2026-02-10', hasFakeData: true },
   // 'chemistry-metric': { testDate: '2026-01-10', hasFakeData: true },
   
