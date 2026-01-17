@@ -7,12 +7,16 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import MathQuickInput from '@/components/MathQuickInput';
-import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle2, XCircle, Lock } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import useQuizTimer from '@/hooks/useQuizTimer';
 import QuizTimer from '@/components/QuizTimer';
 import useCustomUnits from '@/hooks/useCustomUnits';
+
+// Date-based test schedule
+import { shouldShowRealData, getNextUnlockDate, testScheduleConfig } from '@/data/test-schedule-config';
+
 //AP Precalc
 import { polynomialQuestions } from '@/data/apprecalc/polynomial-questions';
 import { rationalQuestions } from '@/data/apprecalc/rational-questions';
@@ -69,11 +73,59 @@ import { general3Questions } from '@/data/memory/general3-questions';
 import { unit1Questions } from '@/data/practice/unit1-questions';
 //Stock
 import { basicsQuestions } from '@/data/stock/basics-questions';
+
+// ============================================
+// FAKE DATA IMPORTS
+// Add imports for fake data files here as you create them
+// ============================================
+import { atomicQuestions as fakeAtomicQuestions } from '@/data/fake/chemistry/atomic-questions';
+// import { compoundsQuestions as fakeCompoundsQuestions } from '@/data/fake/chemistry/compounds-questions';
+// import { polynomialQuestions as fakePolynomialQuestions } from '@/data/fake/apprecalc/polynomial-questions';
+// Add more fake data imports as needed...
+
 //Others
 import { Question, QuizAttempt } from '@/types/quiz';
 import { toast } from 'sonner';
 import QuestionTable from '@/components/QuestionTable';
 import MathText from '@/components/MathText';
+
+// Map of question keys to their fake data (add entries as you create fake data files)
+const fakeDataMap: Record<string, Question[]> = {
+  'chemistry-atomic': fakeAtomicQuestions,
+  // 'chemistry-compounds': fakeCompoundsQuestions,
+  // 'apprecalc-polynomial': fakePolynomialQuestions,
+  // Add more mappings as you create fake data files...
+};
+
+/**
+ * Get questions for a topic, checking if real or fake data should be shown
+ * based on the test schedule configuration
+ */
+const getQuestionsWithDateCheck = (questionKey: string, realQuestions: Question[]): Question[] => {
+  // Check if this topic has a schedule and fake data
+  const schedule = testScheduleConfig[questionKey];
+  
+  if (!schedule || !schedule.hasFakeData) {
+    // No schedule or no fake data - always use real data
+    return realQuestions;
+  }
+  
+  // Check if we should show real data based on the date
+  if (shouldShowRealData(questionKey)) {
+    return realQuestions;
+  }
+  
+  // Show fake data if available
+  const fakeQuestions = fakeDataMap[questionKey];
+  if (fakeQuestions && fakeQuestions.length > 0) {
+    console.log(`[Test Schedule] Using practice data for ${questionKey}`);
+    return fakeQuestions;
+  }
+  
+  // Fallback to real data if fake data not found
+  console.warn(`[Test Schedule] Fake data configured but not found for ${questionKey}`);
+  return realQuestions;
+};
 
 import { useRef } from 'react';
 
@@ -105,7 +157,8 @@ const Quiz = () => {
   const [showGrading, setShowGrading] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<any[]>([]);
 
-  const questionMap: Record<string, Question[]> = useMemo(() => ({
+  // Base question map with real data
+  const baseQuestionMap: Record<string, Question[]> = useMemo(() => ({
     'precalc-polynomial': polynomialQuestions, 'precalc-rational': rationalQuestions,
     'precalc-exponential': exponentialQuestions, 'precalc-logarithmic': logarithmicQuestions,
     'precalc-trigonometric': trigonometricQuestions, 'precalc-polar': polarQuestions,
@@ -131,6 +184,15 @@ const Quiz = () => {
     'memory-general': generalQuestions, 'memory-general2': general2Questions, 'memory-general3': general3Questions,
     'practice-unit1': unit1Questions, 'stock-basics': basicsQuestions,
   }), []);
+
+  // Question map with date-based fake data switching applied
+  const questionMap: Record<string, Question[]> = useMemo(() => {
+    const result: Record<string, Question[]> = {};
+    for (const [key, questions] of Object.entries(baseQuestionMap)) {
+      result[key] = getQuestionsWithDateCheck(key, questions);
+    }
+    return result;
+  }, [baseQuestionMap]);
 
   useEffect(() => {
     // Wait for custom units to load if this is a custom topic
