@@ -36,7 +36,7 @@ export const testScheduleConfig: Record<string, TestSchedule> = {
   // ============================================
   // CHEMISTRY TESTS
   // ============================================
-  // 'chemistry-atomic': { testDate: '2025-01-20', hasFakeData: true },
+  'chemistry-atomic': { testDate: '2026-01-19', hasFakeData: true },
   // 'chemistry-compounds': { testDate: '2025-02-10', hasFakeData: true },
   // 'chemistry-metric': { testDate: '2025-01-10', hasFakeData: true },
   
