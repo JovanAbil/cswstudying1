@@ -3,12 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Switch } from '@/components/ui/switch';
 import { Label } from '@/components/ui/label';
-import { ArrowLeft, ExternalLink, Eye, Brain, FileText, BookOpen, ClipboardList, Target, Download, Calculator, Lock } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Eye, Brain, FileText, BookOpen, ClipboardList, Target, Calculator, Lock } from 'lucide-react';
 import { unitStudyResources } from '@/data/study-resources';
 import { unitAssignments } from '@/data/assignments/unit-assignments';
 import usePresets from '@/hooks/usePresets';
-import { Question } from '@/types/quiz';
-import { downloadBuiltInTopic } from '@/utils/customUnitsExport';
+// Removed: import { downloadBuiltInTopic } from '@/utils/customUnitsExport';
 import { toast } from 'sonner';
 import { useMemo, useState } from 'react';
 import { Footer } from '@/components/Footer';
@@ -44,16 +43,7 @@ const UnitDetail = () => {
     return questions.some(q => q.calculator === true);
   }, [questions]);
 
-  const handleDownload = () => {
-    if (questions.length === 0) {
-      toast.error('No questions available to download');
-      return;
-    }
-    const topicName = unitId?.replace(/-/g, ' ') || 'topic';
-    // Download respects the date-based switching since questions come from the centralized loader
-    downloadBuiltInTopic(questions, topicName, mathEnabled);
-    toast.success(`Downloaded ${questions.length} questions${lockInfo.isLocked ? ' (Practice mode)' : ''}`);
-  };
+  // Download functionality removed to protect content
 
   const getCategoryPath = () => {
     if (!subject) return '/';
@@ -115,25 +105,7 @@ const UnitDetail = () => {
             </Card>
           )}
 
-          {/* Download Topic */}
-          {questions.length > 0 && (
-            <Card className="p-6 mb-4 hover:shadow-lg transition-all cursor-pointer border-2 hover:border-primary group bg-primary/5"
-              onClick={handleDownload}>
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-primary/20 rounded-lg"><Download className="h-8 w-8 text-primary" /></div>
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold mb-2">
-                    Download Topic
-                    {lockInfo.isLocked && <span className="ml-2 text-sm text-amber-500">(Practice)</span>}
-                  </h3>
-                  <p className="text-muted-foreground text-sm">
-                    Export {questions.length} questions as .ts file
-                    {lockInfo.isLocked && ' (practice questions)'}
-                  </p>
-                </div>
-              </div>
-            </Card>
-          )}
+          {/* Download Topic - Removed to protect content */}
 
           {/* View All Questions */}
           <Link to={`/view-all/${subject}/${unitId}`} className="block">

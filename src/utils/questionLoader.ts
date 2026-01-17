@@ -45,15 +45,7 @@ import { solutionsQuestions } from '@/data/chemistry/solutions-questions';
 import { reactionsQuestions } from '@/data/chemistry/reactions-questions';
 import { stoichiometryQuestions } from '@/data/chemistry/stoichiometry-questions';
 import { acidbasesQuestions } from '@/data/chemistry/acidbases-questions';
-// Chemistry Darone
-import { metricDQuestions } from '@/data/chemistryDarone/metricD-questions';
-import { atomicDQuestions } from '@/data/chemistryDarone/atomicD-questions';
-import { compoundsDQuestions } from '@/data/chemistryDarone/compoundsD-questions';
-import { gasesDQuestions } from '@/data/chemistryDarone/gasesD-questions';
-import { solutionsDQuestions } from '@/data/chemistryDarone/solutionsD-questions';
-import { reactionsDQuestions } from '@/data/chemistryDarone/reactionsD-questions';
-import { stoichiometryDQuestions } from '@/data/chemistryDarone/stoichiometryD-questions';
-import { acidbasesDQuestions } from '@/data/chemistryDarone/acidbasesD-questions';
+// Note: chemistryDarone was removed - add imports here if you create that subject
 // World History
 import { religionsQuestions } from '@/data/worldhistory/religions-questions';
 import { islamQuestions } from '@/data/worldhistory/islam-questions';
@@ -111,14 +103,7 @@ const realDataMap: Record<string, Question[]> = {
   'chemistry-reactions': reactionsQuestions,
   'chemistry-stoichiometry': stoichiometryQuestions,
   'chemistry-acidbases': acidbasesQuestions,
-  'chemistryDarone-metric': metricDQuestions,
-  'chemistryDarone-atomic': atomicDQuestions,
-  'chemistryDarone-compounds': compoundsDQuestions,
-  'chemistryDarone-gases': gasesDQuestions,
-  'chemistryDarone-solutions': solutionsDQuestions,
-  'chemistryDarone-reactions': reactionsDQuestions,
-  'chemistryDarone-stoichiometry': stoichiometryDQuestions,
-  'chemistryDarone-acidbases': acidbasesDQuestions,
+  // Note: chemistryDarone entries removed - add them back if you create that subject
   'world-history-religions': religionsQuestions,
   'world-history-islam': islamQuestions,
   'world-history-renaissance': renaissanceQuestions,

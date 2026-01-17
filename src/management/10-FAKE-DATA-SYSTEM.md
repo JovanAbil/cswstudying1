@@ -10,6 +10,7 @@ The system allows you to:
 - Show **fake/practice questions** before and after specific date ranges
 - Show **real test questions** only during approved study periods
 - Automatically cycle yearly so tests stay protected each semester
+- **Download functionality is disabled** to protect content from being exported
 
 ---
 
