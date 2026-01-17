@@ -4,10 +4,18 @@
  * This file controls when real test data is visible vs fake data.
  * 
  * HOW IT WORKS:
- * - Each entry maps a question key (used in Quiz.tsx) to a test date
- * - From the testDate until August 31 of the NEXT year: REAL data is shown
- * - After August 31: FAKE data is shown until (testDate + 7 days) next year
- * - This ensures tests are only available AFTER they've been taken + 7 day buffer
+ * - Each entry maps a question key (e.g., 'chemistry-atomic') to a test date
+ * - BEFORE testDate: FAKE data is shown (test hasn't happened yet)
+ * - FROM testDate to August 31 of NEXT year: REAL data is shown
+ * - AFTER August 31: FAKE data is shown until (testDate + 7 days) of next year
+ * - This ensures tests are only available AFTER they've been taken
+ * - The +7 day buffer after each year's test date ensures academic honesty
+ * 
+ * EXAMPLE (testDate: '2026-01-25'):
+ * - Before Jan 25, 2026: FAKE data (test hasn't happened)
+ * - Jan 25, 2026 to Aug 31, 2027: REAL data (test taken, studying period)
+ * - Sept 1, 2027 to Feb 1, 2027: FAKE data (locked for next year's test)
+ * - Feb 1, 2027 onwards: REAL data (next cycle)
  * 
  * HOW TO ADD A NEW TEST:
  * 1. Add an entry below with the format:
@@ -16,15 +24,7 @@
  * 2. Create the fake data file at:
  *    src/data/fake/[subject]/[topic]-questions.ts
  * 
- * 3. The file should export the same variable name as the real file
- *    but with different (fake) questions
- * 
- * EXAMPLE:
- * 'chemistry-atomic': { testDate: '2025-01-15', hasFakeData: true }
- * - Real data shows from Jan 15, 2025 to Aug 31, 2026
- * - Fake data shows from Sep 1, 2026 to Jan 21, 2027 (testDate + 7 days)
- * - Then real data shows again from Jan 22, 2027 to Aug 31, 2028
- * - And so on...
+ * 3. Import the fake data in src/utils/questionLoader.ts and add to fakeDataMap
  */
 
 export interface TestSchedule {
@@ -36,30 +36,31 @@ export const testScheduleConfig: Record<string, TestSchedule> = {
   // ============================================
   // CHEMISTRY TESTS
   // ============================================
-  'chemistry-atomic': { testDate: '2025-01-19', hasFakeData: true },
-  // 'chemistry-compounds': { testDate: '2025-02-10', hasFakeData: true },
-  // 'chemistry-metric': { testDate: '2025-01-10', hasFakeData: true },
+  // FOR TESTING: testDate is Jan 25, 2026. Current date is Jan 17, 2026.
+  // Since we are BEFORE the testDate, FAKE data should show now!
+  'chemistry-atomic': { testDate: '2026-01-25', hasFakeData: true },
+  // 'chemistry-compounds': { testDate: '2026-02-10', hasFakeData: true },
+  // 'chemistry-metric': { testDate: '2026-01-10', hasFakeData: true },
   
   // ============================================
   // BIOLOGY TESTS
   // ============================================
-  // 'biology-biochemistry': { testDate: '2025-01-25', hasFakeData: true },
-  // 'biology-cellstructure': { testDate: '2025-02-05', hasFakeData: true },
+  // 'biology-biochemistry': { testDate: '2026-01-25', hasFakeData: true },
+  // 'biology-cellstructure': { testDate: '2026-02-05', hasFakeData: true },
   
   // ============================================
   // AP PRECALC TESTS
   // ============================================
-  // 'apprecalc-polynomial': { testDate: '2025-01-18', hasFakeData: true },
-  // 'apprecalc-exponential': { testDate: '2025-02-01', hasFakeData: true },
+  // 'precalc-polynomial': { testDate: '2026-01-18', hasFakeData: true },
+  // 'precalc-exponential': { testDate: '2026-02-01', hasFakeData: true },
   
   // ============================================
   // WORLD HISTORY TESTS
   // ============================================
-  // 'worldhistory-renaissance': { testDate: '2025-01-22', hasFakeData: true },
+  // 'world-history-renaissance': { testDate: '2026-01-22', hasFakeData: true },
   
   // ============================================
   // ADD YOUR TESTS BELOW
-  // Uncomment and modify the examples above, or add new entries
   // ============================================
 };
 
@@ -80,35 +81,30 @@ export const shouldShowRealData = (questionKey: string): boolean => {
   const today = new Date();
   const testDate = new Date(schedule.testDate);
   
+  // BEFORE testDate: show FAKE data
+  if (today < testDate) {
+    return false;
+  }
+  
   // Get the year of the test
   const testYear = testDate.getFullYear();
   const testMonth = testDate.getMonth(); // 0-indexed
   const testDay = testDate.getDate();
   
-  // Calculate the "cycle year" - which academic cycle are we in?
-  // A cycle runs from (testDate) to (August 31 of next year)
-  // Then locks until (testDate + 7 days) of the following year
-  
   const currentYear = today.getFullYear();
-  const currentMonth = today.getMonth();
-  const currentDay = today.getDate();
   
-  // Determine which cycle we're in relative to the original test date
-  // Cycle 0: testDate to Aug 31 of testYear+1
-  // Cycle 1: testDate+7 of testYear+1 to Aug 31 of testYear+2
-  // etc.
-  
+  // Find which cycle we're in
   let cycleYear = testYear;
   
-  // Find the current cycle
   while (true) {
     // Start of this cycle: testDate (or testDate + 7 days for subsequent cycles)
-    const cycleStart = new Date(cycleYear, testMonth, testDay + (cycleYear > testYear ? 7 : 0));
+    const isFirstCycle = cycleYear === testYear;
+    const cycleStart = new Date(cycleYear, testMonth, testDay + (isFirstCycle ? 0 : 7));
     
     // End of this cycle: August 31 of the next year
     const cycleEnd = new Date(cycleYear + 1, 7, 31, 23, 59, 59); // August is month 7 (0-indexed)
     
-    // Start of next cycle
+    // Start of next cycle: testDate + 7 days of next year
     const nextCycleStart = new Date(cycleYear + 1, testMonth, testDay + 7);
     
     // Check if today is within this cycle (show real data)
@@ -145,6 +141,12 @@ export const getNextUnlockDate = (questionKey: string): Date | null => {
   
   const today = new Date();
   const testDate = new Date(schedule.testDate);
+  
+  // If we're before the test date, the test date is the unlock date
+  if (today < testDate) {
+    return testDate;
+  }
+  
   const testYear = testDate.getFullYear();
   const testMonth = testDate.getMonth();
   const testDay = testDate.getDate();
@@ -175,6 +177,13 @@ export const getNextLockDate = (questionKey: string): Date | null => {
   }
   
   const today = new Date();
+  const testDate = new Date(schedule.testDate);
+  
+  // If we're before the test date, there's no lock date yet
+  if (today < testDate) {
+    return null;
+  }
+  
   const currentYear = today.getFullYear();
   
   // Check this year's August 31
