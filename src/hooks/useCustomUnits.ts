@@ -3,7 +3,7 @@ import { Question } from '@/types/quiz';
 
 const STORAGE_KEY = 'custom-units-data';
 
-export type SubjectType = 'Math' | 'English' | 'Science' | 'Social Studies';
+export type SubjectType = 'Math' | 'English' | 'Science' | 'Social Studies' | 'Other';
 export type TestType = 'test' | 'homework';
 
 export interface CustomTopic {
