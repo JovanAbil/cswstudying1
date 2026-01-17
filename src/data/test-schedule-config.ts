@@ -33,31 +33,37 @@ export interface TestSchedule {
 }
 
 export const testScheduleConfig: Record<string, TestSchedule> = {
+  // AP TESTS WON'T BE CHANGED SINCE IT IS STANDARDIZED PRACTICE
+
+  
   // ============================================
   // CHEMISTRY TESTS
   // ============================================
   // FOR TESTING: testDate is Jan 25, 2026. Current date is Jan 17, 2026.
   // Since we are BEFORE the testDate, FAKE data should show now!
-  'chemistry-atomic': { testDate: '2026-01-24', hasFakeData: true },
-  // 'chemistry-compounds': { testDate: '2026-02-10', hasFakeData: true },
-  // 'chemistry-metric': { testDate: '2026-01-10', hasFakeData: true },
+  // 'chemistry-metric': { testDate: '2025-09-25', hasFakeData: true },
+  'chemistry-atomic': { testDate: '2025-10-22', hasFakeData: true },
+  // 'chemistry-compounds': { testDate: '2025-12-04', hasFakeData: true },  
+  // 'chemistry-gases': { testDate: '2025-12-16', hasFakeData: true },  
+
   
   // ============================================
   // BIOLOGY TESTS
   // ============================================
-  // 'biology-biochemistry': { testDate: '2026-01-25', hasFakeData: true },
-  // 'biology-cellstructure': { testDate: '2026-02-05', hasFakeData: true },
-  
-  // ============================================
-  // AP PRECALC TESTS
-  // ============================================
-  // 'precalc-polynomial': { testDate: '2026-01-18', hasFakeData: true },
-  // 'precalc-exponential': { testDate: '2026-02-01', hasFakeData: true },
+  // 'biology-biochemistry': { testDate: '2025-09-25', hasFakeData: true },
+  // 'biology-cellstructure': { testDate: '2025-10-22', hasFakeData: true },
+  // 'biology-cellenergetics': { testDate: '2025-11-19', hasFakeData: true },
+  // biology-cellgrowth doesn't have a set test
+
   
   // ============================================
   // WORLD HISTORY TESTS
   // ============================================
-  // 'world-history-renaissance': { testDate: '2026-01-22', hasFakeData: true },
+  // 'world-history-religions': { testDate: '2025-10-01', hasFakeData: true },
+  // 'world-history-islam': { testDate: '2025-10-22', hasFakeData: true },
+  // 'world-history-renaissance': { testDate: '2025-11-21', hasFakeData: true },
+  // 'world-history-protestant': { testDate: '2025-12-16', hasFakeData: true },
+
   
   // ============================================
   // ADD YOUR TESTS BELOW
