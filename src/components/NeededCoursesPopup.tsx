@@ -16,37 +16,35 @@ export type CategoryType = 'math' | 'science' | 'social' | 'english' | 'other';
 // Modify these arrays to add/remove needed courses
 export const NEEDED_COURSES: Record<CategoryType, string[]> = {
   math: [
-    'Calculus AB/BC',
+    'Calc3',
+    'AP Calculus AB',
+    'AP Calculus BC',
+    'Calculus AB',
+    'Calculus BC',
     'Statistics',
-    'Algebra 2',
-    'Geometry',
-    'AP Precalculus Units 3-4 (Trigonometric, Polar, Parametric, Vectors)',
+    'Math 3',
+    'Math 2',
+    'Math 1',
   ],
   science: [
-    'Physics',
     'AP Biology',
     'AP Chemistry',
-    'Environmental Science',
-    'Biology Units 5-8 (Genetics, Molecular, Evolution, Ecology)',
+    'Chemistry (Darone)',
+    'Physics',
+    'AP Physics',
+    'AP Physics C',
   ],
   social: [
     'AP US History',
-    'AP Government',
-    'AP Economics',
+    'US History',
     'Psychology',
-    'World History Units 5-11',
+    'World History Kohl',
   ],
   english: [
-    'AP English Literature',
-    'AP English Language',
-    'Creative Writing',
-    'Journalism',
   ],
   other: [
-    'Computer Science',
-    'Art History',
-    'Music Theory',
-    'Foreign Languages',
+    'APSCP',
+    'APSCA',
   ],
 };
 
