@@ -6,14 +6,17 @@ import { ArrowLeft, BookOpen, Trophy, Lock, Brain } from 'lucide-react';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { NeededCoursesPopup } from '@/components/NeededCoursesPopup';
+import { usePopupCooldown } from '@/hooks/usePopupSettings';
 
 const EnglishCategory = () => {
+  const shouldShowPopup = usePopupCooldown('english');
   const [showNeededCourses, setShowNeededCourses] = useState(false);
 
   useEffect(() => {
-    // Show popup on page entry
-    setShowNeededCourses(true);
-  }, []);
+    if (shouldShowPopup) {
+      setShowNeededCourses(true);
+    }
+  }, [shouldShowPopup]);
 
   const subjects = [
     {

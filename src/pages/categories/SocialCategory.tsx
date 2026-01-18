@@ -7,16 +7,19 @@ import useWrongAnswers from '@/hooks/useWrongAnswers';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { NeededCoursesPopup } from '@/components/NeededCoursesPopup';
+import { usePopupCooldown } from '@/hooks/usePopupSettings';
 
 const SocialCategory = () => {
   const navigate = useNavigate();
   const { getWrongAnswerCount, getAllWrongQuestionsForSubject } = useWrongAnswers();
+  const shouldShowPopup = usePopupCooldown('social');
   const [showNeededCourses, setShowNeededCourses] = useState(false);
 
   useEffect(() => {
-    // Show popup on page entry
-    setShowNeededCourses(true);
-  }, []);
+    if (shouldShowPopup) {
+      setShowNeededCourses(true);
+    }
+  }, [shouldShowPopup]);
 
   const subjects = [
     {
