@@ -79,7 +79,7 @@ export const ContributionReminder = ({
         onClose();
       }
     }}>
-      <DialogContent className="sm:max-w-md" onPointerDownOutside={(e) => {
+      <DialogContent className="sm:max-w-md [&>button]:hidden" onPointerDownOutside={(e) => {
         if (!canClose) e.preventDefault();
       }} onEscapeKeyDown={(e) => {
         if (!canClose) e.preventDefault();
