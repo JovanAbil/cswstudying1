@@ -64,12 +64,15 @@ const SocialCategory = () => {
           </Button>
         </Link>
 
-        <div className="flex items-center gap-4 mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-social/10">
+        <div 
+          className="flex items-center gap-4 mb-8 cursor-pointer group" 
+          onClick={() => setShowNeededCourses(true)}
+        >
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-social/10 group-hover:bg-social/20 transition-colors">
             <Landmark className="w-7 h-7 text-social" />
           </div>
           <div>
-            <h1 className="text-4xl font-display font-bold text-social">Social Studies</h1>
+            <h1 className="text-4xl font-display font-bold text-social group-hover:underline">Social Studies</h1>
             <p className="text-muted-foreground">World History, US History, and more</p>
           </div>
         </div>

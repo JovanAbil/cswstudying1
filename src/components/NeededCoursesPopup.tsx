@@ -60,7 +60,7 @@ export const NeededCoursesPopup = ({
   onClose,
 }: NeededCoursesPopupProps) => {
   const courses = NEEDED_COURSES[category] || [];
-  const { isLockIn, toggleLockIn } = useLockInMode();
+  const { isLockIn, setLockIn } = useLockInMode();
   const [showLockInPrompt, setShowLockInPrompt] = useState(false);
   
   const categoryNames: Record<CategoryType, string> = {
@@ -80,7 +80,7 @@ export const NeededCoursesPopup = ({
   };
 
   const handleEnableLockIn = () => {
-    toggleLockIn();
+    setLockIn(true);
     setShowLockInPrompt(false);
     onClose();
   };

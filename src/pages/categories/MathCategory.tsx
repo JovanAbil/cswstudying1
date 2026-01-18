@@ -63,12 +63,15 @@ const MathCategory = () => {
           </Button>
         </Link>
 
-        <div className="flex items-center gap-4 mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-math/10">
+        <div 
+          className="flex items-center gap-4 mb-8 cursor-pointer group" 
+          onClick={() => setShowNeededCourses(true)}
+        >
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-math/10 group-hover:bg-math/20 transition-colors">
             <Calculator className="w-7 h-7 text-math" />
           </div>
           <div>
-            <h1 className="text-4xl font-display font-bold text-math">Mathematics</h1>
+            <h1 className="text-4xl font-display font-bold text-math group-hover:underline">Mathematics</h1>
             <p className="text-muted-foreground">Precalculus, Algebra, and more</p>
           </div>
         </div>
