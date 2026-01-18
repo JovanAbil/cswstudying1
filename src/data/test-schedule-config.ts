@@ -6,16 +6,16 @@
  * HOW IT WORKS:
  * - Each entry maps a question key (e.g., 'chemistry-atomic') to a test date
  * - BEFORE testDate: FAKE data is shown (test hasn't happened yet)
- * - FROM testDate to August 31 of NEXT year: REAL data is shown
- * - AFTER August 31: FAKE data is shown until (testDate + 7 days) of next year
+ * - FROM testDate to June 16 of NEXT year: REAL data is shown
+ * - AFTER June 16: FAKE data is shown until (testDate + 7 days) of next year
  * - This ensures tests are only available AFTER they've been taken
  * - The +7 day buffer after each year's test date ensures academic honesty
  * 
  * EXAMPLE (testDate: '2026-01-25'):
  * - Before Jan 25, 2026: FAKE data (test hasn't happened)
- * - Jan 25, 2026 to Aug 31, 2027: REAL data (test taken, studying period)
- * - Sept 1, 2027 to Feb 1, 2027: FAKE data (locked for next year's test)
- * - Feb 1, 2027 onwards: REAL data (next cycle)
+ * - Jan 25, 2026 to June 16, 2027: REAL data (test taken, studying period)
+ * - June 17, 2027 to Feb 1, 2028: FAKE data (locked for next year's test)
+ * - Feb 1, 2028 onwards: REAL data (next cycle)
  * 
  * HOW TO ADD A NEW TEST:
  * 1. Add an entry below with the format:
@@ -107,8 +107,8 @@ export const shouldShowRealData = (questionKey: string): boolean => {
     const isFirstCycle = cycleYear === testYear;
     const cycleStart = new Date(cycleYear, testMonth, testDay + (isFirstCycle ? 0 : 7));
     
-    // End of this cycle: August 31 of the next year
-    const cycleEnd = new Date(cycleYear + 1, 7, 31, 23, 59, 59); // August is month 7 (0-indexed)
+    // End of this cycle: June 16 of the next year
+    const cycleEnd = new Date(cycleYear + 1, 5, 16, 23, 59, 59); // June is month 5 (0-indexed)
     
     // Start of next cycle: testDate + 7 days of next year
     const nextCycleStart = new Date(cycleYear + 1, testMonth, testDay + 7);
@@ -192,13 +192,13 @@ export const getNextLockDate = (questionKey: string): Date | null => {
   
   const currentYear = today.getFullYear();
   
-  // Check this year's August 31
-  let lockDate = new Date(currentYear, 7, 31);
+  // Check this year's June 16
+  let lockDate = new Date(currentYear, 5, 16);
   
   if (lockDate > today) {
     return lockDate;
   }
   
-  // Otherwise, next year's August 31
-  return new Date(currentYear + 1, 7, 31);
+  // Otherwise, next year's June 16
+  return new Date(currentYear + 1, 5, 16);
 };
