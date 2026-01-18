@@ -48,10 +48,13 @@ export const useCustomUnits = () => {
     setIsLoaded(true);
   }, []);
 
-  // Save to localStorage
-  const saveToStorage = (newData: CustomUnitsData) => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
-    setData(newData);
+  // Save to localStorage using functional update to avoid stale closures
+  const saveToStorage = (updater: (current: CustomUnitsData) => CustomUnitsData) => {
+    setData(current => {
+      const newData = updater(current);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newData));
+      return newData;
+    });
   };
 
   // Add a new unit
@@ -63,25 +66,22 @@ export const useCustomUnits = () => {
       subject,
       topics: [],
     };
-    const newData = { units: [...data.units, newUnit] };
-    saveToStorage(newData);
+    saveToStorage(current => ({ units: [...current.units, newUnit] }));
     return newUnit;
   };
 
   // Update a unit
   const updateUnit = (unitId: string, updates: { name?: string; teacherName?: string; subject?: SubjectType }) => {
-    const newData = {
-      units: data.units.map(u => u.id === unitId ? { ...u, ...updates } : u),
-    };
-    saveToStorage(newData);
+    saveToStorage(current => ({
+      units: current.units.map(u => u.id === unitId ? { ...u, ...updates } : u),
+    }));
   };
 
   // Delete a unit
   const deleteUnit = (unitId: string) => {
-    const newData = {
-      units: data.units.filter(u => u.id !== unitId),
-    };
-    saveToStorage(newData);
+    saveToStorage(current => ({
+      units: current.units.filter(u => u.id !== unitId),
+    }));
   };
 
   // Add a topic to a unit
@@ -90,21 +90,20 @@ export const useCustomUnits = () => {
       id: generateId(),
       ...topic,
     };
-    const newData = {
-      units: data.units.map(u => 
+    saveToStorage(current => ({
+      units: current.units.map(u => 
         u.id === unitId 
           ? { ...u, topics: [...u.topics, newTopic] }
           : u
       ),
-    };
-    saveToStorage(newData);
+    }));
     return newTopic;
   };
 
   // Update a topic
   const updateTopic = (unitId: string, topicId: string, updates: Partial<CustomTopic>) => {
-    const newData = {
-      units: data.units.map(u => 
+    saveToStorage(current => ({
+      units: current.units.map(u => 
         u.id === unitId 
           ? { 
               ...u, 
@@ -114,20 +113,18 @@ export const useCustomUnits = () => {
             }
           : u
       ),
-    };
-    saveToStorage(newData);
+    }));
   };
 
   // Delete a topic
   const deleteTopic = (unitId: string, topicId: string) => {
-    const newData = {
-      units: data.units.map(u => 
+    saveToStorage(current => ({
+      units: current.units.map(u => 
         u.id === unitId 
           ? { ...u, topics: u.topics.filter(t => t.id !== topicId) }
           : u
       ),
-    };
-    saveToStorage(newData);
+    }));
   };
 
   // Get a specific unit
