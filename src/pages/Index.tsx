@@ -4,6 +4,7 @@ import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Key
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { CreditsSection } from '@/components/CreditsSection';
+import { ContributionReminder } from '@/components/ContributionReminder';
 
 const categories = [{
   id: 'math',
@@ -58,6 +59,7 @@ const controls = [{
 
 const Index = () => {
   return <div className="min-h-screen bg-background flex flex-col">
+      <ContributionReminder intervalMinutes={1} cooldownSeconds={5} />
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent" />
