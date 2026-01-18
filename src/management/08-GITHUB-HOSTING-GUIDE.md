@@ -17,9 +17,10 @@ This comprehensive guide walks you through completely removing Lovable and hosti
 9. [Step 8: Create Deployment Workflow](#step-8-create-deployment-workflow)
 10. [Step 9: Push Changes and Deploy](#step-9-push-changes-and-deploy)
 11. [Step 10: Enable GitHub Pages](#step-10-enable-github-pages)
-12. [Troubleshooting Common Issues](#troubleshooting-common-issues)
-13. [Making Future Changes](#making-future-changes)
-14. [Custom Domain Setup (Optional)](#custom-domain-setup-optional)
+12. [Step 11: Set Up Cloudflare Analytics (Optional)](#step-11-set-up-cloudflare-analytics-optional)
+13. [Troubleshooting Common Issues](#troubleshooting-common-issues)
+14. [Making Future Changes](#making-future-changes)
+15. [Custom Domain Setup (Optional)](#custom-domain-setup-optional)
 
 ---
 
@@ -430,6 +431,68 @@ Final step - tell GitHub to serve your site.
 
 ---
 
+## Step 11: Set Up Cloudflare Analytics (Optional)
+
+Cloudflare Web Analytics provides free, privacy-focused analytics without cookies.
+
+### 11.1 Create a Cloudflare Account
+
+1. Go to [cloudflare.com](https://cloudflare.com)
+2. Click **Sign Up** (it's free)
+3. Enter your email and create a password
+4. Verify your email
+
+### 11.2 Add Cloudflare Web Analytics
+
+1. Log in to your Cloudflare dashboard
+2. In the left sidebar, click **Analytics & Logs** → **Web Analytics**
+3. Click **Add a site**
+4. Enter your GitHub Pages URL: `YOUR_USERNAME.github.io/YOUR_REPO_NAME`
+5. Click **Done**
+6. Cloudflare will show you a script tag - copy it
+
+### 11.3 Add the Script to Your Site
+
+1. Open **index.html** in VS Code (in the root folder)
+2. Find the closing `</body>` tag at the bottom
+3. Add the Cloudflare script BEFORE the `</body>` tag:
+
+```html
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+    <!-- End Cloudflare Web Analytics -->
+  </body>
+</html>
+```
+
+4. Replace `YOUR_TOKEN_HERE` with your actual token from Cloudflare
+5. Save the file
+
+### 11.4 Push and Verify
+
+1. In GitHub Desktop, commit with summary: `Add Cloudflare Analytics`
+2. Click **Push origin**
+3. Wait for deployment (check Actions tab)
+4. Visit your site and browse a few pages
+5. Check Cloudflare dashboard after 5-10 minutes to see data
+
+### What Cloudflare Analytics Shows
+
+| Metric | Description |
+|--------|-------------|
+| Visits | Unique visitors to your site |
+| Page Views | Total pages viewed |
+| Top Pages | Most visited pages |
+| Countries | Where visitors are from |
+| Devices | Desktop vs Mobile |
+| Browsers | Chrome, Firefox, Safari, etc. |
+| Referrers | Where traffic comes from |
+
+**Cloudflare Analytics is free forever, doesn't require cookies, and respects user privacy!**
+
+---
+
 ## Troubleshooting Common Issues
 
 ### Issue: 404 Error on Pages
@@ -607,5 +670,18 @@ Before you consider yourself done, verify:
 - [ ] Images load correctly
 - [ ] Theme toggle works
 - [ ] Mobile view works
+- [ ] Cloudflare Analytics tracking (optional)
 
 **Congratulations! Your site is now fully independent and hosted for free on GitHub Pages!**
+
+---
+
+## Appendix: Keeping Cloudflare Analytics When Migrating
+
+If your Lovable project already has Cloudflare Analytics installed, make sure you:
+
+1. **Don't delete the script** from index.html during migration
+2. **Keep the same token** - your analytics history will continue
+3. **Update your site URL in Cloudflare** if using a custom domain later
+
+The Cloudflare script works automatically on GitHub Pages with no changes needed!
