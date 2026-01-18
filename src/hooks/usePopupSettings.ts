@@ -2,15 +2,34 @@ import { useState, useEffect } from 'react';
 
 const POPUP_COOLDOWN_KEY = 'popup_last_shown';
 const POPUP_LOCK_IN_KEY = 'popup_lock_in';
+const POPUP_LOCK_IN_TIMESTAMP_KEY = 'popup_lock_in_timestamp';
 const COOLDOWN_MS = 5 * 60 * 1000; // 5 minutes
+const LOCK_IN_DURATION_MS = 5 * 60 * 60 * 1000; // 5 hours
+
+const isLockInValid = (): boolean => {
+  const lockIn = localStorage.getItem(POPUP_LOCK_IN_KEY) === 'true';
+  if (!lockIn) return false;
+  
+  const timestamp = localStorage.getItem(POPUP_LOCK_IN_TIMESTAMP_KEY);
+  if (!timestamp) return false;
+  
+  const elapsed = Date.now() - parseInt(timestamp, 10);
+  if (elapsed > LOCK_IN_DURATION_MS) {
+    // Auto-expire: clear the lock-in
+    localStorage.removeItem(POPUP_LOCK_IN_KEY);
+    localStorage.removeItem(POPUP_LOCK_IN_TIMESTAMP_KEY);
+    return false;
+  }
+  
+  return true;
+};
 
 export const usePopupCooldown = (category: string) => {
   const [shouldShow, setShouldShow] = useState(false);
 
   useEffect(() => {
-    // Check if lock-in mode is enabled
-    const lockIn = localStorage.getItem(POPUP_LOCK_IN_KEY) === 'true';
-    if (lockIn) {
+    // Check if lock-in mode is enabled and valid
+    if (isLockInValid()) {
       setShouldShow(false);
       return;
     }
@@ -32,22 +51,27 @@ export const usePopupCooldown = (category: string) => {
 };
 
 export const useLockInMode = () => {
-  const [isLockIn, setIsLockIn] = useState(() => {
-    return localStorage.getItem(POPUP_LOCK_IN_KEY) === 'true';
-  });
+  const [isLockIn, setIsLockIn] = useState(() => isLockInValid());
 
-  // Sync state across components when localStorage changes
+  // Check expiration periodically and sync state
   useEffect(() => {
-    const handleStorageChange = () => {
-      setIsLockIn(localStorage.getItem(POPUP_LOCK_IN_KEY) === 'true');
+    const checkExpiration = () => {
+      const valid = isLockInValid();
+      setIsLockIn(valid);
     };
 
-    // Listen for custom event for same-tab updates
+    // Check every minute for expiration
+    const interval = setInterval(checkExpiration, 60 * 1000);
+
+    const handleStorageChange = () => {
+      setIsLockIn(isLockInValid());
+    };
+
     window.addEventListener('lockInChanged', handleStorageChange);
-    // Listen for storage event for cross-tab updates
     window.addEventListener('storage', handleStorageChange);
 
     return () => {
+      clearInterval(interval);
       window.removeEventListener('lockInChanged', handleStorageChange);
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -56,14 +80,25 @@ export const useLockInMode = () => {
   const toggleLockIn = () => {
     const newValue = !isLockIn;
     setIsLockIn(newValue);
-    localStorage.setItem(POPUP_LOCK_IN_KEY, newValue.toString());
-    // Dispatch custom event for same-tab sync
+    if (newValue) {
+      localStorage.setItem(POPUP_LOCK_IN_KEY, 'true');
+      localStorage.setItem(POPUP_LOCK_IN_TIMESTAMP_KEY, Date.now().toString());
+    } else {
+      localStorage.removeItem(POPUP_LOCK_IN_KEY);
+      localStorage.removeItem(POPUP_LOCK_IN_TIMESTAMP_KEY);
+    }
     window.dispatchEvent(new Event('lockInChanged'));
   };
 
   const setLockIn = (value: boolean) => {
     setIsLockIn(value);
-    localStorage.setItem(POPUP_LOCK_IN_KEY, value.toString());
+    if (value) {
+      localStorage.setItem(POPUP_LOCK_IN_KEY, 'true');
+      localStorage.setItem(POPUP_LOCK_IN_TIMESTAMP_KEY, Date.now().toString());
+    } else {
+      localStorage.removeItem(POPUP_LOCK_IN_KEY);
+      localStorage.removeItem(POPUP_LOCK_IN_TIMESTAMP_KEY);
+    }
     window.dispatchEvent(new Event('lockInChanged'));
   };
 
