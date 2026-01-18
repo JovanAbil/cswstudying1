@@ -159,14 +159,27 @@ const OtherCategory = () => {
     try {
       const zip = await JSZip.loadAsync(file);
       
-      // Find the folder (first directory in zip)
-      const folders = Object.keys(zip.files).filter(f => zip.files[f].dir);
-      const folderPrefix = folders[0] || '';
+      // Find the src/data/{folder}/ path by looking for index.ts
+      let indexFile: JSZip.JSZipObject | null = null;
+      let srcDataFolder = '';
+      let publicImagesFolder = '';
       
-      // Look for index.ts (metadata)
-      const indexFile = zip.file(folderPrefix + 'index.ts') || zip.file('index.ts');
+      // Search for index.ts in various possible locations
+      const allFiles = Object.keys(zip.files);
+      for (const filePath of allFiles) {
+        if (filePath.endsWith('index.ts') && !zip.files[filePath].dir) {
+          indexFile = zip.files[filePath];
+          // Extract the folder path (e.g., "src/data/unit-name/" from "src/data/unit-name/index.ts")
+          srcDataFolder = filePath.substring(0, filePath.lastIndexOf('/') + 1);
+          // Derive the public images folder from the unit name
+          const folderName = srcDataFolder.split('/').filter(Boolean).pop() || '';
+          publicImagesFolder = `public/images/${folderName}/`;
+          break;
+        }
+      }
+      
       if (!indexFile) {
-        toast({ title: 'Invalid unit file: missing index.ts', variant: 'destructive' });
+        toast({ title: 'Invalid unit file: missing index.ts in src/data/', variant: 'destructive' });
         return;
       }
       
@@ -176,6 +189,26 @@ const OtherCategory = () => {
       if (!metadata) {
         toast({ title: 'Failed to parse unit metadata', variant: 'destructive' });
         return;
+      }
+      
+      // Build a map of image paths to base64 data from the zip
+      const imageMap: Record<string, string> = {};
+      for (const filePath of allFiles) {
+        // Check if this is an image in public/images/
+        if (filePath.startsWith('public/images/') && !zip.files[filePath].dir) {
+          const ext = filePath.split('.').pop()?.toLowerCase();
+          if (['png', 'jpg', 'jpeg', 'gif', 'webp', 'svg'].includes(ext || '')) {
+            try {
+              const imageData = await zip.files[filePath].async('base64');
+              const mimeType = ext === 'svg' ? 'image/svg+xml' : `image/${ext === 'jpg' ? 'jpeg' : ext}`;
+              // Store with the path as it would appear in question.image (e.g., "/images/unit-name/topic-q1.png")
+              const publicPath = filePath.replace('public', '');
+              imageMap[publicPath] = `data:${mimeType};base64,${imageData}`;
+            } catch (err) {
+              console.warn('Failed to load image:', filePath);
+            }
+          }
+        }
       }
       
       // Create the unit - use metadata for teacher/subject if available, else defaults
@@ -188,17 +221,26 @@ const OtherCategory = () => {
       // Import each topic
       for (const topicMeta of metadata.topics) {
         const topicFileName = topicMeta.file.replace('./', '');
-        const topicFile = zip.file(folderPrefix + topicFileName) || zip.file(topicFileName);
+        // Look for the topic file in the src/data folder
+        const topicFile = zip.file(srcDataFolder + topicFileName) || zip.file(topicFileName);
         
         if (topicFile) {
           const topicContent = await topicFile.async('string');
           const parsed = parseTopicFile(topicContent);
           
           if (parsed) {
+            // Replace image paths with base64 data from the zip
+            const questionsWithImages = parsed.questions.map(q => {
+              if (q.image && imageMap[q.image]) {
+                return { ...q, image: imageMap[q.image] };
+              }
+              return q;
+            });
+            
             addTopic(newUnit.id, {
               name: topicMeta.name,
               mathEnabled: topicMeta.mathEnabled,
-              questions: parsed.questions,
+              questions: questionsWithImages,
               testType: (topicMeta.testType as TestType) || 'homework',
               testDate: topicMeta.testDate || new Date().toISOString().split('T')[0],
             });
@@ -206,7 +248,7 @@ const OtherCategory = () => {
         }
       }
       
-      toast({ title: `Imported unit: ${metadata.name}` });
+      toast({ title: `Imported unit: ${metadata.name} with ${Object.keys(imageMap).length} images` });
     } catch (error) {
       console.error('Upload error:', error);
       toast({ title: 'Failed to import unit', variant: 'destructive' });
