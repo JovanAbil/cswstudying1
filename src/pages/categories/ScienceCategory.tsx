@@ -76,12 +76,15 @@ const ScienceCategory = () => {
           </Button>
         </Link>
 
-        <div className="flex items-center gap-4 mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-science/10">
+        <div 
+          className="flex items-center gap-4 mb-8 cursor-pointer group" 
+          onClick={() => setShowNeededCourses(true)}
+        >
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-xl bg-science/10 group-hover:bg-science/20 transition-colors">
             <FlaskConical className="w-7 h-7 text-science" />
           </div>
           <div>
-            <h1 className="text-4xl font-display font-bold text-science">Science</h1>
+            <h1 className="text-4xl font-display font-bold text-science group-hover:underline">Science</h1>
             <p className="text-muted-foreground">Biology, Chemistry, and more</p>
           </div>
         </div>

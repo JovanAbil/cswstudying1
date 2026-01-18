@@ -36,11 +36,36 @@ export const useLockInMode = () => {
     return localStorage.getItem(POPUP_LOCK_IN_KEY) === 'true';
   });
 
+  // Sync state across components when localStorage changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLockIn(localStorage.getItem(POPUP_LOCK_IN_KEY) === 'true');
+    };
+
+    // Listen for custom event for same-tab updates
+    window.addEventListener('lockInChanged', handleStorageChange);
+    // Listen for storage event for cross-tab updates
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('lockInChanged', handleStorageChange);
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
   const toggleLockIn = () => {
     const newValue = !isLockIn;
     setIsLockIn(newValue);
     localStorage.setItem(POPUP_LOCK_IN_KEY, newValue.toString());
+    // Dispatch custom event for same-tab sync
+    window.dispatchEvent(new Event('lockInChanged'));
   };
 
-  return { isLockIn, toggleLockIn };
+  const setLockIn = (value: boolean) => {
+    setIsLockIn(value);
+    localStorage.setItem(POPUP_LOCK_IN_KEY, value.toString());
+    window.dispatchEvent(new Event('lockInChanged'));
+  };
+
+  return { isLockIn, toggleLockIn, setLockIn };
 };
