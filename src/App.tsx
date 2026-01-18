@@ -53,6 +53,7 @@ const App = () => {
             <Route path="/custom-topic/:unitId/:topicId" element={<CustomTopicEditor />} />
             <Route path="/unit/:subject/:unitId" element={<UnitDetail />} />
             <Route path="/unit/:subject/:unitId/view-all" element={<ViewAllQuestions />} />
+            <Route path="/view-all/:subject/:unitId" element={<ViewAllQuestions />} />
             <Route path="/unit/:subject/:unitId/preset-builder" element={<PresetBuilder />} />
             <Route path="/unit/:subject/:unitId/quiz/:quizType" element={<Quiz />} />
             <Route path="/course-challenge/:subject" element={<CourseChallenge />} />
