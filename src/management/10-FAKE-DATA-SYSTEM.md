@@ -21,15 +21,15 @@ For a test with date `2026-01-25`:
 | Date Range | Data Shown | Why |
 |------------|-----------|-----|
 | Before Jan 25, 2026 | FAKE | Test hasn't happened yet |
-| Jan 25, 2026 → Aug 31, 2027 | **REAL** | Open study period |
-| Sep 1, 2027 → Feb 1, 2028 | FAKE | Locked for new semester |
-| Feb 1, 2028 → Aug 31, 2028 | **REAL** | New cycle (test date + 7 days) |
-| Sep 1, 2028 → Feb 1, 2029 | FAKE | Locked again |
+| Jan 25, 2026 → June 16, 2027 | **REAL** | Open study period |
+| June 17, 2027 → Feb 1, 2028 | FAKE | Locked for new semester |
+| Feb 1, 2028 → June 16, 2028 | **REAL** | New cycle (test date + 7 days) |
+| June 17, 2028 → Feb 1, 2029 | FAKE | Locked again |
 | ... | ... | Pattern repeats yearly |
 
 **Key Points:**
-- Real data is available from test date until August 31 of the **next year**
-- After August 31, it locks until the test date + 7 days the following year
+- Real data is available from test date until June 16 of the **next year**
+- After June 16, it locks until the test date + 7 days the following year
 - The 7-day buffer ensures students have taken the test before answers are available
 
 ---
