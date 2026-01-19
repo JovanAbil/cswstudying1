@@ -6,28 +6,34 @@ export const AdBlockDetector = () => {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    const checkCounterDev = async () => {
-      // Wait for page to load
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    const checkAnalyticsBlocked = async () => {
+      await new Promise(resolve => setTimeout(resolve, 1500));
 
+      let scriptBlocked = false;
+      let trackingBlocked = false;
+
+      // Test 1: Check if script can be fetched
       try {
-        // Simple check: try to fetch the counter.dev script
-        // If blocked by adblocker, this will throw a network error
-        const response = await fetch('https://cdn.counter.dev/script.js', {
-          cache: 'no-store',
-        });
-
-        // If we get any response (even error status), the request wasn't blocked
-        setIsBlocked(false);
+        await fetch('https://cdn.counter.dev/script.js', { cache: 'no-store' });
       } catch {
-        // Network error = blocked by adblocker
-        setIsBlocked(true);
-      } finally {
-        setIsChecking(false);
+        scriptBlocked = true;
       }
+
+      // Test 2: Check if tracking endpoint is blocked using sendBeacon
+      try {
+        const beaconSent = navigator.sendBeacon('https://t.counter.dev/trackpage', '');
+        if (!beaconSent) {
+          trackingBlocked = true;
+        }
+      } catch {
+        trackingBlocked = true;
+      }
+
+      setIsBlocked(scriptBlocked || trackingBlocked);
+      setIsChecking(false);
     };
 
-    checkCounterDev();
+    checkAnalyticsBlocked();
   }, []);
 
   const handleRefresh = () => {
@@ -48,22 +54,27 @@ export const AdBlockDetector = () => {
         </div>
         
         <h2 className="text-2xl font-bold text-center mb-4 text-destructive">
-          Adblocker Detected
+          Analytics Blocked
         </h2>
         
         <p className="text-center text-muted-foreground mb-6">
-          Your adblocker is preventing analytics from loading. This helps us understand how students use the site to make it better.
+          A blocker or privacy setting is preventing analytics from loading. This helps us understand how students use the site.
         </p>
         
         <div className="bg-muted/50 rounded-lg p-4 mb-6">
+          <p className="text-sm font-medium text-foreground mb-2">Common causes:</p>
+          <ul className="text-sm text-muted-foreground space-y-1 list-disc list-inside">
+            <li>Adblocker extensions (uBlock, AdGuard)</li>
+            <li>Brave Shields or Firefox strict mode</li>
+            <li>Antivirus web protection</li>
+            <li>School/work device policies</li>
+          </ul>
+        </div>
+        
+        <div className="bg-muted/50 rounded-lg p-4 mb-6">
           <p className="text-sm text-muted-foreground">
-            <strong>To continue:</strong>
+            <strong>To continue:</strong> Disable any blockers for this site, then refresh.
           </p>
-          <ol className="text-sm text-muted-foreground mt-2 space-y-1 list-decimal list-inside">
-            <li>Disable your adblocker for this site</li>
-            <li>Add this site to your adblocker's whitelist</li>
-            <li>Click the refresh button below</li>
-          </ol>
         </div>
         
         <button
@@ -73,10 +84,6 @@ export const AdBlockDetector = () => {
           <RefreshCw className="h-5 w-5" />
           Refresh Page
         </button>
-        
-        <p className="text-xs text-center text-muted-foreground mt-4">
-          This popup cannot be dismissed until analytics can load successfully.
-        </p>
       </div>
     </div>
   );
