@@ -8,7 +8,7 @@ import { DebugModeToggle } from "@/components/DebugModeToggle";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import TermsOfServiceModal from "@/components/TermsOfServiceModal";
-import { CloudflareAnalytics } from "@/components/CloudflareAnalytics";
+
 import { AdBlockDetector } from "@/components/AdBlockDetector";
 import Index from "./pages/Index";
 import UnitDetail from "./pages/UnitDetail";
@@ -41,7 +41,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <CloudflareAnalytics />
+          
           <AdBlockDetector />
           <CookieConsentBanner />
           <TermsOfServiceModal />
