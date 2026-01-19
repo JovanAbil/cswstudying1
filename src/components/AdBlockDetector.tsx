@@ -11,13 +11,19 @@ export const AdBlockDetector = () => {
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       try {
-        // Simple check: try to fetch the counter.dev script
-        // If blocked by adblocker, this will throw a network error
-        const response = await fetch('https://cdn.counter.dev/script.js', {
+        // Check 1: Try to fetch the counter.dev script
+        await fetch('https://cdn.counter.dev/script.js', { cache: 'no-store' });
+
+        // Check 2: Try to reach the tracking endpoint (some adblockers block this but not the script)
+        // Using no-cors mode to avoid CORS errors - we just need to know if it's blocked
+        await fetch('https://t.counter.dev/trackpage', {
+          method: 'POST',
+          mode: 'no-cors',
           cache: 'no-store',
+          body: new URLSearchParams({ id: 'test', page: '/test' }),
         });
 
-        // If we get any response (even error status), the request wasn't blocked
+        // If both requests succeed (no network error), not blocked
         setIsBlocked(false);
       } catch {
         // Network error = blocked by adblocker
