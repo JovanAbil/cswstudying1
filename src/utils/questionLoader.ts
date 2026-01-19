@@ -71,10 +71,16 @@ import { basicsQuestions } from '@/data/stock/basics-questions';
 // FAKE DATA IMPORTS
 // ============================================
 import { atomicQuestions as fakeAtomicQuestions } from '@/data/fake/chemistry/atomic-questions';
+import { metricQuestions as fakeMetricQuestions } from '@/data/fake/chemistry/metric-questions';
+import { compoundsQuestions as fakeCompoundsQuestions } from '@/data/fake/chemistry/compounds-questions';
+import { gasesQuestions as fakeGasesQuestions } from '@/data/fake/chemistry/gases-questions';
 import { biochemistryQuestions as fakeBiochemistryQuestions } from '@/data/fake/biology/biochemistry-questions';
 import { cellstructureQuestions as fakeCellstructureQuestions } from '@/data/fake/biology/cellstructure-questions';
 import { cellenergeticsQuestions as fakeCellenergeticsQuestions } from '@/data/fake/biology/cellenergetics-questions';
 import { religionsQuestions as fakeReligionsQuestions } from '@/data/fake/worldhistory/religions-questions';
+import { islamQuestions as fakeIslamQuestions } from '@/data/fake/worldhistory/islam-questions';
+import { renaissanceQuestions as fakeRenaissanceQuestions } from '@/data/fake/worldhistory/renaissance-questions';
+import { protestantQuestions as fakeProtestantQuestions } from '@/data/fake/worldhistory/protestant-questions';
 
 /**
  * Map of question keys to their REAL data
@@ -104,7 +110,6 @@ const realDataMap: Record<string, Question[]> = {
   'chemistry-reactions': reactionsQuestions,
   'chemistry-stoichiometry': stoichiometryQuestions,
   'chemistry-acidbases': acidbasesQuestions,
-  // Note: chemistryDarone entries removed - add them back if you create that subject
   'world-history-religions': religionsQuestions,
   'world-history-islam': islamQuestions,
   'world-history-renaissance': renaissanceQuestions,
@@ -128,10 +133,16 @@ const realDataMap: Record<string, Question[]> = {
  */
 const fakeDataMap: Record<string, Question[]> = {
   'chemistry-atomic': fakeAtomicQuestions,
+  'chemistry-metric': fakeMetricQuestions,
+  'chemistry-compounds': fakeCompoundsQuestions,
+  'chemistry-gases': fakeGasesQuestions,
   'biology-biochemistry': fakeBiochemistryQuestions,
   'biology-cellstructure': fakeCellstructureQuestions,
   'biology-cellenergetics': fakeCellenergeticsQuestions,
   'world-history-religions': fakeReligionsQuestions,
+  'world-history-islam': fakeIslamQuestions,
+  'world-history-renaissance': fakeRenaissanceQuestions,
+  'world-history-protestant': fakeProtestantQuestions,
 };
 
 /**

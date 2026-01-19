@@ -48,7 +48,7 @@ export const renaissanceQuestions: Question[] = [
     type: 'free-response',
     question: 'Sculptor of the first free-standing bronze nude David since antiquity.',
     correctAnswer: 'Donatello',
-    explanation: 'Donatello's David was the first free-standing nude statue since antiquity.'
+    explanation: 'Donatellos David was the first free-standing nude statue since antiquity.'
   },
   {
     id: 'fake-renaissance-8',
@@ -62,7 +62,7 @@ export const renaissanceQuestions: Question[] = [
     type: 'free-response',
     question: 'Painter of the School of Athens.',
     correctAnswer: 'Raphael',
-    explanation: 'Raphael's School of Athens represents classical learning.'
+    explanation: 'Raphaels School of Athens represents classical learning.'
   },
   {
     id: 'fake-renaissance-10',
@@ -83,7 +83,7 @@ export const renaissanceQuestions: Question[] = [
     type: 'free-response',
     question: 'Author of "The Courtier" describing the ideal Renaissance person.',
     correctAnswer: 'Castiglione',
-    explanation: 'Castiglione described the "Renaissance man."'
+    explanation: 'Castiglione described the Renaissance man.'
   },
   {
     id: 'fake-renaissance-13',
@@ -96,7 +96,7 @@ export const renaissanceQuestions: Question[] = [
     id: 'fake-renaissance-14',
     type: 'free-response',
     question: 'Powerful female patron who brought many Renaissance artists to her court.',
-    correctAnswer: 'Isabella d\'Este',
+    correctAnswer: 'Isabella dEste',
     explanation: 'She was one of the most influential female patrons.'
   },
   {
@@ -137,7 +137,7 @@ export const renaissanceQuestions: Question[] = [
   {
     id: 'fake-renaissance-20',
     type: 'free-response',
-    question: 'Female writer who advocated for women\'s education.',
+    question: 'Female writer who advocated for womens education.',
     correctAnswer: 'Christine de Pizan',
     explanation: 'Christine de Pizan promoted education for women.'
   },
@@ -166,7 +166,7 @@ export const renaissanceQuestions: Question[] = [
   {
     id: 'fake-renaissance-23',
     type: 'multiple-choice',
-    question: '"Classical" refers to ancient Greek and Roman civilization.',
+    question: 'Classical refers to ancient Greek and Roman civilization.',
     options: [
       { label: 'A', value: 'A', text: 'True' },
       { label: 'B', value: 'B', text: 'False' }
@@ -243,13 +243,13 @@ export const renaissanceQuestions: Question[] = [
   {
     id: 'fake-renaissance-30',
     type: 'multiple-choice',
-    question: 'Christian humanists opposed social reform and women\'s education.',
+    question: 'Christian humanists opposed social reform and womens education.',
     options: [
       { label: 'A', value: 'A', text: 'True' },
       { label: 'B', value: 'B', text: 'False' }
     ],
     correctAnswer: 'B',
-    explanation: 'Christian humanists supported social reform and women's education.'
+    explanation: 'Christian humanists supported social reform and womens education.'
   },
   {
     id: 'fake-renaissance-31',
@@ -304,7 +304,7 @@ export const renaissanceQuestions: Question[] = [
       { label: 'B', value: 'B', text: 'False' }
     ],
     correctAnswer: 'A',
-    explanation: 'The English Renaissance peaked during Elizabeth I's rule.'
+    explanation: 'The English Renaissance peaked during Elizabeth Is rule.'
   },
   {
     id: 'fake-renaissance-36',
@@ -342,7 +342,7 @@ export const renaissanceQuestions: Question[] = [
   {
     id: 'fake-renaissance-39',
     type: 'multiple-choice',
-    question: 'Pope Julius II sponsored Raphael\'s "The School of Athens."',
+    question: 'Pope Julius II sponsored Raphaels "The School of Athens."',
     options: [
       { label: 'A', value: 'A', text: 'True' },
       { label: 'B', value: 'B', text: 'False' }

@@ -13,7 +13,7 @@ export const islamQuestions: Question[] = [
     type: 'free-response',
     question: 'Major cultural center in Spain under Umayyad rule',
     correctAnswer: 'Cordoba',
-    explanation: 'Córdoba became a major cultural and intellectual center under the Umayyad Caliphate in Spain.'
+    explanation: 'Cordoba became a major cultural and intellectual center under the Umayyad Caliphate in Spain.'
   },
   {
     id: 'fake-islam-3',
@@ -25,9 +25,9 @@ export const islamQuestions: Question[] = [
   {
     id: 'fake-islam-4',
     type: 'free-response',
-    question: 'Branch of Islam believing caliphs must descend from Muhammad\'s family',
+    question: 'Branch of Islam believing caliphs must descend from Muhammads family',
     correctAnswer: 'Shiite',
-    explanation: 'Shiites believe leadership should descend from Muhammad\'s family, particularly through Ali.'
+    explanation: 'Shiites believe leadership should descend from Muhammads family, particularly through Ali.'
   },
   {
     id: 'fake-islam-5',
@@ -60,7 +60,7 @@ export const islamQuestions: Question[] = [
   {
     id: 'fake-islam-9',
     type: 'free-response',
-    question: 'Term for both inner spiritual struggle and "holy war"',
+    question: 'Term for both inner spiritual struggle and holy war',
     correctAnswer: 'jihad',
     explanation: 'Jihad can refer to personal spiritual struggle or military struggle.'
   },
@@ -129,13 +129,13 @@ export const islamQuestions: Question[] = [
   {
     id: 'fake-islam-16',
     type: 'multiple-choice',
-    question: 'At Muhammad\'s death in 632, the Muslim Empire already included all of North Africa.',
+    question: 'At Muhammads death in 632, the Muslim Empire already included all of North Africa.',
     options: [
       { label: 'A', value: 'A', text: 'True' },
       { label: 'B', value: 'B', text: 'False' }
     ],
     correctAnswer: 'B',
-    explanation: 'At Muhammad\'s death, Islam controlled Arabia, not North Africa.'
+    explanation: 'At Muhammads death, Islam controlled Arabia, not North Africa.'
   },
   {
     id: 'fake-islam-17',
@@ -173,7 +173,7 @@ export const islamQuestions: Question[] = [
   {
     id: 'fake-islam-20',
     type: 'multiple-choice',
-    question: 'Muawiya was a Umayyad governor of Syria who accused Ali of involvement in Uthman\'s murder.',
+    question: 'Muawiya was a Umayyad governor of Syria who accused Ali of involvement in Uthmans murder.',
     options: [
       { label: 'A', value: 'A', text: 'True' },
       { label: 'B', value: 'B', text: 'False' }
@@ -184,7 +184,7 @@ export const islamQuestions: Question[] = [
   {
     id: 'fake-islam-21',
     type: 'multiple-choice',
-    question: 'The Kharijites were Ali\'s followers who left after he agreed to arbitration with Muawiya.',
+    question: 'The Kharijites were Alis followers who left after he agreed to arbitration with Muawiya.',
     options: [
       { label: 'A', value: 'A', text: 'True' },
       { label: 'B', value: 'B', text: 'False' }
@@ -223,7 +223,7 @@ export const islamQuestions: Question[] = [
       { label: 'B', value: 'B', text: 'False' }
     ],
     correctAnswer: 'B',
-    explanation: 'Shiites—not Sunnis—believe in hereditary Imams starting with Ali.'
+    explanation: 'Shiites, not Sunnis, believe in hereditary Imams starting with Ali.'
   },
   {
     id: 'fake-islam-25',
@@ -252,13 +252,13 @@ export const islamQuestions: Question[] = [
     type: 'multiple-choice',
     question: 'Which order correctly ranks Muslim social classes from highest to lowest?',
     options: [
-      { label: 'A', value: 'A', text: 'Muslims at birth, Jews & Christians, converts to Islam, conquered peoples' },
-      { label: 'B', value: 'B', text: 'Jews & Christians, Muslims at birth, converts to Islam, conquered peoples' },
-      { label: 'C', value: 'C', text: 'Muslims at birth, converts to Islam, Jews & Christians, conquered peoples' },
-      { label: 'D', value: 'D', text: 'converts to Islam, Muslims at birth, Jews & Christians, conquered peoples' }
+      { label: 'A', value: 'A', text: 'Muslims at birth, Jews and Christians, converts to Islam, conquered peoples' },
+      { label: 'B', value: 'B', text: 'Jews and Christians, Muslims at birth, converts to Islam, conquered peoples' },
+      { label: 'C', value: 'C', text: 'Muslims at birth, converts to Islam, Jews and Christians, conquered peoples' },
+      { label: 'D', value: 'D', text: 'converts to Islam, Muslims at birth, Jews and Christians, conquered peoples' }
     ],
     correctAnswer: 'C',
-    explanation: 'Born Muslims first, followed by converts, then "People of the Book," then others.'
+    explanation: 'Born Muslims first, followed by converts, then People of the Book, then others.'
   },
   {
     id: 'fake-islam-28',
@@ -269,7 +269,7 @@ export const islamQuestions: Question[] = [
       { label: 'B', value: 'B', text: 'pilgrimage to Mecca' },
       { label: 'C', value: 'C', text: 'praying toward Mecca' },
       { label: 'D', value: 'D', text: 'none of the above' },
-      { label: 'E', value: 'E', text: 'both B & C' }
+      { label: 'E', value: 'E', text: 'both B and C' }
     ],
     correctAnswer: 'E',
     explanation: 'Astronomy helped determine prayer direction and the lunar calendar.'
@@ -280,7 +280,7 @@ export const islamQuestions: Question[] = [
     question: 'Which Caliph founded the House of Wisdom?',
     options: [
       { label: 'A', value: 'A', text: 'al-Rashid' },
-      { label: 'B', value: 'B', text: 'al-Ma\'mun' },
+      { label: 'B', value: 'B', text: 'al-Mamun' },
       { label: 'C', value: 'C', text: 'al-Rhazi' },
       { label: 'D', value: 'D', text: 'al-Khwarizmi' },
       { label: 'E', value: 'E', text: 'al-Haytham' }
@@ -304,7 +304,7 @@ export const islamQuestions: Question[] = [
   {
     id: 'fake-islam-31',
     type: 'multiple-choice',
-    question: 'What is the correct order of the "rightly guided" Caliphs?',
+    question: 'What is the correct order of the rightly guided Caliphs?',
     options: [
       { label: 'A', value: 'A', text: 'Abu-Bakr, Umar, Ali, Uthman' },
       { label: 'B', value: 'B', text: 'Umar, Abu-Bakr, Uthman, Ali' },
@@ -312,7 +312,7 @@ export const islamQuestions: Question[] = [
       { label: 'D', value: 'D', text: 'Ali, Abu-Bakr, Umar, Uthman' }
     ],
     correctAnswer: 'C',
-    explanation: 'The historical order is: Abu Bakr → Umar → Uthman → Ali.'
+    explanation: 'The historical order is: Abu Bakr, Umar, Uthman, Ali.'
   },
   {
     id: 'fake-islam-32',
@@ -332,10 +332,10 @@ export const islamQuestions: Question[] = [
     type: 'multiple-choice',
     question: 'Which correctly matches the scholars with their disciplines?',
     options: [
-      { label: 'A', value: 'A', text: 'al-Razi & astronomy, al-Khwarizmi & algebra, al-Haytham & math' },
-      { label: 'B', value: 'B', text: 'al-Razi & medicine, al-Khwarizmi & philosophy, al-Haytham & algebra' },
-      { label: 'C', value: 'C', text: 'al-Razi & philosophy, al-Khwarizmi & algebra, al-Haytham & medicine' },
-      { label: 'D', value: 'D', text: 'al-Razi & medicine, al-Khwarizmi & algebra, al-Haytham & math/astronomy' }
+      { label: 'A', value: 'A', text: 'al-Razi and astronomy, al-Khwarizmi and algebra, al-Haytham and math' },
+      { label: 'B', value: 'B', text: 'al-Razi and medicine, al-Khwarizmi and philosophy, al-Haytham and algebra' },
+      { label: 'C', value: 'C', text: 'al-Razi and philosophy, al-Khwarizmi and algebra, al-Haytham and medicine' },
+      { label: 'D', value: 'D', text: 'al-Razi and medicine, al-Khwarizmi and algebra, al-Haytham and math/astronomy' }
     ],
     correctAnswer: 'D',
     explanation: 'Al-Razi was a physician, al-Khwarizmi is the father of algebra, al-Haytham pioneered optics.'

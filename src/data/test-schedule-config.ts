@@ -39,30 +39,28 @@ export const testScheduleConfig: Record<string, TestSchedule> = {
   // ============================================
   // CHEMISTRY TESTS
   // ============================================
-  // FOR TESTING: testDate is Jan 25, 2026. Current date is Jan 17, 2026.
-  // Since we are BEFORE the testDate, FAKE data should show now!
-  // 'chemistry-metric': { testDate: '2025-09-25', hasFakeData: true },
+  'chemistry-metric': { testDate: '2025-09-25', hasFakeData: true },
   'chemistry-atomic': { testDate: '2025-10-22', hasFakeData: true },
-  // 'chemistry-compounds': { testDate: '2025-12-04', hasFakeData: true },  
-  // 'chemistry-gases': { testDate: '2025-12-16', hasFakeData: true },  
+  'chemistry-compounds': { testDate: '2025-12-04', hasFakeData: true },
+  'chemistry-gases': { testDate: '2025-12-16', hasFakeData: true },
 
   
   // ============================================
   // BIOLOGY TESTS
   // ============================================
-  // 'biology-biochemistry': { testDate: '2025-09-25', hasFakeData: true },
-  // 'biology-cellstructure': { testDate: '2025-10-22', hasFakeData: true },
-  // 'biology-cellenergetics': { testDate: '2025-11-19', hasFakeData: true },
+  'biology-biochemistry': { testDate: '2025-09-25', hasFakeData: true },
+  'biology-cellstructure': { testDate: '2025-10-22', hasFakeData: true },
+  'biology-cellenergetics': { testDate: '2025-11-19', hasFakeData: true },
   // biology-cellgrowth doesn't have a set test
 
   
   // ============================================
   // WORLD HISTORY TESTS
   // ============================================
-  // 'world-history-religions': { testDate: '2025-10-01', hasFakeData: true },
-  // 'world-history-islam': { testDate: '2025-10-22', hasFakeData: true },
-  // 'world-history-renaissance': { testDate: '2025-11-21', hasFakeData: true },
-  // 'world-history-protestant': { testDate: '2025-12-16', hasFakeData: true },
+  'world-history-religions': { testDate: '2025-10-01', hasFakeData: true },
+  'world-history-islam': { testDate: '2025-10-22', hasFakeData: true },
+  'world-history-renaissance': { testDate: '2025-11-21', hasFakeData: true },
+  'world-history-protestant': { testDate: '2025-12-16', hasFakeData: true },
 
   
   // ============================================
