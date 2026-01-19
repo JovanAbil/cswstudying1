@@ -69,11 +69,12 @@ import { basicsQuestions } from '@/data/stock/basics-questions';
 
 // ============================================
 // FAKE DATA IMPORTS
-// Add imports for fake data files here as you create them
 // ============================================
 import { atomicQuestions as fakeAtomicQuestions } from '@/data/fake/chemistry/atomic-questions';
-// import { compoundsQuestions as fakeCompoundsQuestions } from '@/data/fake/chemistry/compounds-questions';
-// Add more fake data imports as needed...
+import { biochemistryQuestions as fakeBiochemistryQuestions } from '@/data/fake/biology/biochemistry-questions';
+import { cellstructureQuestions as fakeCellstructureQuestions } from '@/data/fake/biology/cellstructure-questions';
+import { cellenergeticsQuestions as fakeCellenergeticsQuestions } from '@/data/fake/biology/cellenergetics-questions';
+import { religionsQuestions as fakeReligionsQuestions } from '@/data/fake/worldhistory/religions-questions';
 
 /**
  * Map of question keys to their REAL data
@@ -127,8 +128,10 @@ const realDataMap: Record<string, Question[]> = {
  */
 const fakeDataMap: Record<string, Question[]> = {
   'chemistry-atomic': fakeAtomicQuestions,
-  // 'chemistry-compounds': fakeCompoundsQuestions,
-  // Add more mappings as you create fake data files...
+  'biology-biochemistry': fakeBiochemistryQuestions,
+  'biology-cellstructure': fakeCellstructureQuestions,
+  'biology-cellenergetics': fakeCellenergeticsQuestions,
+  'world-history-religions': fakeReligionsQuestions,
 };
 
 /**

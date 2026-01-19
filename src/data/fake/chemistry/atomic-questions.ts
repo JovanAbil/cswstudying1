@@ -2,48 +2,36 @@ import { Question } from '@/types/quiz';
 
 /**
  * FAKE/PRACTICE DATA for Atomic Structure
- * 
- * These questions are shown when the real test is locked.
- * They should be similar in topic but NOT the actual test questions.
- * 
- * To enable this fake data:
- * 1. Go to src/data/test-schedule-config.ts
- * 2. Uncomment or add: 'chemistry-atomic': { testDate: '2025-01-20', hasFakeData: true }
+ * These questions cover similar topics but are NOT the actual test questions.
  */
 
 export const atomicQuestions: Question[] = [
-  {
-    id: 'fake-atomic-1',
-    type: 'multiple-choice',
-    question: 'Practice: What is the charge of a proton?',
-    options: [
-      { label: 'A', value: 'a', text: '+1' },
-      { label: 'B', value: 'b', text: '-1' },
-      { label: 'C', value: 'c', text: '0' },
-      { label: 'D', value: 'd', text: '+2' },
-    ],
-    correctAnswer: 'a',
-    explanation: 'This is practice content. Protons have a +1 charge.',
-  },
-  {
-    id: 'fake-atomic-2',
-    type: 'multiple-choice',
-    question: 'Practice: Where are electrons located in an atom?',
-    options: [
-      { label: 'A', value: 'a', text: 'In the nucleus' },
-      { label: 'B', value: 'b', text: 'In electron shells around the nucleus' },
-      { label: 'C', value: 'c', text: 'Scattered randomly' },
-      { label: 'D', value: 'd', text: 'Between atoms' },
-    ],
-    correctAnswer: 'b',
-    explanation: 'This is practice content. Electrons orbit the nucleus in shells.',
-  },
-  {
-    id: 'fake-atomic-3',
-    type: 'free-response',
-    question: 'Practice: Define atomic number.',
-    correctAnswer: 'The number of protons in an atom',
-    explanation: 'This is practice content. Atomic number = number of protons.',
-  },
-  // Add more practice questions as needed...
+  { id: 'fake-atomic-1', type: 'multiple-choice', question: 'Practice: Who first proposed atoms are indivisible particles?', options: [{ label: 'A', value: 'A', text: 'Dalton' }, { label: 'B', value: 'B', text: 'Democritus' }, { label: 'C', value: 'C', text: 'Thomson' }, { label: 'D', value: 'D', text: 'Bohr' }], correctAnswer: 'B', explanation: 'Democritus first proposed the concept of atoms.' },
+  { id: 'fake-atomic-2', type: 'multiple-choice', question: 'Practice: Who created the first evidence-based atomic theory?', options: [{ label: 'A', value: 'A', text: 'Dalton' }, { label: 'B', value: 'B', text: 'Democritus' }, { label: 'C', value: 'C', text: 'Rutherford' }, { label: 'D', value: 'D', text: 'Bohr' }], correctAnswer: 'A', explanation: 'John Dalton developed the first scientific atomic theory.' },
+  { id: 'fake-atomic-3', type: 'multiple-choice', question: 'Practice: Thomson discovered electrons using which experiment?', options: [{ label: 'A', value: 'A', text: 'Gold foil' }, { label: 'B', value: 'B', text: 'Oil drop' }, { label: 'C', value: 'C', text: 'Cathode ray tube' }, { label: 'D', value: 'D', text: 'Flame test' }], correctAnswer: 'C', explanation: 'The cathode ray tube experiment revealed electrons.' },
+  { id: 'fake-atomic-4', type: 'multiple-choice', question: 'Practice: Thomson\'s atomic model is called the...', options: [{ label: 'A', value: 'A', text: 'Nuclear model' }, { label: 'B', value: 'B', text: 'Planetary model' }, { label: 'C', value: 'C', text: 'Plum pudding model' }, { label: 'D', value: 'D', text: 'Quantum model' }], correctAnswer: 'C', explanation: 'Thomson proposed electrons embedded in positive matter.' },
+  { id: 'fake-atomic-5', type: 'multiple-choice', question: 'Practice: In Thomson\'s experiment, cathode rays bent toward...', options: [{ label: 'A', value: 'A', text: 'Positive plate' }, { label: 'B', value: 'B', text: 'Negative plate' }, { label: 'C', value: 'C', text: 'Neither plate' }, { label: 'D', value: 'D', text: 'Both plates equally' }], correctAnswer: 'A', explanation: 'Negatively charged electrons are attracted to positive plates.' },
+  { id: 'fake-atomic-6', type: 'multiple-choice', question: 'Practice: Who measured electron charge with oil drops?', options: [{ label: 'A', value: 'A', text: 'Bohr' }, { label: 'B', value: 'B', text: 'Millikan' }, { label: 'C', value: 'C', text: 'Thomson' }, { label: 'D', value: 'D', text: 'Rutherford' }], correctAnswer: 'B', explanation: 'Robert Millikan\'s oil drop experiment measured electron charge.' },
+  { id: 'fake-atomic-7', type: 'multiple-choice', question: 'Practice: Who performed the gold foil experiment?', options: [{ label: 'A', value: 'A', text: 'Rutherford' }, { label: 'B', value: 'B', text: 'Thomson' }, { label: 'C', value: 'C', text: 'Bohr' }, { label: 'D', value: 'D', text: 'Dalton' }], correctAnswer: 'A', explanation: 'Rutherford discovered the atomic nucleus.' },
+  { id: 'fake-atomic-8', type: 'multiple-choice', question: 'Practice: Rutherford\'s experiment showed atoms have...', options: [{ label: 'A', value: 'A', text: 'Solid spheres' }, { label: 'B', value: 'B', text: 'A small, dense, positive nucleus' }, { label: 'C', value: 'C', text: 'No empty space' }, { label: 'D', value: 'D', text: 'Evenly distributed charge' }], correctAnswer: 'B', explanation: 'Most alpha particles passed through empty space with a few bouncing back.' },
+  { id: 'fake-atomic-9', type: 'multiple-choice', question: 'Practice: Who proposed fixed electron energy levels?', options: [{ label: 'A', value: 'A', text: 'Thomson' }, { label: 'B', value: 'B', text: 'Bohr' }, { label: 'C', value: 'C', text: 'Rutherford' }, { label: 'D', value: 'D', text: 'Dalton' }], correctAnswer: 'B', explanation: 'Bohr proposed quantized electron orbits.' },
+  { id: 'fake-atomic-10', type: 'multiple-choice', question: 'Practice: Bohr\'s model explained...', options: [{ label: 'A', value: 'A', text: 'Radioactive decay' }, { label: 'B', value: 'B', text: 'Emission spectra of elements' }, { label: 'C', value: 'C', text: 'Nuclear fission' }, { label: 'D', value: 'D', text: 'Chemical bonding' }], correctAnswer: 'B', explanation: 'Bohr explained why elements emit specific colors of light.' },
+  { id: 'fake-atomic-11', type: 'multiple-choice', question: 'Practice: Schrödinger described electrons as...', options: [{ label: 'A', value: 'A', text: 'Fixed orbits' }, { label: 'B', value: 'B', text: 'Probability clouds' }, { label: 'C', value: 'C', text: 'Solid particles' }, { label: 'D', value: 'D', text: 'Stationary waves' }], correctAnswer: 'B', explanation: 'The quantum model uses probability distributions for electrons.' },
+  { id: 'fake-atomic-12', type: 'multiple-choice', question: 'Practice: The modern atomic model is based on...', options: [{ label: 'A', value: 'A', text: 'Dalton\'s theory' }, { label: 'B', value: 'B', text: 'Bohr\'s model' }, { label: 'C', value: 'C', text: 'Quantum mechanics' }, { label: 'D', value: 'D', text: 'Plum pudding model' }], correctAnswer: 'C', explanation: 'Modern atomic theory uses Schrödinger\'s quantum mechanics.' },
+  { id: 'fake-atomic-13', type: 'multiple-choice', question: 'Practice: Who discovered the neutron?', options: [{ label: 'A', value: 'A', text: 'Thomson' }, { label: 'B', value: 'B', text: 'Bohr' }, { label: 'C', value: 'C', text: 'Rutherford' }, { label: 'D', value: 'D', text: 'Chadwick' }], correctAnswer: 'D', explanation: 'James Chadwick discovered the neutron in 1932.' },
+  { id: 'fake-atomic-14', type: 'multiple-choice', question: 'Practice: The neutron discovery explained...', options: [{ label: 'A', value: 'A', text: 'Electron spin' }, { label: 'B', value: 'B', text: 'Missing atomic mass' }, { label: 'C', value: 'C', text: 'Chemical bonding' }, { label: 'D', value: 'D', text: 'Light emission' }], correctAnswer: 'B', explanation: 'Neutrons account for atomic mass not explained by protons alone.' },
+  { id: 'fake-atomic-15', type: 'multiple-choice', question: 'Practice: Calculate average atomic mass of element X: 60% is mass 35, 40% is mass 37.', options: [{ label: 'A', value: 'A', text: '35.8' }, { label: 'B', value: 'B', text: '36.0' }, { label: 'C', value: 'C', text: '36.2' }, { label: 'D', value: 'D', text: '35.5' }], correctAnswer: 'A', explanation: '(0.60 × 35) + (0.40 × 37) = 21 + 14.8 = 35.8' },
+  { id: 'fake-atomic-16', type: 'multiple-choice', question: 'Practice: Which elements have smaller atomic radius than silicon?', options: [{ label: 'A', value: 'A', text: 'Mg, Ca, K' }, { label: 'B', value: 'B', text: 'C, N, O' }, { label: 'C', value: 'C', text: 'Na, Al, P' }, { label: 'D', value: 'D', text: 'Fe, Co, Ni' }], correctAnswer: 'B', explanation: 'Elements above and to the right of Si have smaller radii.' },
+  { id: 'fake-atomic-17', type: 'multiple-choice', question: 'Practice: Which elements have higher ionization energy than sulfur?', options: [{ label: 'A', value: 'A', text: 'O, N, F' }, { label: 'B', value: 'B', text: 'Ca, K, Na' }, { label: 'C', value: 'C', text: 'Br, I, At' }, { label: 'D', value: 'D', text: 'Fe, Cu, Zn' }], correctAnswer: 'A', explanation: 'Elements above S on the periodic table have higher ionization energy.' },
+  { id: 'fake-atomic-18', type: 'multiple-choice', question: 'Practice: After 3 alpha decays from mass 250, the new mass is...', options: [{ label: 'A', value: 'A', text: '238' }, { label: 'B', value: 'B', text: '242' }, { label: 'C', value: 'C', text: '246' }, { label: 'D', value: 'D', text: '244' }], correctAnswer: 'A', explanation: '250 - (3 × 4) = 250 - 12 = 238' },
+  { id: 'fake-atomic-19', type: 'multiple-choice', question: 'Practice: Elements forming only +1, +2, or +3 ions include...', options: [{ label: 'A', value: 'A', text: 'Na, C, O' }, { label: 'B', value: 'B', text: 'Li, Mg, Al' }, { label: 'C', value: 'C', text: 'N, P, S' }, { label: 'D', value: 'D', text: 'Fe, Co, Ni' }], correctAnswer: 'B', explanation: 'Li loses 1e⁻, Mg loses 2e⁻, Al loses 3e⁻ to form stable ions.' },
+  { id: 'fake-atomic-20', type: 'multiple-choice', question: 'Practice: Electron config ending in 4p³ is which element?', options: [{ label: 'A', value: 'A', text: 'Arsenic' }, { label: 'B', value: 'B', text: 'Phosphorus' }, { label: 'C', value: 'C', text: 'Nitrogen' }, { label: 'D', value: 'D', text: 'Antimony' }], correctAnswer: 'A', explanation: 'Arsenic (As) ends its configuration with 4p³.' },
+  { id: 'fake-atomic-21', type: 'multiple-choice', question: 'Practice: A photon with frequency 5.0 × 10¹⁴ Hz has wavelength...', options: [{ label: 'A', value: 'A', text: '6.0 × 10⁻⁷ m' }, { label: 'B', value: 'B', text: '3.0 × 10⁻⁷ m' }, { label: 'C', value: 'C', text: '1.5 × 10⁻⁶ m' }, { label: 'D', value: 'D', text: '2.0 × 10⁻⁵ m' }], correctAnswer: 'A', explanation: 'λ = c/f = (3×10⁸)/(5×10¹⁴) = 6×10⁻⁷ m' },
+  { id: 'fake-atomic-22', type: 'multiple-choice', question: 'Practice: An isotope 238/92 U⁴⁺ has how many electrons?', options: [{ label: 'A', value: 'A', text: '92' }, { label: 'B', value: 'B', text: '88' }, { label: 'C', value: 'C', text: '96' }, { label: 'D', value: 'D', text: '146' }], correctAnswer: 'B', explanation: '92 protons - 4 charge = 88 electrons' },
+  { id: 'fake-atomic-23', type: 'multiple-choice', question: 'Practice: Two nuclei combining to release energy is called...', options: [{ label: 'A', value: 'A', text: 'Fission' }, { label: 'B', value: 'B', text: 'Fusion' }, { label: 'C', value: 'C', text: 'Alpha decay' }, { label: 'D', value: 'D', text: 'Beta decay' }], correctAnswer: 'B', explanation: 'Nuclear fusion combines light nuclei into heavier ones.' },
+  { id: 'fake-atomic-24', type: 'multiple-choice', question: 'Practice: Half-life of 20 min, starting with 200g. After 60 min, parent remaining is...', options: [{ label: 'A', value: 'A', text: '25 g' }, { label: 'B', value: 'B', text: '50 g' }, { label: 'C', value: 'C', text: '100 g' }, { label: 'D', value: 'D', text: '12.5 g' }], correctAnswer: 'A', explanation: '60/20 = 3 half-lives. 200 → 100 → 50 → 25 g' },
+  { id: 'fake-atomic-25', type: 'multiple-choice', question: 'Practice: Which list contains a metal, nonmetal, and metalloid?', options: [{ label: 'A', value: 'A', text: 'Fe, Si, Cl' }, { label: 'B', value: 'B', text: 'Na, K, Ca' }, { label: 'C', value: 'C', text: 'C, N, O' }, { label: 'D', value: 'D', text: 'Ge, As, Se' }], correctAnswer: 'A', explanation: 'Fe is metal, Si is metalloid, Cl is nonmetal.' },
+  { id: 'fake-atomic-26', type: 'multiple-choice', question: 'Practice: True statement about nuclear decay particles...', options: [{ label: 'A', value: 'A', text: 'Gamma rays have no mass or charge' }, { label: 'B', value: 'B', text: 'Alpha particles are electrons' }, { label: 'C', value: 'C', text: 'Beta particles have mass of 4' }, { label: 'D', value: 'D', text: 'Neutrons have positive charge' }], correctAnswer: 'A', explanation: 'Gamma radiation is electromagnetic with no mass or charge.' },
+  { id: 'fake-atomic-27', type: 'free-response', question: 'Practice: Write the electron configuration for calcium (Z=20).', correctAnswer: '1s² 2s² 2p⁶ 3s² 3p⁶ 4s²', explanation: 'Calcium has 20 electrons filling orbitals in order.' },
+  { id: 'fake-atomic-28', type: 'free-response', question: 'Practice: How many protons, neutrons, electrons in ⁴⁰₂₀Ca²⁺?', correctAnswer: '20 protons, 20 neutrons, 18 electrons', explanation: 'Protons=atomic number, neutrons=mass-protons, electrons=protons-charge.' }
 ];
