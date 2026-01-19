@@ -11,7 +11,7 @@ export const AdBlockDetector = () => {
       await new Promise(resolve => setTimeout(resolve, 3000));
 
       try {
-        // Check if the counter.dev script tag exists and loaded successfully
+        // Check if the counter.dev script tag exists
         const script = document.querySelector('script[src*="counter.dev"]') as HTMLScriptElement;
         
         if (!script) {
@@ -20,18 +20,29 @@ export const AdBlockDetector = () => {
           return;
         }
 
-        // Try to fetch the script - if blocked, this will fail
-        const response = await fetch('https://cdn.counter.dev/script.js', {
+        // Test 1: Try to fetch the script
+        const scriptResponse = await fetch('https://cdn.counter.dev/script.js', {
           method: 'GET',
           cache: 'no-store',
         });
 
-        if (!response.ok) {
+        if (!scriptResponse.ok) {
           setIsBlocked(true);
-        } else {
-          // Script loaded successfully - no adblocker
-          setIsBlocked(false);
+          setIsChecking(false);
+          return;
         }
+
+        // Test 2: Try to reach the tracking endpoint (some adblockers block this but not the script)
+        // Using a HEAD request to minimize data transfer
+        const trackResponse = await fetch('https://t.counter.dev/trackpage', {
+          method: 'POST',
+          body: new URLSearchParams({ id: 'test', page: '/test' }),
+          cache: 'no-store',
+        });
+
+        // If we get here without an error, tracking is not blocked
+        // Note: The response might be an error status but that's OK - we just need to know the request wasn't blocked
+        setIsBlocked(false);
       } catch (error) {
         // Fetch failed - blocked by adblocker
         console.warn('Counter.dev analytics blocked:', error);
