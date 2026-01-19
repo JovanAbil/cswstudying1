@@ -7,64 +7,33 @@ export const AdBlockDetector = () => {
 
   useEffect(() => {
     const checkCounterDev = async () => {
+      // Wait for page to fully load and scripts to execute
+      await new Promise(resolve => setTimeout(resolve, 3000));
+
       try {
-        // Method 1: Try to fetch the Counter.dev script
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 3000);
-
-        const response = await fetch('https://cdn.counter.dev/script.js', {
-          method: 'HEAD',
-          mode: 'no-cors',
-          signal: controller.signal,
-        });
-
-        clearTimeout(timeoutId);
-
-        // If we get here with no-cors, we can't really tell if it succeeded
-        // So we also check if the script tag loaded
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
-        // Method 2: Check if counter.dev script is in the DOM and loaded
-        const scripts = document.querySelectorAll('script[src*="counter.dev"]');
-        if (scripts.length === 0) {
+        // Check if the counter.dev script tag exists and loaded successfully
+        const script = document.querySelector('script[src*="counter.dev"]') as HTMLScriptElement;
+        
+        if (!script) {
           setIsBlocked(true);
           setIsChecking(false);
           return;
         }
 
-        // Method 3: Check if the script actually executed by looking for network activity
-        // We'll use a small test - try to create an image request to counter.dev
-        const testImg = new Image();
-        let loaded = false;
+        // Try to fetch the script - if blocked, this will fail
+        const response = await fetch('https://cdn.counter.dev/script.js', {
+          method: 'GET',
+          cache: 'no-store',
+        });
 
-        testImg.onload = () => {
-          loaded = true;
-        };
-        testImg.onerror = () => {
-          // Image request blocked - likely adblocker
+        if (!response.ok) {
           setIsBlocked(true);
-        };
-
-        testImg.src = `https://cdn.counter.dev/favicon.ico?t=${Date.now()}`;
-
-        // Wait for the test to complete
-        await new Promise(resolve => setTimeout(resolve, 2000));
-
-        if (!loaded && !isBlocked) {
-          // Double-check by trying to access the script content
-          try {
-            const testFetch = await fetch('https://cdn.counter.dev/script.js', {
-              signal: AbortSignal.timeout(3000),
-            });
-            if (!testFetch.ok) {
-              setIsBlocked(true);
-            }
-          } catch {
-            setIsBlocked(true);
-          }
+        } else {
+          // Script loaded successfully - no adblocker
+          setIsBlocked(false);
         }
       } catch (error) {
-        // Fetch failed - likely blocked by adblocker
+        // Fetch failed - blocked by adblocker
         console.warn('Counter.dev analytics blocked:', error);
         setIsBlocked(true);
       } finally {
