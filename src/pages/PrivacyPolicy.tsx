@@ -93,8 +93,8 @@ const PrivacyPolicy = () => {
               <p className="text-muted-foreground leading-relaxed">
                 The purpose of this resource is to help students study more effectively, not to enable cheating. 
                 By only making content available after tests have been administered, we ensure this tool can only 
-                be used for legitimate studying purposes. We believe that practicing with real exam questions is 
-                one of the most effective ways to prepare for future assessments as it promotes active recall.
+                be used for legitimate studying purposes. We believe that practicing with real exam questions 
+                (after the fact) is one of the most effective ways to prepare for future assessments.
               </p>
             </section>
           </Card>
