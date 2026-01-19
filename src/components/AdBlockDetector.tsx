@@ -20,32 +20,62 @@ export const AdBlockDetector = () => {
           return;
         }
 
-        // Test 1: Try to fetch the script
-        const scriptResponse = await fetch('https://cdn.counter.dev/script.js', {
-          method: 'GET',
-          cache: 'no-store',
-        });
+        // Test 1: Try to fetch the script (bypasses some adblockers)
+        try {
+          const scriptResponse = await fetch('https://cdn.counter.dev/script.js', {
+            method: 'GET',
+            cache: 'no-store',
+          });
 
-        if (!scriptResponse.ok) {
+          if (!scriptResponse.ok) {
+            setIsBlocked(true);
+            setIsChecking(false);
+            return;
+          }
+        } catch {
           setIsBlocked(true);
           setIsChecking(false);
           return;
         }
 
-        // Test 2: Try to reach the tracking endpoint (some adblockers block this but not the script)
-        // Using a HEAD request to minimize data transfer
-        const trackResponse = await fetch('https://t.counter.dev/trackpage', {
-          method: 'POST',
-          body: new URLSearchParams({ id: 'test', page: '/test' }),
-          cache: 'no-store',
+        // Test 2: Try to reach the tracking domain using an Image request (bypasses CORS)
+        // Some adblockers block the tracking endpoint but not the script
+        const trackingBlocked = await new Promise<boolean>((resolve) => {
+          const img = new Image();
+          const timeout = setTimeout(() => {
+            resolve(true); // Timeout = likely blocked
+          }, 5000);
+
+          img.onload = () => {
+            clearTimeout(timeout);
+            resolve(false); // Loaded = not blocked
+          };
+
+          img.onerror = () => {
+            clearTimeout(timeout);
+            // Error could be 404 (not blocked) or network error (blocked)
+            // We need to check if it's a network-level block
+            // Try a second approach: check if we can reach the domain at all
+            const xhr = new XMLHttpRequest();
+            xhr.open('HEAD', 'https://t.counter.dev/', true);
+            xhr.timeout = 3000;
+            xhr.onload = () => resolve(false); // Got a response = not blocked
+            xhr.onerror = () => resolve(true); // Network error = blocked
+            xhr.ontimeout = () => resolve(true); // Timeout = blocked
+            try {
+              xhr.send();
+            } catch {
+              resolve(true); // Exception = blocked
+            }
+          };
+
+          // Request favicon from tracking domain
+          img.src = `https://t.counter.dev/favicon.ico?t=${Date.now()}`;
         });
 
-        // If we get here without an error, tracking is not blocked
-        // Note: The response might be an error status but that's OK - we just need to know the request wasn't blocked
-        setIsBlocked(false);
+        setIsBlocked(trackingBlocked);
       } catch (error) {
-        // Fetch failed - blocked by adblocker
-        console.warn('Counter.dev analytics blocked:', error);
+        console.warn('Counter.dev analytics check failed:', error);
         setIsBlocked(true);
       } finally {
         setIsChecking(false);
