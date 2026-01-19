@@ -20,6 +20,8 @@ This folder contains comprehensive documentation for maintaining and extending t
 | [08-GITHUB-HOSTING-GUIDE.md](./08-GITHUB-HOSTING-GUIDE.md) | How to host on GitHub Pages |
 | [09-TROUBLESHOOTING-ERRORS.md](./09-TROUBLESHOOTING-ERRORS.md) | Common errors and how to fix them |
 | [10-FAKE-DATA-SYSTEM.md](./10-FAKE-DATA-SYSTEM.md) | Date-based test protection system |
+| [11-CLOUDFLARE-ANALYTICS-GITHUB-ACTIONS.md](./11-CLOUDFLARE-ANALYTICS-GITHUB-ACTIONS.md) | Cloudflare analytics with GitHub Actions automation |
+| [12-COUNTER-DEV-ANALYTICS.md](./12-COUNTER-DEV-ANALYTICS.md) | Counter.dev real-time analytics and adblocker detection |
 
 ---
 

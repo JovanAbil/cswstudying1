@@ -9,6 +9,7 @@ import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import TermsOfServiceModal from "@/components/TermsOfServiceModal";
 import { CloudflareAnalytics } from "@/components/CloudflareAnalytics";
+import { AdBlockDetector } from "@/components/AdBlockDetector";
 import Index from "./pages/Index";
 import UnitDetail from "./pages/UnitDetail";
 import Quiz from "./pages/Quiz";
@@ -41,6 +42,7 @@ const App = () => {
         <Sonner />
         <BrowserRouter>
           <CloudflareAnalytics />
+          <AdBlockDetector />
           <CookieConsentBanner />
           <TermsOfServiceModal />
           <Routes>
