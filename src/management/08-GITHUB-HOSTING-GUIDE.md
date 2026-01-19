@@ -460,18 +460,70 @@ Cloudflare Web Analytics provides free, privacy-focused analytics without cookie
 ```html
     <script type="module" src="/src/main.tsx"></script>
     <!-- Cloudflare Web Analytics -->
-    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE"}'></script>
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "YOUR_TOKEN_HERE", "spa": true}'></script>
     <!-- End Cloudflare Web Analytics -->
   </body>
 </html>
 ```
 
 4. Replace `YOUR_TOKEN_HERE` with your actual token from Cloudflare
-5. Save the file
+5. **IMPORTANT**: Notice the `"spa": true` option - this is required for React apps!
+6. Save the file
 
-### 11.4 Push and Verify
+### 11.4 Enable SPA Tracking in React
 
-1. In GitHub Desktop, commit with summary: `Add Cloudflare Analytics`
+Since this is a Single Page Application (SPA), Cloudflare only tracks the initial page load by default. To track all route changes:
+
+1. Create `src/components/CloudflareAnalytics.tsx`:
+
+```tsx
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+
+declare global {
+  interface Window {
+    __cfRl?: {
+      t: (url: string) => void;
+    };
+  }
+}
+
+export const CloudflareAnalytics = () => {
+  const location = useLocation();
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    // Skip initial load - Cloudflare handles that automatically
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    // Send pageview to Cloudflare on route change
+    if (window.__cfRl && typeof window.__cfRl.t === 'function') {
+      window.__cfRl.t(window.location.href);
+    }
+  }, [location.pathname, location.search]);
+
+  return null;
+};
+```
+
+2. Add the component to `App.tsx` inside `BrowserRouter`:
+
+```tsx
+import { CloudflareAnalytics } from '@/components/CloudflareAnalytics';
+
+// Inside BrowserRouter:
+<BrowserRouter>
+  <CloudflareAnalytics />
+  {/* ... rest of your routes */}
+</BrowserRouter>
+```
+
+### 11.5 Push and Verify
+
+1. In GitHub Desktop, commit with summary: `Add Cloudflare Analytics with SPA tracking`
 2. Click **Push origin**
 3. Wait for deployment (check Actions tab)
 4. Visit your site and browse a few pages
@@ -482,7 +534,7 @@ Cloudflare Web Analytics provides free, privacy-focused analytics without cookie
 | Metric | Description |
 |--------|-------------|
 | Visits | Unique visitors to your site |
-| Page Views | Total pages viewed |
+| Page Views | Total pages viewed (including SPA navigations) |
 | Top Pages | Most visited pages |
 | Countries | Where visitors are from |
 | Devices | Desktop vs Mobile |
