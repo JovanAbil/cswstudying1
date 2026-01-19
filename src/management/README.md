@@ -19,9 +19,9 @@ This folder contains comprehensive documentation for maintaining and extending t
 | [07-LOVABLE-REMOVAL-IMPACT.md](./07-LOVABLE-REMOVAL-IMPACT.md) | What changes when you leave Lovable |
 | [08-GITHUB-HOSTING-GUIDE.md](./08-GITHUB-HOSTING-GUIDE.md) | How to host on GitHub Pages |
 | [09-TROUBLESHOOTING-ERRORS.md](./09-TROUBLESHOOTING-ERRORS.md) | Common errors and how to fix them |
-| [10-FAKE-DATA-SYSTEM.md](./10-FAKE-DATA-SYSTEM.md) | Date-based test protection system |
-| [11-CLOUDFLARE-ANALYTICS-GITHUB-ACTIONS.md](./11-CLOUDFLARE-ANALYTICS-GITHUB-ACTIONS.md) | Cloudflare analytics with GitHub Actions automation |
-| [12-COUNTER-DEV-ANALYTICS.md](./12-COUNTER-DEV-ANALYTICS.md) | Counter.dev real-time analytics and adblocker detection |
+| [10-FAKE-DATA-SYSTEM.md](./10-FAKE-DATA-SYSTEM.md) | Date-based test protection system (11 topics, 336 fake questions) |
+| [11-CLOUDFLARE-ANALYTICS-GITHUB-ACTIONS.md](./11-CLOUDFLARE-ANALYTICS-GITHUB-ACTIONS.md) | *(Archived)* Reference for GitHub Actions data fetching |
+| [12-COUNTER-DEV-ANALYTICS.md](./12-COUNTER-DEV-ANALYTICS.md) | Counter.dev real-time analytics integration |
 
 ---
 
@@ -33,7 +33,10 @@ This folder contains comprehensive documentation for maintaining and extending t
 src/
 ├── components/     # Reusable UI components
 ├── data/          # Question banks and configuration
-│   ├── fake/      # Fake questions for test protection
+│   ├── fake/      # Fake questions for test protection (11 topics)
+│   │   ├── chemistry/    (4 files: atomic, metric, compounds, gases)
+│   │   ├── biology/      (3 files: biochemistry, cellstructure, cellenergetics)
+│   │   └── worldhistory/ (4 files: religions, islam, renaissance, protestant)
 │   └── test-schedule-config.ts  # Test date settings
 ├── hooks/         # React hooks for state management
 ├── pages/         # Page components (routes)
@@ -86,6 +89,7 @@ src/
 | Routing | React Router v6 |
 | Math Rendering | KaTeX |
 | State | React hooks + localStorage |
+| Analytics | Counter.dev (real-time) |
 
 ---
 
@@ -126,7 +130,8 @@ This application is entirely client-side:
 ## Important: Centralized Question Loading
 
 All built-in questions are loaded through `src/utils/questionLoader.ts`. This file:
-- Imports all real and fake question data
+- Imports all real question data (24 topics)
+- Imports all fake question data (11 topics)
 - Applies date-based switching for test protection
 - Provides consistent behavior across all pages
 
@@ -134,6 +139,19 @@ All built-in questions are loaded through `src/utils/questionLoader.ts`. This fi
 ```typescript
 import { getQuestions, getQuestionMap } from '@/utils/questionLoader';
 ```
+
+---
+
+## Current Fake Data Coverage
+
+| Subject | Topics Protected | Total Fake Questions |
+|---------|-----------------|---------------------|
+| Chemistry | 4 | 123 |
+| Biology | 3 | 90 |
+| World History | 4 | 143 |
+| **Total** | **11** | **336** |
+
+All fake data files are located in `src/data/fake/` and are automatically switched based on test dates configured in `src/data/test-schedule-config.ts`.
 
 ---
 

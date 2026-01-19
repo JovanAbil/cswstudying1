@@ -16,21 +16,49 @@ The system allows you to:
 
 ## How the Date Logic Works
 
-For a test with date `2026-01-25`:
+For a test with date `2025-10-22`:
 
 | Date Range | Data Shown | Why |
 |------------|-----------|-----|
-| Before Jan 25, 2026 | FAKE | Test hasn't happened yet |
-| Jan 25, 2026 → June 16, 2027 | **REAL** | Open study period |
-| June 17, 2027 → Feb 1, 2028 | FAKE | Locked for new semester |
-| Feb 1, 2028 → June 16, 2028 | **REAL** | New cycle (test date + 7 days) |
-| June 17, 2028 → Feb 1, 2029 | FAKE | Locked again |
+| Before Oct 22, 2025 | FAKE | Test hasn't happened yet |
+| Oct 22, 2025 → June 16, 2026 | **REAL** | Open study period |
+| June 17, 2026 → Oct 29, 2026 | FAKE | Locked for new semester |
+| Oct 29, 2026 → June 16, 2027 | **REAL** | New cycle (test date + 7 days) |
 | ... | ... | Pattern repeats yearly |
 
 **Key Points:**
 - Real data is available from test date until June 16 of the **next year**
 - After June 16, it locks until the test date + 7 days the following year
 - The 7-day buffer ensures students have taken the test before answers are available
+
+---
+
+## Currently Protected Topics
+
+### Chemistry (4 topics)
+| Topic Key | Test Date | Fake Questions |
+|-----------|-----------|----------------|
+| `chemistry-metric` | 2025-09-25 | 31 |
+| `chemistry-atomic` | 2025-10-22 | 30 |
+| `chemistry-compounds` | 2025-12-04 | 40 |
+| `chemistry-gases` | 2025-12-16 | 22 |
+
+### Biology (3 topics)
+| Topic Key | Test Date | Fake Questions |
+|-----------|-----------|----------------|
+| `biology-biochemistry` | 2025-09-25 | 30 |
+| `biology-cellstructure` | 2025-10-22 | 30 |
+| `biology-cellenergetics` | 2025-11-19 | 30 |
+
+### World History (4 topics)
+| Topic Key | Test Date | Fake Questions |
+|-----------|-----------|----------------|
+| `world-history-religions` | 2025-10-01 | 30 |
+| `world-history-islam` | 2025-10-22 | 33 |
+| `world-history-renaissance` | 2025-11-21 | 40 |
+| `world-history-protestant` | 2025-12-16 | 40 |
+
+**Total: 11 protected topics with 336 fake questions**
 
 ---
 
@@ -72,6 +100,40 @@ getTopicLockInfo(questionKey: string): {
 
 ---
 
+## File Structure
+
+```
+src/
+├── data/
+│   ├── test-schedule-config.ts    # Date configuration
+│   └── fake/
+│       ├── README.md              # Instructions
+│       ├── chemistry/
+│       │   ├── atomic-questions.ts     (30 questions)
+│       │   ├── metric-questions.ts     (31 questions)
+│       │   ├── compounds-questions.ts  (40 questions)
+│       │   └── gases-questions.ts      (22 questions)
+│       ├── biology/
+│       │   ├── biochemistry-questions.ts   (30 questions)
+│       │   ├── cellstructure-questions.ts  (30 questions)
+│       │   └── cellenergetics-questions.ts (30 questions)
+│       └── worldhistory/
+│           ├── religions-questions.ts   (30 questions)
+│           ├── islam-questions.ts       (33 questions)
+│           ├── renaissance-questions.ts (40 questions)
+│           └── protestant-questions.ts  (40 questions)
+├── utils/
+│   └── questionLoader.ts          # Centralized question loading
+└── pages/
+    ├── Quiz.tsx                   # Uses getQuestionMap()
+    ├── ViewAllQuestions.tsx       # Uses getQuestionMap() + lock indicators
+    ├── UnitDetail.tsx             # Uses getQuestionMap() + lock indicators
+    ├── PresetBuilder.tsx          # Uses getQuestionMap() + lock indicators
+    └── CourseChallengePresetBuilder.tsx  # Uses getQuestionMap()
+```
+
+---
+
 ## Step-by-Step: Adding a Protected Test
 
 ### Step 1: Create the Fake Data File
@@ -104,17 +166,19 @@ export const atomicQuestions: Question[] = [
 - Use the **same variable name** as the real file (e.g., `atomicQuestions`)
 - Prefix question IDs with `fake-` to distinguish them
 - Make questions similar in topic but **NOT the actual test questions**
+- For math questions, change the numbers
+- For image-based questions, describe the content in words and remove the image
 
 ### Step 2: Import in questionLoader.ts
 
 Open `src/utils/questionLoader.ts` and:
 
-1. **Add the fake data import** (around line 73-76):
+1. **Add the fake data import** (in the FAKE DATA IMPORTS section):
 ```typescript
 import { atomicQuestions as fakeAtomicQuestions } from '@/data/fake/chemistry/atomic-questions';
 ```
 
-2. **Add to the fakeDataMap** (around line 128-132):
+2. **Add to the fakeDataMap**:
 ```typescript
 const fakeDataMap: Record<string, Question[]> = {
   'chemistry-atomic': fakeAtomicQuestions,
@@ -129,43 +193,10 @@ Open `src/data/test-schedule-config.ts` and add the test date:
 ```typescript
 export const testScheduleConfig: Record<string, TestSchedule> = {
   // Chemistry Tests
-  'chemistry-atomic': { testDate: '2026-01-25', hasFakeData: true },
-  'chemistry-compounds': { testDate: '2026-02-10', hasFakeData: true },
-  
-  // Biology Tests  
-  'biology-biochemistry': { testDate: '2026-01-25', hasFakeData: true },
+  'chemistry-atomic': { testDate: '2025-10-22', hasFakeData: true },
   
   // Add more...
 };
-```
-
----
-
-## File Structure
-
-```
-src/
-├── data/
-│   ├── test-schedule-config.ts    # Date configuration
-│   └── fake/
-│       ├── README.md              # Instructions
-│       ├── chemistry/
-│       │   ├── atomic-questions.ts
-│       │   └── compounds-questions.ts
-│       ├── biology/
-│       │   └── biochemistry-questions.ts
-│       ├── apprecalc/
-│       │   └── polynomial-questions.ts
-│       └── worldhistory/
-│           └── renaissance-questions.ts
-├── utils/
-│   └── questionLoader.ts          # Centralized question loading
-└── pages/
-    ├── Quiz.tsx                   # Uses getQuestionMap()
-    ├── ViewAllQuestions.tsx       # Uses getQuestionMap() + lock indicators
-    ├── UnitDetail.tsx             # Uses getQuestionMap() + lock indicators
-    ├── PresetBuilder.tsx          # Uses getQuestionMap() + lock indicators
-    └── CourseChallengePresetBuilder.tsx  # Uses getQuestionMap()
 ```
 
 ---
@@ -179,7 +210,7 @@ The question key format is `{subject}-{topic}`:
 | Chemistry | `chemistry-{topic}` | `chemistry-atomic`, `chemistry-compounds` |
 | Biology | `biology-{topic}` | `biology-biochemistry`, `biology-cellstructure` |
 | AP Precalc | `precalc-{topic}` | `precalc-polynomial`, `precalc-exponential` |
-| World History | `world-history-{topic}` | `world-history-renaissance` |
+| World History | `world-history-{topic}` | `world-history-renaissance`, `world-history-islam` |
 
 ---
 
@@ -261,3 +292,9 @@ For each test you want to protect:
 - [ ] Set `hasFakeData: true`
 - [ ] Test by checking console logs
 - [ ] Verify all pages show practice mode indicators when locked
+
+---
+
+## Last Updated
+
+January 2026

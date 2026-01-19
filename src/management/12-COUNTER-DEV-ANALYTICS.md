@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide explains the Counter.dev analytics integration, which provides real-time visitor tracking with minimal setup.
+This guide explains the Counter.dev analytics integration, which provides real-time visitor tracking with minimal setup. Counter.dev is the **primary analytics provider** for CSW Studying.
 
 ---
 
@@ -13,7 +13,7 @@ This guide explains the Counter.dev analytics integration, which provides real-t
 3. [SPA Tracking](#spa-tracking)
 4. [Adblocker Detection](#adblocker-detection)
 5. [Dashboard Access](#dashboard-access)
-6. [Comparison with Cloudflare Analytics](#comparison-with-cloudflare-analytics)
+6. [Manual Stats Update](#manual-stats-update)
 
 ---
 
@@ -124,21 +124,36 @@ await new Promise(resolve => setTimeout(resolve, 2000));
 
 ---
 
-## Comparison with Cloudflare Analytics
+## Manual Stats Update
 
-| Feature | Counter.dev | Cloudflare Analytics |
-|---------|-------------|---------------------|
-| Real-time data | ✅ Instant | ❌ ~24hr delay |
-| Free tier | ✅ Unlimited | ✅ Basic |
-| Privacy-friendly | ✅ No cookies | ✅ No cookies |
-| Adblocker resistant | ❌ Can be blocked | ⚠️ Partial |
-| Setup complexity | ✅ Simple script | ✅ Simple script |
-| API access | ⚠️ Limited | ✅ Full GraphQL API |
-| GitHub Actions integration | ❌ Not needed | ✅ See guide 11 |
+Counter.dev does not provide a public API for fetching visitor counts programmatically. To display stats on the website:
 
-**Recommendation:** Use both for comprehensive coverage:
-- Counter.dev for real-time monitoring
-- Cloudflare for historical trends and API access
+### Current Implementation
+
+Stats are manually updated in `src/components/CreditsSection.tsx`:
+
+```typescript
+// Update these values periodically from Counter.dev dashboard
+const visitorCount = "1,234"; // Get from dashboard
+```
+
+### How to Update
+
+1. Log into [counter.dev](https://counter.dev)
+2. Note the current visitor/page view counts
+3. Open `src/components/CreditsSection.tsx`
+4. Update the displayed values
+5. Commit and deploy the changes
+
+### Update Frequency
+
+Recommended: Update monthly or after significant milestones.
+
+---
+
+## Analytics Removed
+
+**Cloudflare Analytics has been removed** from this project. The guide at `11-CLOUDFLARE-ANALYTICS-GITHUB-ACTIONS.md` is kept for reference only in case GitHub Actions data fetching is needed for other purposes in the future.
 
 ---
 
