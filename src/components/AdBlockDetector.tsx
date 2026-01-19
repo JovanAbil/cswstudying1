@@ -1,33 +1,135 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
 
 export const AdBlockDetector = () => {
   const [isBlocked, setIsBlocked] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
+  const observerRef = useRef<PerformanceObserver | null>(null);
 
   useEffect(() => {
-    const checkCounterDev = async () => {
-      // Wait for page to load
-      await new Promise(resolve => setTimeout(resolve, 2000));
+    const checkAnalyticsBlocked = async () => {
+      // Wait for page to fully load and Counter.dev to attempt tracking
+      await new Promise(resolve => setTimeout(resolve, 2500));
 
+      let scriptBlocked = false;
+      let trackingBlocked = false;
+
+      // Test 1: Check if the Counter.dev script can be fetched
       try {
-        // Simple check: try to fetch the counter.dev script
-        // If blocked by adblocker, this will throw a network error
         const response = await fetch('https://cdn.counter.dev/script.js', {
           cache: 'no-store',
         });
-
-        // If we get any response (even error status), the request wasn't blocked
-        setIsBlocked(false);
+        if (!response.ok) {
+          scriptBlocked = true;
+        }
       } catch {
-        // Network error = blocked by adblocker
-        setIsBlocked(true);
-      } finally {
-        setIsChecking(false);
+        scriptBlocked = true;
       }
+
+      if (scriptBlocked) {
+        setIsBlocked(true);
+        setIsChecking(false);
+        return;
+      }
+
+      // Test 2: Check if tracking endpoint is blocked
+      // Use PerformanceObserver to detect blocked requests to t.counter.dev
+      try {
+        const entries = performance.getEntriesByType('resource') as PerformanceResourceTiming[];
+        
+        for (const entry of entries) {
+          if (entry.name.includes('t.counter.dev') || entry.name.includes('counter.dev/track')) {
+            // If the request was made but got 0 bytes transferred, it was likely blocked
+            if (entry.transferSize === 0 && entry.decodedBodySize === 0 && entry.encodedBodySize === 0) {
+              trackingBlocked = true;
+              break;
+            }
+          }
+        }
+      } catch {
+        // PerformanceObserver not supported, fall through to other checks
+      }
+
+      // Test 3: Try to directly test the tracking endpoint
+      // Some adblockers block specific domains entirely
+      if (!trackingBlocked) {
+        try {
+          // Use an image request to test if t.counter.dev is reachable
+          // This won't trigger CORS but will fail if the domain is blocked
+          const testBlocked = await new Promise<boolean>((resolve) => {
+            const img = new Image();
+            const timeout = setTimeout(() => {
+              resolve(false); // Timeout means we can't determine, assume not blocked
+            }, 3000);
+            
+            img.onload = () => {
+              clearTimeout(timeout);
+              resolve(false); // Loaded = not blocked
+            };
+            
+            img.onerror = () => {
+              clearTimeout(timeout);
+              // Check if the error is due to blocking vs normal 404
+              // Blocked requests typically fail immediately
+              resolve(true);
+            };
+            
+            // Use a cache-busting query param
+            img.src = `https://t.counter.dev/pixel.gif?_=${Date.now()}`;
+          });
+          
+          if (testBlocked) {
+            // Double-check: try fetching and check for network error vs CORS
+            try {
+              await fetch(`https://t.counter.dev/pixel?_=${Date.now()}`, {
+                mode: 'no-cors',
+                cache: 'no-store',
+              });
+              // If fetch succeeds in no-cors mode, not blocked
+            } catch {
+              // Network error in no-cors mode = blocked by client
+              trackingBlocked = true;
+            }
+          }
+        } catch {
+          // If all tests fail, check performance entries one more time
+        }
+      }
+
+      // Test 4: Set up observer for future blocked requests
+      if (!trackingBlocked && typeof PerformanceObserver !== 'undefined') {
+        try {
+          observerRef.current = new PerformanceObserver((list) => {
+            for (const entry of list.getEntries()) {
+              if (entry.name.includes('t.counter.dev')) {
+                const resourceEntry = entry as PerformanceResourceTiming;
+                if (resourceEntry.transferSize === 0 && resourceEntry.decodedBodySize === 0) {
+                  setIsBlocked(true);
+                }
+              }
+            }
+          });
+          
+          observerRef.current.observe({ entryTypes: ['resource'] });
+          
+          // Give it a moment to catch any pending requests
+          await new Promise(resolve => setTimeout(resolve, 1500));
+        } catch {
+          // Observer not supported
+        }
+      }
+
+      setIsBlocked(trackingBlocked);
+      setIsChecking(false);
     };
 
-    checkCounterDev();
+    checkAnalyticsBlocked();
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
   }, []);
 
   const handleRefresh = () => {
