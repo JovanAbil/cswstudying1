@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
-import { Mail, Users, Heart, Copy, Check } from 'lucide-react';
+import { Mail, Users, Heart, Copy, Check, Eye, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 /**
@@ -44,6 +44,21 @@ const contributors = [
  */
 
 const contactEmail = 'abilash.jovan@charterschool.org';
+
+/**
+ * =============================================================================
+ * SITE STATISTICS
+ * =============================================================================
+ * 
+ * Update these values to reflect the latest site statistics.
+ * Last updated: Jan 19th, 2026 at 9:35 AM
+ * 
+ * =============================================================================
+ */
+
+const TOTAL_VISITORS = 236 + 18; // 254 total visitors
+const TOTAL_PAGEVIEWS = 1700 + 101; // 1801 total pageviews
+const LAST_UPDATED = "9:35 AM, Jan 19th 2026";
 
 export const CreditsSection = () => {
   const [copied, setCopied] = useState(false);
@@ -138,6 +153,33 @@ export const CreditsSection = () => {
           </div>
         </Card>
       </div>
+
+      {/* Site Stats Box */}
+      <Card className="mt-6 p-6 border-2 border-muted bg-muted/30">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <BarChart3 className="h-5 w-5 text-primary" />
+            </div>
+            <span className="text-sm font-medium text-muted-foreground">Site Stats</span>
+          </div>
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-primary" />
+              <span className="text-lg font-bold">{TOTAL_VISITORS.toLocaleString()}</span>
+              <span className="text-sm text-muted-foreground">visitors</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Eye className="h-4 w-4 text-primary" />
+              <span className="text-lg font-bold">{TOTAL_PAGEVIEWS.toLocaleString()}</span>
+              <span className="text-sm text-muted-foreground">pageviews</span>
+            </div>
+          </div>
+        </div>
+        <p className="text-xs text-muted-foreground/60 text-center mt-3">
+          Last updated: {LAST_UPDATED}
+        </p>
+      </Card>
     </div>
   );
 };
