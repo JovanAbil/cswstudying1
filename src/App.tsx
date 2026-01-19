@@ -8,7 +8,8 @@ import { DebugModeToggle } from "@/components/DebugModeToggle";
 import { AdPlaceholder } from "@/components/AdPlaceholder";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import TermsOfServiceModal from "@/components/TermsOfServiceModal";
-import { PageviewTracker } from "@/components/PageviewTracker";
+import { CloudflareAnalytics } from "@/components/CloudflareAnalytics";
+import { AdBlockDetector } from "@/components/AdBlockDetector";
 import Index from "./pages/Index";
 import UnitDetail from "./pages/UnitDetail";
 import Quiz from "./pages/Quiz";
@@ -40,7 +41,8 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <PageviewTracker />
+          <CloudflareAnalytics />
+          <AdBlockDetector />
           <CookieConsentBanner />
           <TermsOfServiceModal />
           <Routes>

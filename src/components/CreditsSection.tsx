@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { Card } from '@/components/ui/card';
-import { Mail, Users, Heart, Copy, Check, Eye, BarChart3, Wifi } from 'lucide-react';
+import { Mail, Users, Heart, Copy, Check, Eye, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useCounterAPIStats } from '@/hooks/useCounterAPIStats';
-import { Skeleton } from '@/components/ui/skeleton';
 
 /**
  * =============================================================================
@@ -47,9 +45,23 @@ const contributors = [
 
 const contactEmail = 'abilash.jovan@charterschool.org';
 
+/**
+ * =============================================================================
+ * SITE STATISTICS
+ * =============================================================================
+ * 
+ * Update these values to reflect the latest site statistics.
+ * Last updated: Jan 19th, 2026 at 9:35 AM
+ * 
+ * =============================================================================
+ */
+
+const TOTAL_VISITORS = 236 + 18; // 254 total visitors
+const TOTAL_PAGEVIEWS = 1700 + 101; // 1801 total pageviews
+const LAST_UPDATED = "9:35 AM, Jan 19th 2026";
+
 export const CreditsSection = () => {
   const [copied, setCopied] = useState(false);
-  const { visitors, pageviews, loading, isLive } = useCounterAPIStats();
 
   const copyEmail = async () => {
     try {
@@ -151,36 +163,22 @@ export const CreditsSection = () => {
             </div>
             <span className="text-sm font-medium text-muted-foreground">Site Stats</span>
           </div>
-          {loading ? (
-            <div className="flex items-center gap-6">
-              <Skeleton className="h-6 w-24" />
-              <Skeleton className="h-6 w-28" />
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2">
+              <Users className="h-4 w-4 text-primary" />
+              <span className="text-lg font-bold">{TOTAL_VISITORS.toLocaleString()}</span>
+              <span className="text-sm text-muted-foreground">visitors</span>
             </div>
-          ) : (
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-primary" />
-                <span className="text-lg font-bold">{visitors.toLocaleString()}</span>
-                <span className="text-sm text-muted-foreground">visitors</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Eye className="h-4 w-4 text-primary" />
-                <span className="text-lg font-bold">{pageviews.toLocaleString()}</span>
-                <span className="text-sm text-muted-foreground">pageviews</span>
-              </div>
+            <div className="flex items-center gap-2">
+              <Eye className="h-4 w-4 text-primary" />
+              <span className="text-lg font-bold">{TOTAL_PAGEVIEWS.toLocaleString()}</span>
+              <span className="text-sm text-muted-foreground">pageviews</span>
             </div>
-          )}
+          </div>
         </div>
-        <div className="flex items-center justify-center gap-2 mt-3">
-          {isLive ? (
-            <>
-              <Wifi className="h-3 w-3 text-green-500" />
-              <span className="text-xs text-green-500 font-medium">Live stats</span>
-            </>
-          ) : (
-            <span className="text-xs text-muted-foreground/60">Cached stats</span>
-          )}
-        </div>
+        <p className="text-xs text-muted-foreground/60 text-center mt-3">
+          Last updated: {LAST_UPDATED}
+        </p>
       </Card>
     </div>
   );
