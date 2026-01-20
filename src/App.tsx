@@ -27,6 +27,7 @@ import OtherCategory from "./pages/categories/OtherCategory";
 import CustomTopicEditor from "./pages/CustomTopicEditor";
 import StockPage from "./pages/StockPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import AdBlocked from "./pages/AdBlocked";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,7 @@ const App = () => {
           <TermsOfServiceModal />
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/blocked" element={<AdBlocked />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/stock" element={<StockPage />} />
             <Route path="/category/math" element={<MathCategory />} />
