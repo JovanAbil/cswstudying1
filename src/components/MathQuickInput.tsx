@@ -60,7 +60,6 @@ const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeRep
   { pattern: /cbrt$/i, latexReplacement: '\\sqrt[3]{}', unicodeReplacement: '∛()', cursorOffset: -1 },
   { pattern: /nrt$/i, latexReplacement: '\\sqrt[n]{}', unicodeReplacement: 'ⁿ√()', cursorOffset: -1 },
   { pattern: /lim$/i, latexReplacement: '\\lim_{x \\to }', unicodeReplacement: 'lim(x→)', cursorOffset: -1 },
-  { pattern: /log$/i, latexReplacement: '\\log_{}', unicodeReplacement: 'log₍₎', cursorOffset: -1 },
   { pattern: /ln$/i, latexReplacement: '\\ln()', unicodeReplacement: 'ln()', cursorOffset: -1 },
   { pattern: /exp$/i, latexReplacement: 'e^{}', unicodeReplacement: 'e^()', cursorOffset: -1 },
   { pattern: /inf$/i, latexReplacement: '\\infty', unicodeReplacement: '∞', cursorOffset: 0 },
@@ -124,28 +123,6 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
         return;
       }
 
-      if (e.key === '/') {
-        // Only trigger fraction if not in a URL or path context
-        const lastWord = textBeforeCursor.split(/\s/).pop() || '';
-        if (!lastWord.includes(':') && !lastWord.includes('.')) {
-          e.preventDefault();
-          if (useUnicode) {
-            // For unicode mode, just insert a regular slash
-            const start = element.selectionStart || 0;
-            const end = element.selectionEnd || 0;
-            const newValue = value.substring(0, start) + '/' + value.substring(end);
-            onChange(newValue);
-            setTimeout(() => {
-              element.setSelectionRange(start + 1, start + 1);
-              element.focus();
-            }, 0);
-          } else {
-            insertAtCursor('\\frac{}{}', '/', -3);
-          }
-          return;
-        }
-      }
-
       // Check for word-based shortcuts on space
       if (e.key === ' ') {
         for (const shortcut of keyboardShortcuts) {
@@ -195,7 +172,7 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
           <div className="p-3 bg-muted/50 rounded-lg border space-y-3 animate-fade-in">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span className="font-medium">Quick Math:</span>
-              <span>Type shortcuts like <code className="px-1 bg-muted rounded">sqrt</code>, <code className="px-1 bg-muted rounded">lim</code>, <code className="px-1 bg-muted rounded">log</code> + Space</span>
+              <span>Type shortcuts like <code className="px-1 bg-muted rounded">sqrt</code>, <code className="px-1 bg-muted rounded">lim</code>, <code className="px-1 bg-muted rounded">inf</code> + Space</span>
             </div>
 
             {/* Symbols row */}
@@ -251,7 +228,7 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
             </div>
 
             <div className="text-xs text-muted-foreground space-y-0.5">
-              <p><kbd className="px-1 bg-muted rounded">^</kbd> for superscript, <kbd className="px-1 bg-muted rounded">_</kbd> for subscript{!useUnicode && <>, <kbd className="px-1 bg-muted rounded">/</kbd> for fraction</>}</p>
+              <p><kbd className="px-1 bg-muted rounded">^</kbd> for superscript, <kbd className="px-1 bg-muted rounded">_</kbd> for subscript</p>
             </div>
           </div>
         )}
