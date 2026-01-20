@@ -88,9 +88,6 @@ const AdblockBlocked = () => {
           Your adblocker is preventing analytics from loading. This helps us understand how students use the site to make it better.
         </p>
 
-        <p className="text-sm text-muted-foreground mb-6 italic">
-          Nice try removing the overlay — this page is one step ahead. 😎
-        </p>
         
         <div className="bg-muted/50 rounded-lg p-4 mb-6 text-left">
           <p className="text-sm font-semibold mb-2">To continue:</p>
