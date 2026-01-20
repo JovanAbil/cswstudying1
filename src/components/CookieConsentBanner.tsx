@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Cookie, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const COOKIE_CONSENT_KEY = 'cookie-consent-status';
 
@@ -18,16 +18,24 @@ export const getCookieConsent = (): ConsentStatus => {
 
 export const CookieConsentBanner = () => {
   const [visible, setVisible] = useState(false);
+  const location = useLocation();
+
+  // Don't show on blocked page
+  const isBlockedPage = location.pathname === '/blocked';
 
   useEffect(() => {
-    // Only show if user hasn't made a choice yet
+    // Only show if user hasn't made a choice yet and not on blocked page
+    if (isBlockedPage) {
+      setVisible(false);
+      return;
+    }
     const consent = getCookieConsent();
     if (consent === null) {
       // Small delay so it doesn't flash immediately on page load
       const timer = setTimeout(() => setVisible(true), 1000);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [isBlockedPage]);
 
   const handleAccept = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, 'accepted');
