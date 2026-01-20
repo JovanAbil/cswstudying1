@@ -66,19 +66,35 @@ export const AdBlockDetector = () => {
   useEffect(() => {
     if (!isBlocked || isChecking) return;
 
+    let redirected = false;
+
     const checkOverlayExists = () => {
+      if (redirected) return;
       const overlay = document.getElementById('adblock-overlay');
       if (!overlay) {
         // Overlay was removed via dev tools - redirect to blocked page
-        navigate('/blocked', { replace: true, state: { returnPath: location.pathname } });
+        redirected = true;
+        window.location.href = '/blocked';
       }
     };
 
-    // Check periodically
-    const interval = setInterval(checkOverlayExists, 500);
+    // Check frequently with a short interval
+    const interval = setInterval(checkOverlayExists, 100);
 
     // Also use MutationObserver for immediate detection
-    const observer = new MutationObserver(() => {
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        for (const removed of mutation.removedNodes) {
+          if (removed instanceof HTMLElement && removed.id === 'adblock-overlay') {
+            if (!redirected) {
+              redirected = true;
+              window.location.href = '/blocked';
+            }
+            return;
+          }
+        }
+      }
+      // Also check if it's just gone
       checkOverlayExists();
     });
 
@@ -88,7 +104,7 @@ export const AdBlockDetector = () => {
       clearInterval(interval);
       observer.disconnect();
     };
-  }, [isBlocked, isChecking, navigate, location.pathname]);
+  }, [isBlocked, isChecking]);
 
   const handleRefresh = () => {
     window.location.reload();
