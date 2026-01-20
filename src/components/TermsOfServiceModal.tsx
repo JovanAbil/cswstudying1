@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   Dialog,
   DialogContent,
@@ -22,16 +23,20 @@ interface TermsOfServiceModalProps {
 const TermsOfServiceModal = ({ externalOpen = false, onExternalClose }: TermsOfServiceModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [showPrivacySummary, setShowPrivacySummary] = useState(false);
+  const location = useLocation();
+
+  // Don't show on blocked page
+  const isBlockedPage = location.pathname === '/blocked';
 
   useEffect(() => {
-    // Only auto-open on first visit if not being controlled externally
-    if (!externalOpen) {
+    // Only auto-open on first visit if not being controlled externally and not on blocked page
+    if (!externalOpen && !isBlockedPage) {
       const hasAccepted = localStorage.getItem(TERMS_ACCEPTED_KEY);
       if (!hasAccepted) {
         setIsOpen(true);
       }
     }
-  }, [externalOpen]);
+  }, [externalOpen, isBlockedPage]);
 
   // Handle external open state
   useEffect(() => {
