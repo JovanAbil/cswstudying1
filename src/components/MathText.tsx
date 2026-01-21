@@ -255,7 +255,17 @@ const MathText = ({ children, className = '', tag = 'span', enableChemistry = fa
           }
           containerRef.current?.appendChild(span);
         } else if (part) {
-          containerRef.current?.appendChild(document.createTextNode(part));
+          // Handle line breaks by splitting on \n and inserting <br> elements
+          const lines = part.split('\n');
+          lines.forEach((line, index) => {
+            if (line) {
+              containerRef.current?.appendChild(document.createTextNode(line));
+            }
+            // Add <br> between lines (not after the last one)
+            if (index < lines.length - 1) {
+              containerRef.current?.appendChild(document.createElement('br'));
+            }
+          });
         }
       });
     }
