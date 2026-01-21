@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from '@/components/ui/tooltip';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, CornerDownLeft } from 'lucide-react';
 
 interface MathQuickInputProps {
   textareaRef?: React.RefObject<HTMLTextAreaElement>;
@@ -38,11 +38,10 @@ const mathFunctions = [
   { label: '√', latex: '\\sqrt{}', unicode: '√()', cursorOffset: -1, tooltip: 'Square root (type sqrt)' },
   { label: '∛', latex: '\\sqrt[3]{}', unicode: '∛()', cursorOffset: -1, tooltip: 'Cube root (type cbrt)' },
   { label: 'ⁿ√', latex: '\\sqrt[n]{}', unicode: 'ⁿ√()', cursorOffset: -1, tooltip: 'Nth root (type nrt)' },
-  { label: 'x²', latex: '^{2}', unicode: '²', cursorOffset: 0, tooltip: 'Superscript (press ^)' },
-  { label: 'xₙ', latex: '_{}', unicode: '₍₎', cursorOffset: -1, tooltip: 'Subscript (press _)' },
+  { label: 'x²', latex: '^{2}', unicode: '²', cursorOffset: 0, tooltip: 'Superscript (type ^ + space)' },
+  { label: 'xₙ', latex: '_{}', unicode: '₍₎', cursorOffset: -1, tooltip: 'Subscript (type _ + space)' },
   { label: 'a/b', latex: '\\frac{}{}', unicode: '/', cursorOffset: 0, tooltip: 'Fraction (type /)' },
   { label: 'lim', latex: '\\lim_{x \\to }', unicode: 'lim(x→)', cursorOffset: -1, tooltip: 'Limit (type lim)' },
-  { label: 'log', latex: '\\log_{}', unicode: 'log₍₎', cursorOffset: -1, tooltip: 'Logarithm (type log)' },
   { label: 'ln', latex: '\\ln', unicode: 'ln', cursorOffset: 0, tooltip: 'Natural log (type ln)' },
   { label: 'sin', latex: '\\sin', unicode: 'sin', cursorOffset: 0, tooltip: 'Sine' },
   { label: 'cos', latex: '\\cos', unicode: 'cos', cursorOffset: 0, tooltip: 'Cosine' },
@@ -54,31 +53,42 @@ const mathFunctions = [
   { label: 'eˣ', latex: 'e^{}', unicode: 'e^()', cursorOffset: -1, tooltip: 'Exponential (type exp)' },
 ];
 
-// Desmos-like keyboard shortcuts
-const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeReplacement: string; cursorOffset: number }[] = [
-  { pattern: /sqrt$/i, latexReplacement: '\\sqrt{}', unicodeReplacement: '√()', cursorOffset: -1 },
-  { pattern: /cbrt$/i, latexReplacement: '\\sqrt[3]{}', unicodeReplacement: '∛()', cursorOffset: -1 },
-  { pattern: /nrt$/i, latexReplacement: '\\sqrt[n]{}', unicodeReplacement: 'ⁿ√()', cursorOffset: -1 },
-  { pattern: /lim$/i, latexReplacement: '\\lim_{x \\to }', unicodeReplacement: 'lim(x→)', cursorOffset: -1 },
-  { pattern: /ln$/i, latexReplacement: '\\ln()', unicodeReplacement: 'ln()', cursorOffset: -1 },
-  { pattern: /exp$/i, latexReplacement: 'e^{}', unicodeReplacement: 'e^()', cursorOffset: -1 },
-  { pattern: /inf$/i, latexReplacement: '\\infty', unicodeReplacement: '∞', cursorOffset: 0 },
-  { pattern: /pi$/i, latexReplacement: '\\pi', unicodeReplacement: 'π', cursorOffset: 0 },
-  { pattern: /theta$/i, latexReplacement: '\\theta', unicodeReplacement: 'θ', cursorOffset: 0 },
-  { pattern: /alpha$/i, latexReplacement: '\\alpha', unicodeReplacement: 'α', cursorOffset: 0 },
-  { pattern: /beta$/i, latexReplacement: '\\beta', unicodeReplacement: 'β', cursorOffset: 0 },
-  { pattern: /delta$/i, latexReplacement: '\\Delta', unicodeReplacement: 'Δ', cursorOffset: 0 },
-  { pattern: /sum$/i, latexReplacement: '\\sum_{}^{}', unicodeReplacement: 'Σ', cursorOffset: 0 },
-  { pattern: /int$/i, latexReplacement: '\\int_{}^{}', unicodeReplacement: '∫', cursorOffset: 0 },
-  { pattern: /pm$/i, latexReplacement: '\\pm', unicodeReplacement: '±', cursorOffset: 0 },
-  { pattern: /neq$/i, latexReplacement: '\\neq', unicodeReplacement: '≠', cursorOffset: 0 },
-  { pattern: /leq$/i, latexReplacement: '\\leq', unicodeReplacement: '≤', cursorOffset: 0 },
-  { pattern: /geq$/i, latexReplacement: '\\geq', unicodeReplacement: '≥', cursorOffset: 0 },
-  { pattern: /->$/i, latexReplacement: '\\to', unicodeReplacement: '→', cursorOffset: 0 },
+// Desmos-like keyboard shortcuts - all trigger on space
+const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeReplacement: string; cursorOffset: number; originalText: string }[] = [
+  { pattern: /sqrt$/i, latexReplacement: '\\sqrt{}', unicodeReplacement: '√()', cursorOffset: -1, originalText: 'sqrt' },
+  { pattern: /cbrt$/i, latexReplacement: '\\sqrt[3]{}', unicodeReplacement: '∛()', cursorOffset: -1, originalText: 'cbrt' },
+  { pattern: /nrt$/i, latexReplacement: '\\sqrt[n]{}', unicodeReplacement: 'ⁿ√()', cursorOffset: -1, originalText: 'nrt' },
+  { pattern: /lim$/i, latexReplacement: '\\lim_{x \\to }', unicodeReplacement: 'lim(x→)', cursorOffset: -1, originalText: 'lim' },
+  { pattern: /ln$/i, latexReplacement: '\\ln()', unicodeReplacement: 'ln()', cursorOffset: -1, originalText: 'ln' },
+  { pattern: /exp$/i, latexReplacement: 'e^{}', unicodeReplacement: 'e^()', cursorOffset: -1, originalText: 'exp' },
+  { pattern: /inf$/i, latexReplacement: '\\infty', unicodeReplacement: '∞', cursorOffset: 0, originalText: 'inf' },
+  { pattern: /pi$/i, latexReplacement: '\\pi', unicodeReplacement: 'π', cursorOffset: 0, originalText: 'pi' },
+  { pattern: /theta$/i, latexReplacement: '\\theta', unicodeReplacement: 'θ', cursorOffset: 0, originalText: 'theta' },
+  { pattern: /alpha$/i, latexReplacement: '\\alpha', unicodeReplacement: 'α', cursorOffset: 0, originalText: 'alpha' },
+  { pattern: /beta$/i, latexReplacement: '\\beta', unicodeReplacement: 'β', cursorOffset: 0, originalText: 'beta' },
+  { pattern: /delta$/i, latexReplacement: '\\Delta', unicodeReplacement: 'Δ', cursorOffset: 0, originalText: 'delta' },
+  { pattern: /sum$/i, latexReplacement: '\\sum_{}^{}', unicodeReplacement: 'Σ', cursorOffset: 0, originalText: 'sum' },
+  { pattern: /int$/i, latexReplacement: '\\int_{}^{}', unicodeReplacement: '∫', cursorOffset: 0, originalText: 'int' },
+  { pattern: /pm$/i, latexReplacement: '\\pm', unicodeReplacement: '±', cursorOffset: 0, originalText: 'pm' },
+  { pattern: /neq$/i, latexReplacement: '\\neq', unicodeReplacement: '≠', cursorOffset: 0, originalText: 'neq' },
+  { pattern: /leq$/i, latexReplacement: '\\leq', unicodeReplacement: '≤', cursorOffset: 0, originalText: 'leq' },
+  { pattern: /geq$/i, latexReplacement: '\\geq', unicodeReplacement: '≥', cursorOffset: 0, originalText: 'geq' },
+  { pattern: /->$/i, latexReplacement: '\\to', unicodeReplacement: '→', cursorOffset: 0, originalText: '->' },
+  // Special character shortcuts (now also require space)
+  { pattern: /\^$/i, latexReplacement: '^{}', unicodeReplacement: '^()', cursorOffset: -1, originalText: '^' },
+  { pattern: /_$/i, latexReplacement: '_{}', unicodeReplacement: '₍₎', cursorOffset: -1, originalText: '_' },
 ];
+
+// Track last replacement for undo functionality
+interface LastReplacement {
+  originalText: string;
+  replacement: string;
+  position: number;
+}
 
 const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = false, defaultOpen = false }: MathQuickInputProps) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
+  const lastReplacementRef = useRef<LastReplacement | null>(null);
   
   // Support both textarea and input elements
   const getElement = () => textareaRef?.current || inputRef?.current;
@@ -93,9 +103,28 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
     const newValue = value.substring(0, start) + textToInsert + value.substring(end);
     onChange(newValue);
 
+    // Clear last replacement since this is a button insert
+    lastReplacementRef.current = null;
+
     // Set cursor position after insert
     setTimeout(() => {
       const newPos = start + textToInsert.length + cursorOffset;
+      element.setSelectionRange(newPos, newPos);
+      element.focus();
+    }, 0);
+  };
+
+  const insertNewLine = () => {
+    const element = getElement();
+    if (!element) return;
+
+    const start = element.selectionStart || 0;
+    const end = element.selectionEnd || 0;
+    const newValue = value.substring(0, start) + '\n' + value.substring(end);
+    onChange(newValue);
+
+    setTimeout(() => {
+      const newPos = start + 1;
       element.setSelectionRange(newPos, newPos);
       element.focus();
     }, 0);
@@ -110,20 +139,35 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
       const cursorPos = element.selectionStart || 0;
       const textBeforeCursor = value.substring(0, cursorPos);
 
-      // Check for special key shortcuts
-      if (e.key === '_') {
-        e.preventDefault();
-        insertAtCursor('_{}', '₍₎', -1);
-        return;
+      // Handle backspace to undo last replacement
+      if (e.key === 'Backspace' && lastReplacementRef.current) {
+        const { originalText, replacement, position } = lastReplacementRef.current;
+        const expectedEnd = position + replacement.length;
+        
+        // Check if cursor is right after the replacement
+        if (cursorPos === expectedEnd && value.substring(position, expectedEnd) === replacement) {
+          e.preventDefault();
+          const newValue = 
+            value.substring(0, position) + 
+            originalText + 
+            value.substring(expectedEnd);
+          onChange(newValue);
+          
+          // Clear the undo state
+          lastReplacementRef.current = null;
+          
+          setTimeout(() => {
+            const newPos = position + originalText.length;
+            element.setSelectionRange(newPos, newPos);
+            element.focus();
+          }, 0);
+          return;
+        }
+        // If cursor moved elsewhere, clear undo state
+        lastReplacementRef.current = null;
       }
 
-      if (e.key === '^') {
-        e.preventDefault();
-        insertAtCursor('^{}', '^()', -1);
-        return;
-      }
-
-      // Check for word-based shortcuts on space
+      // Check for word-based shortcuts on space (including ^ and _)
       if (e.key === ' ') {
         for (const shortcut of keyboardShortcuts) {
           if (shortcut.pattern.test(textBeforeCursor)) {
@@ -137,6 +181,13 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
                 replacement + 
                 value.substring(cursorPos);
               onChange(newValue);
+              
+              // Store for undo
+              lastReplacementRef.current = {
+                originalText: shortcut.originalText,
+                replacement: replacement,
+                position: matchStart,
+              };
               
               setTimeout(() => {
                 const newPos = matchStart + replacement.length + shortcut.cursorOffset;
@@ -172,7 +223,31 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
           <div className="p-3 bg-muted/50 rounded-lg border space-y-3 animate-fade-in">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span className="font-medium">Quick Math:</span>
-              <span>Type shortcuts like <code className="px-1 bg-muted rounded">sqrt</code>, <code className="px-1 bg-muted rounded">lim</code>, <code className="px-1 bg-muted rounded">inf</code> + Space</span>
+              <span>Type shortcuts like <code className="px-1 bg-muted rounded">sqrt</code>, <code className="px-1 bg-muted rounded">lim</code>, <code className="px-1 bg-muted rounded">inf</code>, <code className="px-1 bg-muted rounded">^</code>, <code className="px-1 bg-muted rounded">_</code> + Space (Backspace to undo)</span>
+            </div>
+
+            {/* New Line button */}
+            <div className="space-y-1.5">
+              <span className="text-xs font-medium text-muted-foreground">Formatting</span>
+              <div className="flex flex-wrap gap-1">
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="h-8 px-2 text-sm font-normal flex items-center gap-1"
+                      onClick={insertNewLine}
+                    >
+                      <CornerDownLeft className="h-4 w-4" />
+                      New Line
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>Insert a line break (forces next content to new line)</p>
+                  </TooltipContent>
+                </Tooltip>
+              </div>
             </div>
 
             {/* Symbols row */}
@@ -228,7 +303,7 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
             </div>
 
             <div className="text-xs text-muted-foreground space-y-0.5">
-              <p><kbd className="px-1 bg-muted rounded">^</kbd> for superscript, <kbd className="px-1 bg-muted rounded">_</kbd> for subscript</p>
+              <p><kbd className="px-1 bg-muted rounded">^</kbd> + Space for superscript, <kbd className="px-1 bg-muted rounded">_</kbd> + Space for subscript</p>
             </div>
           </div>
         )}
