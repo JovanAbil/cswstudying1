@@ -53,7 +53,7 @@ const mathFunctions = [
   { label: 'eˣ', latex: 'e^{}', unicode: 'e^()', cursorOffset: -1, tooltip: 'Exponential (type exp)' },
 ];
 
-// Desmos-like keyboard shortcuts - all trigger on space
+// Desmos-like keyboard shortcuts - trigger on space
 const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeReplacement: string; cursorOffset: number; originalText: string }[] = [
   { pattern: /sqrt$/i, latexReplacement: '\\sqrt{}', unicodeReplacement: '√()', cursorOffset: -1, originalText: 'sqrt' },
   { pattern: /cbrt$/i, latexReplacement: '\\sqrt[3]{}', unicodeReplacement: '∛()', cursorOffset: -1, originalText: 'cbrt' },
@@ -74,9 +74,36 @@ const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeRep
   { pattern: /leq$/i, latexReplacement: '\\leq', unicodeReplacement: '≤', cursorOffset: 0, originalText: 'leq' },
   { pattern: /geq$/i, latexReplacement: '\\geq', unicodeReplacement: '≥', cursorOffset: 0, originalText: 'geq' },
   { pattern: /->$/i, latexReplacement: '\\to', unicodeReplacement: '→', cursorOffset: 0, originalText: '->' },
-  // Special character shortcuts (now also require space)
-  { pattern: /\^$/i, latexReplacement: '^{}', unicodeReplacement: '^()', cursorOffset: -1, originalText: '^' },
-  { pattern: /_$/i, latexReplacement: '_{}', unicodeReplacement: '₍₎', cursorOffset: -1, originalText: '_' },
+];
+
+// Immediate shortcuts - these trigger right away without space
+const immediateShortcuts: { key: string; latexReplacement: string; unicodeReplacement: string; cursorOffset: number }[] = [
+  { key: '^', latexReplacement: '^{}', unicodeReplacement: '^()', cursorOffset: -1 },
+  { key: '_', latexReplacement: '_{}', unicodeReplacement: '₍₎', cursorOffset: -1 },
+  { key: '/', latexReplacement: '\\frac{}{}', unicodeReplacement: '/', cursorOffset: -3 },
+];
+
+// Patterns to detect and remove on backspace (LaTeX commands with their braces)
+const latexRemovalPatterns = [
+  { pattern: /\\frac\{\}\{\}$/, length: 10 },
+  { pattern: /\\frac\{[^}]*\}\{\}$/, getLength: (match: string) => match.length },
+  { pattern: /\\sqrt\{\}$/, length: 7 },
+  { pattern: /\\sqrt\[[^\]]*\]\{\}$/, getLength: (match: string) => match.length },
+  { pattern: /\\lim_\{x \\to \}$/, length: 13 },
+  { pattern: /\\ln\(\)$/, length: 5 },
+  { pattern: /\\sum_\{\}\^\{\}$/, length: 11 },
+  { pattern: /\\int_\{\}\^\{\}$/, length: 11 },
+  { pattern: /e\^\{\}$/, length: 4 },
+  { pattern: /\^\{\}$/, length: 3 },
+  { pattern: /_\{\}$/, length: 3 },
+  { pattern: /\^\(\)$/, length: 3 },
+  { pattern: /₍₎$/, length: 2 },
+  { pattern: /√\(\)$/, length: 3 },
+  { pattern: /∛\(\)$/, length: 3 },
+  { pattern: /ⁿ√\(\)$/, length: 4 },
+  { pattern: /e\^\(\)$/, length: 4 },
+  { pattern: /lim\(x→\)$/, length: 7 },
+  { pattern: /ln\(\)$/, length: 4 },
 ];
 
 // Track last replacement for undo functionality
@@ -139,35 +166,78 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
       const cursorPos = element.selectionStart || 0;
       const textBeforeCursor = value.substring(0, cursorPos);
 
-      // Handle backspace to undo last replacement
-      if (e.key === 'Backspace' && lastReplacementRef.current) {
-        const { originalText, replacement, position } = lastReplacementRef.current;
-        const expectedEnd = position + replacement.length;
-        
-        // Check if cursor is right after the replacement
-        if (cursorPos === expectedEnd && value.substring(position, expectedEnd) === replacement) {
+      // Handle immediate shortcuts (/, ^, _) - no space needed
+      for (const shortcut of immediateShortcuts) {
+        if (e.key === shortcut.key) {
           e.preventDefault();
+          const replacement = useUnicode ? shortcut.unicodeReplacement : shortcut.latexReplacement;
           const newValue = 
-            value.substring(0, position) + 
-            originalText + 
-            value.substring(expectedEnd);
+            value.substring(0, cursorPos) + 
+            replacement + 
+            value.substring(cursorPos);
           onChange(newValue);
           
-          // Clear the undo state
-          lastReplacementRef.current = null;
-          
           setTimeout(() => {
-            const newPos = position + originalText.length;
+            const newPos = cursorPos + replacement.length + shortcut.cursorOffset;
             element.setSelectionRange(newPos, newPos);
             element.focus();
           }, 0);
           return;
         }
-        // If cursor moved elsewhere, clear undo state
-        lastReplacementRef.current = null;
       }
 
-      // Check for word-based shortcuts on space (including ^ and _)
+      // Handle backspace to remove LaTeX patterns
+      if (e.key === 'Backspace') {
+        // Check for LaTeX patterns to remove
+        for (const removal of latexRemovalPatterns) {
+          const match = textBeforeCursor.match(removal.pattern);
+          if (match) {
+            e.preventDefault();
+            const matchLength = removal.getLength ? removal.getLength(match[0]) : removal.length;
+            const newValue = 
+              value.substring(0, cursorPos - matchLength) + 
+              value.substring(cursorPos);
+            onChange(newValue);
+            
+            setTimeout(() => {
+              const newPos = cursorPos - matchLength;
+              element.setSelectionRange(newPos, newPos);
+              element.focus();
+            }, 0);
+            return;
+          }
+        }
+        
+        // Also check for space-based shortcut undo
+        if (lastReplacementRef.current) {
+          const { originalText, replacement, position } = lastReplacementRef.current;
+          const expectedEnd = position + replacement.length;
+          
+          // Check if cursor is right after the replacement
+          if (cursorPos === expectedEnd && value.substring(position, expectedEnd) === replacement) {
+            e.preventDefault();
+            const newValue = 
+              value.substring(0, position) + 
+              originalText + 
+              value.substring(expectedEnd);
+            onChange(newValue);
+            
+            // Clear the undo state
+            lastReplacementRef.current = null;
+            
+            setTimeout(() => {
+              const newPos = position + originalText.length;
+              element.setSelectionRange(newPos, newPos);
+              element.focus();
+            }, 0);
+            return;
+          }
+          // If cursor moved elsewhere, clear undo state
+          lastReplacementRef.current = null;
+        }
+      }
+
+      // Check for word-based shortcuts on space
       if (e.key === ' ') {
         for (const shortcut of keyboardShortcuts) {
           if (shortcut.pattern.test(textBeforeCursor)) {
@@ -223,7 +293,7 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
           <div className="p-3 bg-muted/50 rounded-lg border space-y-3 animate-fade-in">
             <div className="flex items-center gap-2 text-xs text-muted-foreground">
               <span className="font-medium">Quick Math:</span>
-              <span>Type shortcuts like <code className="px-1 bg-muted rounded">sqrt</code>, <code className="px-1 bg-muted rounded">lim</code>, <code className="px-1 bg-muted rounded">inf</code>, <code className="px-1 bg-muted rounded">^</code>, <code className="px-1 bg-muted rounded">_</code> + Space (Backspace to undo)</span>
+              <span>Type <code className="px-1 bg-muted rounded">/</code>, <code className="px-1 bg-muted rounded">^</code>, <code className="px-1 bg-muted rounded">_</code> for instant formatting. Type <code className="px-1 bg-muted rounded">sqrt</code>, <code className="px-1 bg-muted rounded">lim</code>, <code className="px-1 bg-muted rounded">inf</code> + Space. Backspace removes whole commands.</span>
             </div>
 
             {/* New Line button */}
@@ -303,7 +373,7 @@ const MathQuickInput = ({ textareaRef, inputRef, value, onChange, useUnicode = f
             </div>
 
             <div className="text-xs text-muted-foreground space-y-0.5">
-              <p><kbd className="px-1 bg-muted rounded">^</kbd> + Space for superscript, <kbd className="px-1 bg-muted rounded">_</kbd> + Space for subscript</p>
+              <p><kbd className="px-1 bg-muted rounded">/</kbd> fraction, <kbd className="px-1 bg-muted rounded">^</kbd> superscript, <kbd className="px-1 bg-muted rounded">_</kbd> subscript (instant)</p>
             </div>
           </div>
         )}
