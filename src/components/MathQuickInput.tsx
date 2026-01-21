@@ -78,8 +78,8 @@ const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeRep
 
 // Immediate shortcuts - these trigger right away without space
 const immediateShortcuts: { key: string; latexReplacement: string; unicodeReplacement: string; cursorOffset: number }[] = [
-  { key: '^', latexReplacement: '^{}', unicodeReplacement: '^()', cursorOffset: -1 },
-  { key: '_', latexReplacement: '_{}', unicodeReplacement: '₍₎', cursorOffset: -1 },
+  { key: '^', latexReplacement: '^{}', unicodeReplacement: '^()', cursorOffset: 0 },
+  { key: '_', latexReplacement: '_{}', unicodeReplacement: '₍₎', cursorOffset: 0 },
 ];
 
 // Patterns to detect and remove on backspace (LaTeX commands with their braces)
