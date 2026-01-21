@@ -55,12 +55,12 @@ const mathFunctions = [
 
 // Desmos-like keyboard shortcuts - trigger on space
 const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeReplacement: string; cursorOffset: number; originalText: string }[] = [
-  { pattern: /sqrt$/i, latexReplacement: '\\sqrt{}', unicodeReplacement: '√()', cursorOffset: -1, originalText: 'sqrt' },
-  { pattern: /cbrt$/i, latexReplacement: '\\sqrt[3]{}', unicodeReplacement: '∛()', cursorOffset: -1, originalText: 'cbrt' },
-  { pattern: /nrt$/i, latexReplacement: '\\sqrt[n]{}', unicodeReplacement: 'ⁿ√()', cursorOffset: -1, originalText: 'nrt' },
-  { pattern: /lim$/i, latexReplacement: '\\lim_{x \\to }', unicodeReplacement: 'lim(x→)', cursorOffset: -1, originalText: 'lim' },
-  { pattern: /ln$/i, latexReplacement: '\\ln()', unicodeReplacement: 'ln()', cursorOffset: -1, originalText: 'ln' },
-  { pattern: /exp$/i, latexReplacement: 'e^{}', unicodeReplacement: 'e^()', cursorOffset: -1, originalText: 'exp' },
+  { pattern: /sqrt$/i, latexReplacement: '\\sqrt{}', unicodeReplacement: '√()', cursorOffset: 0, originalText: 'sqrt' },
+  { pattern: /cbrt$/i, latexReplacement: '\\sqrt[3]{}', unicodeReplacement: '∛()', cursorOffset: 0, originalText: 'cbrt' },
+  { pattern: /nrt$/i, latexReplacement: '\\sqrt[n]{}', unicodeReplacement: 'ⁿ√()', cursorOffset: 0, originalText: 'nrt' },
+  { pattern: /lim$/i, latexReplacement: '\\lim_{x \\to }', unicodeReplacement: 'lim(x→)', cursorOffset: 0, originalText: 'lim' },
+  { pattern: /ln$/i, latexReplacement: '\\ln()', unicodeReplacement: 'ln()', cursorOffset: 0, originalText: 'ln' },
+  { pattern: /exp$/i, latexReplacement: 'e^{}', unicodeReplacement: 'e^()', cursorOffset: 0, originalText: 'exp' },
   { pattern: /inf$/i, latexReplacement: '\\infty', unicodeReplacement: '∞', cursorOffset: 0, originalText: 'inf' },
   { pattern: /pi$/i, latexReplacement: '\\pi', unicodeReplacement: 'π', cursorOffset: 0, originalText: 'pi' },
   { pattern: /theta$/i, latexReplacement: '\\theta', unicodeReplacement: 'θ', cursorOffset: 0, originalText: 'theta' },
