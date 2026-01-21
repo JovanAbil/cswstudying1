@@ -80,7 +80,6 @@ const keyboardShortcuts: { pattern: RegExp; latexReplacement: string; unicodeRep
 const immediateShortcuts: { key: string; latexReplacement: string; unicodeReplacement: string; cursorOffset: number }[] = [
   { key: '^', latexReplacement: '^{}', unicodeReplacement: '^()', cursorOffset: -1 },
   { key: '_', latexReplacement: '_{}', unicodeReplacement: '₍₎', cursorOffset: -1 },
-  { key: '/', latexReplacement: '\\frac{}{}', unicodeReplacement: '/', cursorOffset: -3 },
 ];
 
 // Patterns to detect and remove on backspace (LaTeX commands with their braces)
