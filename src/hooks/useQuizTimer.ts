@@ -7,6 +7,7 @@ interface UseQuizTimerReturn {
   start: () => void;
   pause: () => void;
   reset: () => void;
+  set: (seconds: number) => void;
   stop: () => number;
 }
 
@@ -41,6 +42,10 @@ export const useQuizTimer = (): UseQuizTimerReturn => {
     setIsRunning(false);
   }, []);
 
+  const set = useCallback((value: number) => {
+    setSeconds(Math.max(0, Math.floor(value)));
+  }, []);
+
   const stop = useCallback(() => {
     setIsRunning(false);
     return seconds;
@@ -64,6 +69,7 @@ export const useQuizTimer = (): UseQuizTimerReturn => {
     start,
     pause,
     reset,
+    set,
     stop,
   };
 };

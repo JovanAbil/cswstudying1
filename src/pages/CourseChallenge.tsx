@@ -11,6 +11,8 @@ import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import RemoveConfirmDialog from '@/components/RemoveConfirmDialog';
 
+import { buildRouteKey, hasInProgressQuiz } from '@/utils/inProgressQuizStorage';
+
 const CourseChallenge = () => {
   const { subject } = useParams();
   const navigate = useNavigate();
@@ -99,6 +101,8 @@ const CourseChallenge = () => {
   };
 
   const units = getUnits();
+
+  const canResumeCram = hasInProgressQuiz(buildRouteKey(subject || '', 'challenge', 'cram'));
   
   // Get study resources for this course challenge
   const studyResources = courseChallengeResources[subject || ''] || [];
@@ -110,7 +114,8 @@ const CourseChallenge = () => {
     navigate(`/quiz/${subject}/challenge/cram`, { 
       state: { 
         selectedUnits: allUnitIds,
-        importedQuestions: allImportedQuestions
+        importedQuestions: allImportedQuestions,
+        startNewAttempt: true,
       } 
     });
   };
@@ -316,6 +321,16 @@ const CourseChallenge = () => {
           <Trophy className="mr-2 h-4 w-4" />
           Cram Mode (All Units{totalImportedQuestions > 0 ? ` + ${totalImportedQuestions} imported` : ''})
         </Button>
+
+        {canResumeCram && (
+          <Button
+            variant="outline"
+            className="w-full mt-3"
+            onClick={() => navigate(`/quiz/${subject}/challenge/cram`)}
+          >
+            Resume last Cram Mode
+          </Button>
+        )}
 
         {/* Custom Practice & Targeted Practice */}
         <div className="grid md:grid-cols-2 gap-4 mt-6">

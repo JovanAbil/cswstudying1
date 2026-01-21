@@ -16,6 +16,8 @@ import { AdPlaceholder } from '@/components/AdPlaceholder';
 // Use centralized question loader with date-based switching
 import { getQuestionMap, getTopicLockInfo } from '@/utils/questionLoader';
 
+import { buildRouteKey, hasInProgressQuiz } from '@/utils/inProgressQuizStorage';
+
 const UnitDetail = () => {
   const { subject, unitId } = useParams();
   const navigate = useNavigate();
@@ -37,6 +39,8 @@ const UnitDetail = () => {
   
   // Calculator section toggle - when ON, puts calculator questions at the end
   const [calculatorSectionEnabled, setCalculatorSectionEnabled] = useState(false);
+
+  const canResumeCram = hasInProgressQuiz(buildRouteKey(subject, unitId, 'cram'));
   
   // Check if there are any calculator questions
   const hasCalculatorQuestions = useMemo(() => {
@@ -187,6 +191,16 @@ const UnitDetail = () => {
               </div>
             </Card>
           </Link>
+
+          {canResumeCram && (
+            <Button
+              variant="outline"
+              className="w-full mb-8"
+              onClick={() => navigate(`/quiz/${subject}/${unitId}/cram${calculatorSectionEnabled ? '?calculatorSection=true' : ''}`)}
+            >
+              Resume last Cram Study
+            </Button>
+          )}
 
           {/* Homework Assignments Section */}
           {unitContent && unitContent.assignments.length > 0 && (
