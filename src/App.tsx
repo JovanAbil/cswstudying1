@@ -28,6 +28,8 @@ import CustomTopicEditor from "./pages/CustomTopicEditor";
 import StockPage from "./pages/StockPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import AdblockBlocked from "./pages/AdblockBlocked";
+import CustomUnitChallenge from "./pages/CustomUnitChallenge";
+import CustomUnitChallengePresetBuilder from "./pages/CustomUnitChallengePresetBuilder";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +66,8 @@ const App = () => {
             <Route path="/unit/:subject/:unitId/quiz/:quizType" element={<Quiz />} />
             <Route path="/course-challenge/:subject" element={<CourseChallenge />} />
             <Route path="/course-challenge/:subject/preset-builder" element={<CourseChallengePresetBuilder />} />
+            <Route path="/custom-unit/:unitId" element={<CustomUnitChallenge />} />
+            <Route path="/custom-unit/:unitId/preset-builder" element={<CustomUnitChallengePresetBuilder />} />
             <Route path="/quiz/:subject/:unitId/:quizType" element={<Quiz />} />
             <Route path="/results" element={<Results />} />
             <Route path="*" element={<NotFound />} />

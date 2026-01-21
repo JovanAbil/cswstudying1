@@ -435,6 +435,15 @@ const OtherCategory = () => {
                 <div key={unit.id}>
                   <div className="flex items-center gap-3 mb-4 flex-wrap">
                     <h3 className="text-lg font-semibold">{unit.name}</h3>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="border-other text-other hover:bg-other hover:text-other-foreground"
+                      onClick={() => navigate(`/custom-unit/${unit.id}`)}
+                    >
+                      <Trophy className="mr-2 h-4 w-4" />
+                      Course Challenge
+                    </Button>
                     <div className="flex items-center gap-1">
                       <Button variant="ghost" size="icon" onClick={() => openEditUnit(unit.id, unit.name)} title="Edit unit">
                         <Pencil className="h-4 w-4" />

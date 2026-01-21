@@ -22,6 +22,13 @@ import { toast } from 'sonner';
 import QuestionTable from '@/components/QuestionTable';
 import MathText from '@/components/MathText';
 
+import {
+  buildRouteKey,
+  clearInProgressQuiz,
+  loadInProgressQuiz,
+  saveInProgressQuiz,
+} from '@/utils/inProgressQuizStorage';
+
 const Quiz = () => {
   const frqInputRef = useRef<HTMLInputElement>(null);
   const { subject, unitId, quizType } = useParams();
@@ -37,6 +44,7 @@ const Quiz = () => {
   const selectedUnits = useMemo(() => location.state?.selectedUnits || [], [location.state?.selectedUnits]);
   const wrongQuestions = useMemo(() => location.state?.wrongQuestions || [], [location.state?.wrongQuestions]);
   const presetQuestions = useMemo(() => location.state?.presetQuestions || [], [location.state?.presetQuestions]);
+  const startNewAttempt = useMemo(() => !!location.state?.startNewAttempt, [location.state?.startNewAttempt]);
   
   // Check if this is a custom topic quiz
   const isCustomTopic = subject?.startsWith('custom-');
@@ -50,6 +58,8 @@ const Quiz = () => {
   const [showGrading, setShowGrading] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<any[]>([]);
 
+  const routeKey = useMemo(() => buildRouteKey(subject, unitId, quizType), [subject, unitId, quizType]);
+
   // Get questions using the centralized loader (applies date-based switching)
   const questionMap = useMemo(() => getQuestionMap(), []);
   
@@ -58,9 +68,31 @@ const Quiz = () => {
   const lockInfo = getTopicLockInfo(questionKey);
 
   useEffect(() => {
+    // If user explicitly starts a new attempt, wipe any saved progress for this route.
+    if (startNewAttempt) {
+      clearInProgressQuiz(routeKey);
+    }
+
     // Wait for custom units to load if this is a custom topic
     if (isCustomTopic && !customUnitsLoaded) {
       return;
+    }
+
+    // Try to restore an in-progress attempt first (so leaving/reloading the site doesn't reset).
+    if (!startNewAttempt) {
+      const saved = loadInProgressQuiz(routeKey);
+      if (saved && saved.questions.length > 0) {
+        setQuestions(saved.questions);
+        setAttempts(saved.attempts);
+        setCurrentIndex(saved.currentIndex);
+        setCurrentAnswer(saved.currentAnswer);
+        setIsSubmitted(saved.isSubmitted);
+        setShowGrading(saved.showGrading);
+        timer.reset();
+        timer.set(saved.timerSeconds);
+        timer.start();
+        return;
+      }
     }
     
     const totalQuestions = 30;
@@ -76,14 +108,47 @@ const Quiz = () => {
     else if (wrongQuestions.length > 0) {
       allQuestions = [...wrongQuestions].sort(() => Math.random() - 0.5);
     } 
-    // Handle custom topic quiz
-    else if (isCustomTopic && customUnitId && unitId) {
-      // Get questions directly from customUnitsData to avoid stale closures
+    // Handle custom topic / custom unit challenge
+    else if (isCustomTopic && customUnitId) {
       const unit = customUnitsData.units.find(u => u.id === customUnitId);
-      const topic = unit?.topics.find(t => t.id === unitId);
-      const customQuestions = topic?.questions || [];
-      const shuffled = [...customQuestions].sort(() => Math.random() - 0.5);
-      allQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
+      if (!unit) {
+        allQuestions = [];
+      }
+      // If selectedUnits are provided, treat them as topicIds (course-challenge style for custom units)
+      else if (selectedUnits.length > 0) {
+        const topics = unit.topics.filter(t => selectedUnits.includes(t.id));
+
+        if (quizType === 'test') {
+          // Distribute 30 questions evenly across selected topics
+          const numTopics = topics.length;
+          const base = numTopics > 0 ? Math.floor(totalQuestions / numTopics) : 0;
+          let remainder = numTopics > 0 ? totalQuestions % numTopics : 0;
+
+          topics.forEach(topic => {
+            const shuffledTopic = [...topic.questions].sort(() => Math.random() - 0.5);
+            let toTake = base;
+            if (remainder > 0) {
+              toTake += 1;
+              remainder -= 1;
+            }
+            allQuestions = [...allQuestions, ...shuffledTopic.slice(0, Math.min(toTake, shuffledTopic.length))];
+          });
+          allQuestions = allQuestions.sort(() => Math.random() - 0.5);
+        } else {
+          // Cram mode across selected topics
+          topics.forEach(topic => {
+            allQuestions = [...allQuestions, ...topic.questions];
+          });
+          allQuestions = allQuestions.sort(() => Math.random() - 0.5);
+        }
+      }
+      // Otherwise, single topic
+      else if (unitId) {
+        const topic = unit.topics.find(t => t.id === unitId);
+        const customQuestions = topic?.questions || [];
+        const shuffled = [...customQuestions].sort(() => Math.random() - 0.5);
+        allQuestions = shuffled.slice(0, Math.min(questionCount, shuffled.length));
+      }
     }
     else if (selectedUnits.length > 0 && quizType === 'test') {
       // Course challenge: distribute 30 questions evenly across selected units
@@ -142,7 +207,30 @@ const Quiz = () => {
       timer.start();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap, isCustomTopic, customUnitId, customUnitsLoaded, calculatorSectionEnabled]);
+  }, [subject, unitId, quizType, selectedUnits, wrongQuestions, presetQuestions, questionMap, isCustomTopic, customUnitId, customUnitsLoaded, calculatorSectionEnabled, routeKey, startNewAttempt]);
+
+  // Persist progress so leaving/reloading doesn't lose work
+  useEffect(() => {
+    if (!questions.length || !attempts.length) return;
+    saveInProgressQuiz({
+      version: 1,
+      routeKey,
+      updatedAt: Date.now(),
+      questions,
+      attempts,
+      currentIndex,
+      currentAnswer,
+      isSubmitted,
+      showGrading,
+      timerSeconds: timer.seconds,
+      meta: {
+        subject,
+        unitId,
+        quizType,
+        calculatorSectionEnabled,
+      },
+    });
+  }, [questions, attempts, currentIndex, currentAnswer, isSubmitted, showGrading, timer.seconds, routeKey, subject, unitId, quizType, calculatorSectionEnabled]);
 
   const currentQuestion = questions[currentIndex];
   const currentAttempt = attempts[currentIndex];
@@ -269,6 +357,10 @@ const Quiz = () => {
       const finalTime = timer.stop();
       const score = newAttempts.filter(a => a.isCorrect).length;
       const total = newAttempts.length;
+
+      // Completed quizzes shouldn't be resumable
+      clearInProgressQuiz(routeKey);
+
       navigate('/results', { 
         state: { 
           score, 
@@ -304,6 +396,10 @@ const Quiz = () => {
       const finalTime = timer.stop();
       const score = attempts.filter(a => a.isCorrect).length;
       const total = attempts.length;
+
+      // Completed quizzes shouldn't be resumable
+      clearInProgressQuiz(routeKey);
+
       navigate('/results', { 
         state: { 
           score, 
