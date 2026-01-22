@@ -310,6 +310,17 @@ import { topicNameQuestions } from '@/data/${folderName}/topic-name-questions';
   URL.revokeObjectURL(url);
 };
 
+// Helper function to unescape string literals (convert \n to actual newlines, etc.)
+const unescapeString = (str: string): string => {
+  return str
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\r')
+    .replace(/\\t/g, '\t')
+    .replace(/\\"/g, '"')
+    .replace(/\\'/g, "'")
+    .replace(/\\\\/g, '\\');
+};
+
 // Helper function to extract string value from a field, handling nested braces in LaTeX
 const extractStringField = (content: string, fieldName: string): string | null => {
   const fieldStart = content.indexOf(`${fieldName}:`);
@@ -331,8 +342,8 @@ const extractStringField = (content: string, fieldName: string): string | null =
       value += content[i] + content[i + 1];
       i += 2;
     } else if (content[i] === quoteChar) {
-      // Found closing quote
-      return value;
+      // Found closing quote - unescape and return
+      return unescapeString(value);
     } else {
       value += content[i];
       i++;
