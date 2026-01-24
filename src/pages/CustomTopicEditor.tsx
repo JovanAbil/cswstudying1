@@ -75,6 +75,7 @@ const CustomTopicEditor = () => {
   // Question being edited
   const [editingQuestion, setEditingQuestion] = useState<EditingQuestion | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [lastAutosave, setLastAutosave] = useState<Date | null>(null);
 
   // Load existing topic data - read directly from localStorage to avoid stale closures
   useEffect(() => {
@@ -101,6 +102,60 @@ const CustomTopicEditor = () => {
       }
     }
   }, [unitId, topicId, isNew]);
+
+  // Autosave every 3 minutes
+  useEffect(() => {
+    const autosaveInterval = setInterval(() => {
+      // Only autosave if we have data worth saving
+      if (!unitId || !topicName.trim()) return;
+      
+      const topicData: Omit<CustomTopic, 'id'> & { id?: string } = {
+        name: topicName,
+        mathEnabled,
+        questions,
+        testType,
+        testDate,
+      };
+
+      if (isNew) {
+        // For new topics, create a draft in localStorage
+        const draftKey = `custom-topic-draft-${unitId}`;
+        localStorage.setItem(draftKey, JSON.stringify(topicData));
+      } else if (topicId) {
+        // For existing topics, save directly
+        updateTopic(unitId, topicId, topicData);
+      }
+      
+      setLastAutosave(new Date());
+      toast({ 
+        title: 'Autosaved', 
+        description: 'Your progress has been saved automatically',
+        duration: 2000
+      });
+    }, 3 * 60 * 1000); // 3 minutes
+
+    return () => clearInterval(autosaveInterval);
+  }, [unitId, topicId, topicName, mathEnabled, questions, testType, testDate, isNew, updateTopic, toast]);
+
+  // Load draft for new topics
+  useEffect(() => {
+    if (isNew && unitId) {
+      const draftKey = `custom-topic-draft-${unitId}`;
+      const draft = localStorage.getItem(draftKey);
+      if (draft) {
+        try {
+          const parsedDraft = JSON.parse(draft);
+          setTopicName(parsedDraft.name || '');
+          setMathEnabled(parsedDraft.mathEnabled ?? true);
+          setQuestions(parsedDraft.questions || []);
+          setTestType(parsedDraft.testType || 'homework');
+          setTestDate(parsedDraft.testDate || new Date().toISOString().split('T')[0]);
+        } catch (e) {
+          console.error('Failed to load draft:', e);
+        }
+      }
+    }
+  }, [isNew, unitId]);
 
   const handleMathToggle = (enabled: boolean) => {
     if (!enabled && mathEnabled) {
@@ -415,6 +470,9 @@ const CustomTopicEditor = () => {
 
     if (isNew) {
       const newTopic = addTopic(unitId, topicData);
+      // Clear draft after successful save
+      const draftKey = `custom-topic-draft-${unitId}`;
+      localStorage.removeItem(draftKey);
       toast({ title: 'Topic created!' });
       navigate(`/category/other`, { replace: true });
     } else if (topicId) {
