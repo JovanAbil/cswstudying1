@@ -68,7 +68,7 @@ const ScienceCategory = () => {
         isOpen={showNeededCourses} 
         onClose={() => setShowNeededCourses(false)} 
       />
-      <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
+      <div className="container mx-auto px-4 py-8 flex-1 max-w-4xl">
         <Link to="/" className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" />

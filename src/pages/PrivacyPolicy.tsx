@@ -23,7 +23,7 @@ const PrivacyPolicy = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="container mx-auto px-4 py-8 flex-1">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
         <Button variant="ghost" asChild className="mb-6">
           <Link to="/">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -31,7 +31,7 @@ const PrivacyPolicy = () => {
           </Link>
         </Button>
 
-        <div className="max-w-3xl mx-auto">
+        <div>
           {/* Academic Honesty Section */}
           <h1 className="text-4xl font-display font-bold mb-8">Academic Honesty</h1>
           

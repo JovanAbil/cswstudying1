@@ -66,13 +66,13 @@ const UnitDetail = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="container mx-auto px-4 py-8 flex-1">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
         <Link to={getCategoryPath()} className="inline-block mb-6">
           <Button variant="ghost">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back to Subject
           </Button>
         </Link>
-        <div className="max-w-3xl mx-auto">
+        <div>
           <h1 className="text-4xl font-bold text-center mb-3 text-primary font-display">
             {unitId?.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
           </h1>
