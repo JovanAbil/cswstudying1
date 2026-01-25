@@ -27,6 +27,7 @@ import { useToast } from '@/hooks/use-toast';
 import { downloadUnit, downloadTopic, parseTopicFile, parseUnitMetadata } from '@/utils/customUnitsExport';
 import JSZip from 'jszip';
 import { Footer } from '@/components/Footer';
+import { StorageUsageBar } from '@/components/StorageUsageBar';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import {
   Select,
@@ -395,9 +396,12 @@ const OtherCategory = () => {
         {/* Custom Units Section */}
         <div className="mb-12">
           <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-            <div className="flex items-center gap-2">
-              <Plus className="h-6 w-6 text-other" />
-              <h2 className="text-2xl font-display font-bold">Custom Units</h2>
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-2">
+                <Plus className="h-6 w-6 text-other" />
+                <h2 className="text-2xl font-display font-bold">Custom Units</h2>
+              </div>
+              <StorageUsageBar />
             </div>
             <div className="flex gap-2">
               <Button
