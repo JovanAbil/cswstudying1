@@ -74,7 +74,7 @@ export const CreditsSection = () => {
   };
 
   return (
-    <div className="mt-16 max-w-4xl mx-auto">
+    <div className="mt-16 max-w-5xl mx-auto">
       <div className="grid md:grid-cols-2 gap-6">
         {/* Contributors Card */}
         <Card className="p-8 border-2 border-primary/20 bg-primary/5">

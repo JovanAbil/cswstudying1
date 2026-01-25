@@ -84,7 +84,7 @@ const CustomUnitChallengePresetBuilder = () => {
   if (!unit) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        <div className="container mx-auto px-4 py-8 flex-1 max-w-4xl">
+        <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
           <Button variant="ghost" onClick={() => navigate('/category/other')} className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" /> Back
           </Button>
@@ -256,7 +256,7 @@ const CustomUnitChallengePresetBuilder = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
+      <div className="container mx-auto px-4 py-8 max-w-5xl flex-1">
         <Button variant="ghost" onClick={() => navigate(`/custom-unit/${unit.id}`)} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Course Challenge
         </Button>

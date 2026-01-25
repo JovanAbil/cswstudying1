@@ -75,7 +75,7 @@ const Results = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="container mx-auto px-4 py-8 flex-1 max-w-4xl">
+      <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
         <Card className="p-8 md:p-12 mb-8 animate-fade-in">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6">
