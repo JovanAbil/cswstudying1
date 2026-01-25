@@ -275,7 +275,7 @@ const PresetBuilder = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <div className="container mx-auto px-4 py-8 flex-1">
+      <div className="container mx-auto px-4 py-8 max-w-4xl flex-1">
         <Button variant="ghost" onClick={() => navigate(`/unit/${subject}/${unitId}`)} className="mb-6">
           <ArrowLeft className="mr-2 h-4 w-4" /> Back to Unit
         </Button>
