@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
-import { Trophy, Home, CheckCircle2, XCircle, Clock } from 'lucide-react';
+import { Trophy, Home, CheckCircle2, XCircle, Clock, Download } from 'lucide-react';
 import { useEffect } from 'react';
 import { Question, QuizAttempt } from '@/types/quiz';
 import QuestionTable from '@/components/QuestionTable';
@@ -11,6 +11,7 @@ import MathText from '@/components/MathText';
 import useWrongAnswers from '@/hooks/useWrongAnswers';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
+import { toast } from 'sonner';
 
 interface ExtendedAttempt extends QuizAttempt {
   question: Question;
@@ -72,10 +73,61 @@ const Results = () => {
   const gradeInfo = getGrade();
 
   const extendedAttempts = attempts as ExtendedAttempt[];
+  
+  const wrongAttempts = extendedAttempts.filter(a => !a.isCorrect);
+
+  const handleDownloadWrongAnswers = () => {
+    if (wrongAttempts.length === 0) {
+      toast.error('No wrong answers to download');
+      return;
+    }
+
+    const presetData = {
+      version: 1,
+      preset: {
+        id: `wrong-answers-${Date.now()}`,
+        name: `Wrong Answers - ${subject} ${unitId || 'Course Challenge'}`,
+        questionIds: wrongAttempts.map(a => a.questionId),
+      }
+    };
+
+    const blob = new Blob([JSON.stringify(presetData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `wrong_answers_${subject}_${unitId || 'course-challenge'}.json`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast.success('Wrong answers downloaded as preset!');
+  };
+
+  const getSubjectDisplayName = (s: string) => {
+    const names: Record<string, string> = {
+      'apprecalc': 'AP Precalculus',
+      'chemistry': 'Chemistry',
+      'biology': 'Biology',
+      'worldhistory': 'World History',
+      'memory': 'Memory Training',
+      'stock': 'Stock Market',
+    };
+    return names[s] || s;
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <div className="container mx-auto px-4 py-8 flex-1 max-w-5xl">
+        {/* Top Home Button */}
+        <div className="flex justify-start mb-4">
+          <Link to="/">
+            <Button variant="outline" size="sm">
+              <Home className="mr-2 h-4 w-4" />
+              Back to Home
+            </Button>
+          </Link>
+        </div>
+
         <Card className="p-8 md:p-12 mb-8 animate-fade-in">
           <div className="text-center">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full mb-6">
@@ -110,6 +162,26 @@ const Results = () => {
             </div>
           </div>
         </Card>
+
+        {/* Download Wrong Answers Section */}
+        {wrongAttempts.length > 0 && (
+          <Card className="p-6 mb-8 animate-fade-in" style={{ animationDelay: '0.05s' }}>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div>
+                <h3 className="font-semibold text-lg mb-1">Download Wrong Answers as Preset</h3>
+                <p className="text-sm text-muted-foreground">
+                  You got {wrongAttempts.length} question{wrongAttempts.length !== 1 ? 's' : ''} wrong. 
+                  Download them as a preset file to use in <span className="font-medium">{getSubjectDisplayName(subject)}</span>'s 
+                  {unitId === 'course-challenge' ? ' Course Challenge' : ` Unit ${unitId?.toUpperCase()}`} Preset Builder.
+                </p>
+              </div>
+              <Button onClick={handleDownloadWrongAnswers} className="shrink-0">
+                <Download className="mr-2 h-4 w-4" />
+                Download Preset
+              </Button>
+            </div>
+          </Card>
+        )}
 
         <Card className="p-8 mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
           <h2 className="text-2xl font-display font-bold mb-6">Review Your Answers</h2>
