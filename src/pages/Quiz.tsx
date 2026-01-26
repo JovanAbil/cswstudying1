@@ -57,6 +57,7 @@ const Quiz = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [showGrading, setShowGrading] = useState(false);
   const [shuffledOptions, setShuffledOptions] = useState<any[]>([]);
+  const [showSkipTransition, setShowSkipTransition] = useState(false);
 
   const routeKey = useMemo(() => buildRouteKey(subject, unitId, quizType), [subject, unitId, quizType]);
 
@@ -370,64 +371,61 @@ const Quiz = () => {
       }
     }
     
-    // Priority 3: Find next skipped question that can be revisited (userAnswer === 'SKIPPED', not 'SKIPPED_FINAL')
-    if (nextIndex === -1) {
-      for (let i = currentIndex + 1; i < questions.length; i++) {
-        if (newAttempts[i].skipped && newAttempts[i].userAnswer === 'SKIPPED') {
-          // Reset it so user can answer
-          newAttempts[i] = {
-            ...newAttempts[i],
-            userAnswer: null,
-            isCorrect: null,
-            skipped: true
-          };
-          nextIndex = i;
-          break;
-        }
-      }
-    }
-    
-    // Priority 4: Find skipped question from beginning (wrap around)
-    if (nextIndex === -1) {
-      for (let i = 0; i < currentIndex; i++) {
-        if (newAttempts[i].skipped && newAttempts[i].userAnswer === 'SKIPPED') {
-          // Reset it so user can answer
-          newAttempts[i] = {
-            ...newAttempts[i],
-            userAnswer: null,
-            isCorrect: null,
-            skipped: true
-          };
-          nextIndex = i;
-          break;
-        }
-      }
-    }
-    
     setAttempts(newAttempts);
     
-    // If no next question found, all questions are done - go to results
+    // If no unanswered questions left, check for skipped questions
     if (nextIndex === -1) {
-      const finalTime = timer.stop();
-      const score = newAttempts.filter(a => a.isCorrect).length;
-      const total = newAttempts.length;
-
-      clearInProgressQuiz(routeKey);
-
-      navigate('/results', { 
-        state: { 
-          score, 
-          total,
-          subject,
-          unitId, 
-          quizType,
-          timeElapsed: finalTime,
-          attempts: newAttempts.map((a, i) => ({
-            ...a,
-            question: questions[i]
-          }))
-        } 
-      });
+      const skippedCount = newAttempts.filter(a => a.userAnswer === 'SKIPPED').length;
+      
+      // If there are skipped questions and we're not already in skipped section, show transition
+      if (skippedCount > 0 && !wasAlreadySkipped) {
+        setShowSkipTransition(true);
+        return;
+      }
+      
+      // If already in skipped section, find next skipped question
+      if (wasAlreadySkipped) {
+        // Find next skipped question that can be revisited
+        for (let i = currentIndex + 1; i < questions.length; i++) {
+          if (newAttempts[i].skipped && newAttempts[i].userAnswer === 'SKIPPED') {
+            newAttempts[i] = {
+              ...newAttempts[i],
+              userAnswer: null,
+              isCorrect: null,
+              skipped: true
+            };
+            setAttempts(newAttempts);
+            setCurrentIndex(i);
+            setCurrentAnswer('');
+            setIsSubmitted(false);
+            setShowGrading(false);
+            setShuffledOptions([]);
+            return;
+          }
+        }
+        
+        // Wrap around
+        for (let i = 0; i < currentIndex; i++) {
+          if (newAttempts[i].skipped && newAttempts[i].userAnswer === 'SKIPPED') {
+            newAttempts[i] = {
+              ...newAttempts[i],
+              userAnswer: null,
+              isCorrect: null,
+              skipped: true
+            };
+            setAttempts(newAttempts);
+            setCurrentIndex(i);
+            setCurrentAnswer('');
+            setIsSubmitted(false);
+            setShowGrading(false);
+            setShuffledOptions([]);
+            return;
+          }
+        }
+      }
+      
+      // No more questions - go to results
+      goToResults(newAttempts);
       return;
     }
     
@@ -438,37 +436,148 @@ const Quiz = () => {
     setShuffledOptions([]);
   };
 
-  const handleNext = () => {
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      setCurrentAnswer('');
-      setIsSubmitted(false);
-      setShowGrading(false);
-      setShuffledOptions([]);
-    } else {
-      const finalTime = timer.stop();
-      const score = attempts.filter(a => a.isCorrect).length;
-      const total = attempts.length;
+  const goToResults = (finalAttempts: QuizAttempt[]) => {
+    const finalTime = timer.stop();
+    const score = finalAttempts.filter(a => a.isCorrect).length;
+    const total = finalAttempts.length;
 
-      // Completed quizzes shouldn't be resumable
-      clearInProgressQuiz(routeKey);
+    clearInProgressQuiz(routeKey);
 
-      navigate('/results', { 
-        state: { 
-          score, 
-          total,
-          subject,
-          unitId, 
-          quizType,
-          timeElapsed: finalTime,
-          attempts: attempts.map((a, i) => ({
-            ...a,
-            question: questions[i]
-          }))
-        } 
-      });
+    navigate('/results', { 
+      state: { 
+        score, 
+        total,
+        subject,
+        unitId, 
+        quizType,
+        timeElapsed: finalTime,
+        attempts: finalAttempts.map((a, i) => ({
+          ...a,
+          question: questions[i]
+        }))
+      } 
+    });
+  };
+
+  const handleSkipTransitionYes = () => {
+    // User wants to review skipped questions
+    setShowSkipTransition(false);
+    
+    const newAttempts = [...attempts];
+    // Find first skipped question and reset it
+    for (let i = 0; i < newAttempts.length; i++) {
+      if (newAttempts[i].skipped && newAttempts[i].userAnswer === 'SKIPPED') {
+        newAttempts[i] = {
+          ...newAttempts[i],
+          userAnswer: null,
+          isCorrect: null,
+          skipped: true
+        };
+        setAttempts(newAttempts);
+        setCurrentIndex(i);
+        setCurrentAnswer('');
+        setIsSubmitted(false);
+        setShowGrading(false);
+        setShuffledOptions([]);
+        return;
+      }
     }
   };
+
+  const handleSkipTransitionNo = () => {
+    // User doesn't want to review - mark all skipped as final and go to results
+    const newAttempts = attempts.map(a => {
+      if (a.userAnswer === 'SKIPPED') {
+        return { ...a, userAnswer: 'SKIPPED_FINAL' };
+      }
+      return a;
+    });
+    setAttempts(newAttempts);
+    goToResults(newAttempts);
+  };
+
+  const handleNext = () => {
+    if (currentIndex < questions.length - 1) {
+      // Check if next question is unanswered
+      let nextIndex = currentIndex + 1;
+      
+      // Find next unanswered question
+      while (nextIndex < questions.length && attempts[nextIndex].userAnswer !== null) {
+        nextIndex++;
+      }
+      
+      if (nextIndex < questions.length) {
+        setCurrentIndex(nextIndex);
+        setCurrentAnswer('');
+        setIsSubmitted(false);
+        setShowGrading(false);
+        setShuffledOptions([]);
+        return;
+      }
+      
+      // No more unanswered questions - check for skipped
+      const skippedCount = attempts.filter(a => a.userAnswer === 'SKIPPED').length;
+      if (skippedCount > 0) {
+        setShowSkipTransition(true);
+        return;
+      }
+      
+      // No skipped either - go to results
+      goToResults(attempts);
+    } else {
+      // At last question - check for skipped questions
+      const skippedCount = attempts.filter(a => a.userAnswer === 'SKIPPED').length;
+      if (skippedCount > 0) {
+        setShowSkipTransition(true);
+        return;
+      }
+      
+      goToResults(attempts);
+    }
+  };
+
+  // Transition screen for reviewing skipped questions
+  if (showSkipTransition) {
+    const skippedCount = attempts.filter(a => a.userAnswer === 'SKIPPED').length;
+    const answeredCount = attempts.filter(a => a.userAnswer !== null && a.userAnswer !== 'SKIPPED').length;
+    const correctCount = attempts.filter(a => a.isCorrect).length;
+    
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <div className="container mx-auto px-4 py-8 max-w-5xl flex-1 flex items-center justify-center">
+          <Card className="p-8 max-w-md w-full animate-fade-in text-center">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-warning/20 rounded-full mb-6 mx-auto">
+              <span className="text-3xl">⏭️</span>
+            </div>
+            
+            <h2 className="text-2xl font-bold mb-2">Main Quiz Complete!</h2>
+            <p className="text-muted-foreground mb-6">
+              You answered {answeredCount} of {questions.length} questions ({correctCount} correct).
+            </p>
+            
+            <div className="bg-warning/10 border border-warning/30 rounded-lg p-4 mb-6">
+              <p className="font-medium text-warning-foreground">
+                You skipped {skippedCount} question{skippedCount !== 1 ? 's' : ''}.
+              </p>
+              <p className="text-sm text-muted-foreground mt-1">
+                Would you like to review them now?
+              </p>
+            </div>
+            
+            <div className="flex flex-col gap-3">
+              <Button onClick={handleSkipTransitionYes} size="lg" className="w-full">
+                Yes, Review Skipped Questions
+              </Button>
+              <Button onClick={handleSkipTransitionNo} variant="outline" size="lg" className="w-full">
+                No, Go to Results
+              </Button>
+            </div>
+          </Card>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   if (questions.length === 0) {
     return (
