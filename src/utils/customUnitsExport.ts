@@ -142,7 +142,19 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string, r
       if (options.length === 0) {
         console.warn(`[Export] MCQ question "${q.id}" has no options - this may cause issues`);
       }
-      lines.push(`${indent}  options: ${JSON.stringify(options)},`);
+      
+      // Process options with image path rewriting
+      const processedOptions = options.map((opt, optIndex) => {
+        if (rewriteImagePaths && opt.image && opt.image.startsWith('data:')) {
+          return {
+            ...opt,
+            image: `/images/${toSafeName(unitName)}/${topicPrefix}-q${qIndex + 1}-opt${optIndex + 1}.png`
+          };
+        }
+        return opt;
+      });
+      
+      lines.push(`${indent}  options: ${JSON.stringify(processedOptions)},`);
     }
     
     lines.push(`${indent}  correctAnswer: ${JSON.stringify(q.correctAnswer)},`);
@@ -257,17 +269,31 @@ export const downloadUnit = async (unit: CustomUnit) => {
   // Track if we have any images
   let hasImages = false;
   
-  // Process each topic - extract images first
+  // Process each topic - extract images first (both question images and MCQ option images)
   for (const topic of unit.topics) {
     const topicPrefix = toSafeName(topic.name);
     
     topic.questions.forEach((q, qIndex) => {
+      // Extract question-level image
       if (q.image && q.image.startsWith('data:')) {
         hasImages = true;
         const ext = getImageExtension(q.image);
         const filename = `${topicPrefix}-q${qIndex + 1}.${ext}`;
         const imageData = base64ToBlob(q.image);
         publicImagesFolder.file(filename, imageData);
+      }
+      
+      // Extract MCQ option images
+      if (q.type === 'multiple-choice' && q.options) {
+        q.options.forEach((opt, optIndex) => {
+          if (opt.image && opt.image.startsWith('data:')) {
+            hasImages = true;
+            const ext = getImageExtension(opt.image);
+            const filename = `${topicPrefix}-q${qIndex + 1}-opt${optIndex + 1}.${ext}`;
+            const imageData = base64ToBlob(opt.image);
+            publicImagesFolder.file(filename, imageData);
+          }
+        });
       }
     });
   }
