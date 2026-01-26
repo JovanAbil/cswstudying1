@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Trophy, Home, CheckCircle2, XCircle, Clock, Download } from 'lucide-react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Question, QuizAttempt } from '@/types/quiz';
 import QuestionTable from '@/components/QuestionTable';
 import MathText from '@/components/MathText';
@@ -12,6 +12,16 @@ import useWrongAnswers from '@/hooks/useWrongAnswers';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { toast } from 'sonner';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface ExtendedAttempt extends QuizAttempt {
   question: Question;
@@ -22,6 +32,11 @@ const Results = () => {
   const navigate = useNavigate();
   const { addWrongAnswers } = useWrongAnswers();
   const { score, total, subject, unitId, quizType, attempts, timeElapsed } = location.state || {};
+
+  // Preset download dialog state - must be before any early returns
+  const [showDownloadDialog, setShowDownloadDialog] = useState(false);
+  const defaultPresetName = `Wrong Answers - ${subject || ''} ${unitId || 'Course Challenge'}`;
+  const [presetName, setPresetName] = useState(defaultPresetName);
 
   useEffect(() => {
     if (!location.state) {
@@ -76,30 +91,40 @@ const Results = () => {
   
   const wrongAttempts = extendedAttempts.filter(a => !a.isCorrect);
 
-  const handleDownloadWrongAnswers = () => {
+  const handleOpenDownloadDialog = () => {
     if (wrongAttempts.length === 0) {
       toast.error('No wrong answers to download');
       return;
     }
+    setPresetName(defaultPresetName);
+    setShowDownloadDialog(true);
+  };
 
+  const handleDownloadWrongAnswers = () => {
     const presetData = {
       version: 1,
       preset: {
         id: `wrong-answers-${Date.now()}`,
-        name: `Wrong Answers - ${subject} ${unitId || 'Course Challenge'}`,
+        name: presetName.trim() || defaultPresetName,
         questionIds: wrongAttempts.map(a => a.questionId),
       }
     };
+
+    const safeFileName = (presetName.trim() || defaultPresetName)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '_')
+      .replace(/^_|_$/g, '');
 
     const blob = new Blob([JSON.stringify(presetData, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `wrong_answers_${subject}_${unitId || 'course-challenge'}.json`;
+    a.download = `${safeFileName}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    setShowDownloadDialog(false);
     toast.success('Wrong answers downloaded as preset!');
   };
 
@@ -175,7 +200,7 @@ const Results = () => {
                   {unitId === 'course-challenge' ? ' Course Challenge' : ` Unit ${unitId?.toUpperCase()}`} Preset Builder.
                 </p>
               </div>
-              <Button onClick={handleDownloadWrongAnswers} className="shrink-0">
+              <Button onClick={handleOpenDownloadDialog} className="shrink-0">
                 <Download className="mr-2 h-4 w-4" />
                 Download Preset
               </Button>
@@ -325,6 +350,43 @@ const Results = () => {
           </Link>
         </div>
       </div>
+
+      {/* Download Preset Name Dialog */}
+      <Dialog open={showDownloadDialog} onOpenChange={setShowDownloadDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Download Preset</DialogTitle>
+            <DialogDescription>
+              Enter a name for your preset file containing {wrongAttempts.length} wrong question{wrongAttempts.length !== 1 ? 's' : ''}.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Label htmlFor="preset-name">Preset Name</Label>
+            <Input
+              id="preset-name"
+              value={presetName}
+              onChange={(e) => setPresetName(e.target.value)}
+              placeholder="Enter preset name..."
+              className="mt-2"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleDownloadWrongAnswers();
+                }
+              }}
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowDownloadDialog(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleDownloadWrongAnswers}>
+              <Download className="mr-2 h-4 w-4" />
+              Download
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Footer />
     </div>
   );

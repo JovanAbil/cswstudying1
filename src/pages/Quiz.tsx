@@ -317,6 +317,10 @@ const Quiz = () => {
 
   const handleSkip = () => {
     const newAttempts = [...attempts];
+    
+    // Check if current question was already skipped before (we're revisiting it)
+    const wasAlreadySkipped = newAttempts[currentIndex].skipped && newAttempts[currentIndex].userAnswer === null;
+    
     newAttempts[currentIndex] = {
       ...newAttempts[currentIndex],
       userAnswer: 'SKIPPED',
@@ -335,8 +339,13 @@ const Quiz = () => {
     
     // If we've gone through all questions, check if there are skipped questions to revisit
     if (nextIndex >= questions.length) {
-      const firstSkippedIndex = newAttempts.findIndex(a => a.skipped && a.userAnswer === 'SKIPPED');
-      if (firstSkippedIndex !== -1 && firstSkippedIndex !== currentIndex) {
+      // Find a skipped question that hasn't been finalized yet (userAnswer === 'SKIPPED' means it can be revisited)
+      // But if the user just skipped again while revisiting, we should NOT offer the same question
+      const firstSkippedIndex = newAttempts.findIndex((a, idx) => 
+        a.skipped && a.userAnswer === 'SKIPPED' && idx !== currentIndex
+      );
+      
+      if (firstSkippedIndex !== -1 && !wasAlreadySkipped) {
         // Reset the skipped question so it can be answered
         newAttempts[firstSkippedIndex] = {
           ...newAttempts[firstSkippedIndex],
@@ -351,6 +360,29 @@ const Quiz = () => {
         setShowGrading(false);
         setShuffledOptions([]);
         return;
+      }
+      
+      // If user was revisiting a skipped question and skipped again, find next skipped question or finish
+      if (wasAlreadySkipped) {
+        const nextSkippedIndex = newAttempts.findIndex((a, idx) => 
+          a.skipped && a.userAnswer === 'SKIPPED' && idx !== currentIndex
+        );
+        
+        if (nextSkippedIndex !== -1) {
+          newAttempts[nextSkippedIndex] = {
+            ...newAttempts[nextSkippedIndex],
+            userAnswer: null,
+            isCorrect: null,
+            skipped: true
+          };
+          setAttempts(newAttempts);
+          setCurrentIndex(nextSkippedIndex);
+          setCurrentAnswer('');
+          setIsSubmitted(false);
+          setShowGrading(false);
+          setShuffledOptions([]);
+          return;
+        }
       }
       
       // No more questions to answer, go to results
