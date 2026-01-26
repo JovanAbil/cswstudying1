@@ -439,15 +439,16 @@ const OtherCategory = () => {
                 <div key={unit.id}>
                   <div className="flex items-center gap-3 mb-4 flex-wrap">
                     <h3 className="text-lg font-semibold">{unit.name}</h3>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-other text-other hover:bg-other hover:text-other-foreground"
-                      onClick={() => navigate(`/custom-unit/${unit.id}`)}
-                    >
-                      <Trophy className="mr-2 h-4 w-4" />
-                      Course Challenge
-                    </Button>
+                    <Link to={`/custom-unit/${unit.id}`}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-other text-other hover:bg-other hover:text-other-foreground"
+                      >
+                        <Trophy className="mr-2 h-4 w-4" />
+                        Course Challenge
+                      </Button>
+                    </Link>
                     <div className="flex items-center gap-1">
                       <Button variant="ghost" size="icon" onClick={() => openEditUnit(unit.id, unit.name)} title="Edit unit">
                         <Pencil className="h-4 w-4" />
@@ -465,56 +466,63 @@ const OtherCategory = () => {
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {unit.topics.map((topic) => (
-                      <Card
+                      <Link
                         key={topic.id}
-                        className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-other group relative"
-                        onClick={() => navigate(`/unit/custom-${unit.id}/${topic.id}`)}
+                        to={`/unit/custom-${unit.id}/${topic.id}`}
+                        className="block"
                       >
-                        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              navigate(`/custom-topic/${unit.id}/${topic.id}`);
-                            }}
-                            title="Edit topic"
-                          >
-                            <Pencil className="h-3 w-3" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDownloadTopic(topic, unit.name);
-                            }}
-                            title="Download topic"
-                          >
-                            <Download className="h-3 w-3" />
-                          </Button>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-6 w-6"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setShowDeleteTopic({ unitId: unit.id, topicId: topic.id });
-                            }}
-                            title="Delete topic"
-                          >
-                            <Trash2 className="h-3 w-3 text-destructive" />
-                          </Button>
-                        </div>
-                        <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                          {topic.name}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {topic.questions.length} question{topic.questions.length !== 1 ? 's' : ''}
-                        </p>
-                      </Card>
+                        <Card
+                          className="p-6 hover:shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer border-2 hover:border-other group relative h-full"
+                        >
+                          <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                navigate(`/custom-topic/${unit.id}/${topic.id}`);
+                              }}
+                              title="Edit topic"
+                            >
+                              <Pencil className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleDownloadTopic(topic, unit.name);
+                              }}
+                              title="Download topic"
+                            >
+                              <Download className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-6 w-6"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setShowDeleteTopic({ unitId: unit.id, topicId: topic.id });
+                              }}
+                              title="Delete topic"
+                            >
+                              <Trash2 className="h-3 w-3 text-destructive" />
+                            </Button>
+                          </div>
+                          <p className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                            {topic.name}
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {topic.questions.length} question{topic.questions.length !== 1 ? 's' : ''}
+                          </p>
+                        </Card>
+                      </Link>
                     ))}
                     {/* Add Topic Card */}
                     <Card
