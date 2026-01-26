@@ -149,8 +149,10 @@ const PresetBuilder = () => {
 
   const handleUsePreset = (preset: Preset) => {
     const presetQuestions = questions.filter(q => preset.questionIds.includes(q.id));
-    navigate(`/quiz/${subject}/${unitId}/preset`, {
-      state: { presetQuestions, presetName: preset.name }
+    // Use replace + unique timestamp to force Quiz.tsx to re-mount and pick up new state
+    navigate(`/quiz/${subject}/${unitId}/preset?t=${Date.now()}`, {
+      state: { presetQuestions, presetName: preset.name, startNewAttempt: true },
+      replace: true,
     });
   };
 
@@ -247,8 +249,10 @@ const PresetBuilder = () => {
       return;
     }
     const selectedQuestions = questions.filter(q => selectedIds.has(q.id));
-    navigate(`/quiz/${subject}/${unitId}/preset`, {
-      state: { presetQuestions: selectedQuestions, presetName: 'Quick Practice' }
+    // Use replace + unique timestamp to force Quiz.tsx to re-mount and pick up new state
+    navigate(`/quiz/${subject}/${unitId}/preset?t=${Date.now()}`, {
+      state: { presetQuestions: selectedQuestions, presetName: 'Quick Practice', startNewAttempt: true },
+      replace: true,
     });
   };
 

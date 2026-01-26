@@ -305,8 +305,10 @@ const CourseChallengePresetBuilder = () => {
     
     const presetQuestions = allQuestions.filter(q => preset.questionIds.includes(q.id));
     
-    navigate(`/quiz/${subject}/course-challenge/cram`, {
-      state: { presetQuestions }
+    // Use replace + unique timestamp to force Quiz.tsx to re-mount and pick up new state
+    navigate(`/quiz/${subject}/course-challenge/cram?t=${Date.now()}`, {
+      state: { presetQuestions, startNewAttempt: true },
+      replace: true,
     });
   };
 
@@ -324,8 +326,10 @@ const CourseChallengePresetBuilder = () => {
     
     const selectedQs = allQuestions.filter(q => selectedQuestionIds.has(q.id));
     
-    navigate(`/quiz/${subject}/course-challenge/cram`, {
-      state: { presetQuestions: selectedQs }
+    // Use replace + unique timestamp to force Quiz.tsx to re-mount and pick up new state
+    navigate(`/quiz/${subject}/course-challenge/cram?t=${Date.now()}`, {
+      state: { presetQuestions: selectedQs, startNewAttempt: true },
+      replace: true,
     });
   };
 
