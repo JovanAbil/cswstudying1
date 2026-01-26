@@ -239,22 +239,19 @@ const Quiz = () => {
   const isInSkippedSection = attempts.length > 0 && 
     attempts.every(a => a.userAnswer !== null || a.skipped);
   
-  // Get skipped questions that are still pending (not finalized)
-  const pendingSkippedIndices = attempts
-    .map((a, i) => (a.skipped && a.userAnswer !== 'SKIPPED_FINAL' ? i : -1))
-    .filter(i => i !== -1);
+  // Total skipped = all questions with skipped: true (this stays constant)
+  const totalSkipped = attempts.filter(a => a.skipped).length;
   
-  // Calculate progress display
-  const currentSkippedPosition = isInSkippedSection 
-    ? pendingSkippedIndices.indexOf(currentIndex) + 1 
-    : 0;
-  const totalSkipped = pendingSkippedIndices.length;
-  
-  // Progress: answered questions / total, OR if in skipped section, position in skipped
-  const answeredCount = attempts.filter(a => a.userAnswer !== null && a.userAnswer !== 'SKIPPED' && !a.skipped).length;
+  // How many skipped questions have been finalized (answered or skipped again)
   const finalizedSkippedCount = attempts.filter(a => a.userAnswer === 'SKIPPED_FINAL').length;
+  
+  // Current position in skipped section = finalized + 1 (for current question)
+  const currentSkippedPosition = isInSkippedSection ? finalizedSkippedCount + 1 : 0;
+  
+  // Progress: for skipped section, base on finalized skips + non-skipped answered
+  const answeredCount = attempts.filter(a => a.userAnswer !== null && !a.skipped).length;
   const progress = isInSkippedSection
-    ? ((answeredCount + finalizedSkippedCount + currentSkippedPosition) / questions.length) * 100
+    ? ((answeredCount + finalizedSkippedCount + 1) / questions.length) * 100
     : ((currentIndex + 1) / questions.length) * 100;
 
   useEffect(() => {
