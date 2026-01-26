@@ -50,8 +50,13 @@ export const generateBuiltInTopicFile = (questions: Question[], topicName: strin
     lines.push(`${indent}  type: "${q.type}",`);
     lines.push(`${indent}  question: ${JSON.stringify(q.question)},`);
     
-    if (q.type === 'multiple-choice' && q.options) {
-      lines.push(`${indent}  options: ${JSON.stringify(q.options)},`);
+    // Always include options for multiple-choice questions, even if empty/undefined
+    if (q.type === 'multiple-choice') {
+      const options = q.options || [];
+      if (options.length === 0) {
+        console.warn(`[Export] MCQ question "${q.id}" has no options - this may cause issues`);
+      }
+      lines.push(`${indent}  options: ${JSON.stringify(options)},`);
     }
     
     lines.push(`${indent}  correctAnswer: ${JSON.stringify(q.correctAnswer)},`);
@@ -131,8 +136,13 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string, r
     lines.push(`${indent}  type: "${q.type}",`);
     lines.push(`${indent}  question: ${JSON.stringify(q.question)},`);
     
-    if (q.type === 'multiple-choice' && q.options) {
-      lines.push(`${indent}  options: ${JSON.stringify(q.options)},`);
+    // Always include options for multiple-choice questions, even if empty/undefined
+    if (q.type === 'multiple-choice') {
+      const options = q.options || [];
+      if (options.length === 0) {
+        console.warn(`[Export] MCQ question "${q.id}" has no options - this may cause issues`);
+      }
+      lines.push(`${indent}  options: ${JSON.stringify(options)},`);
     }
     
     lines.push(`${indent}  correctAnswer: ${JSON.stringify(q.correctAnswer)},`);
