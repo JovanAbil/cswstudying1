@@ -1,5 +1,31 @@
 # Content Authoring Guide
 
+## Adding External Study Resources
+
+External study resource links appear on the "Other" category page. Edit `src/data/external-study-resources.ts`:
+
+```typescript
+export const externalStudyResources: ExternalResource[] = [
+  {
+    title: 'Khan Academy',
+    url: 'https://www.khanacademy.org',
+    description: 'Free courses on math, science, and more'
+  },
+  {
+    title: 'Quizlet',
+    url: 'https://quizlet.com',
+    description: 'Flashcards and study sets'
+  },
+];
+```
+
+Each resource has:
+- `title` (required): Display name for the link
+- `url` (required): The full URL
+- `description` (optional): Brief description shown below the title
+
+---
+
 ## Overview
 
 This guide provides step-by-step instructions for adding new courses, units, and questions to the CSW Studying application.
