@@ -5,7 +5,7 @@ import { Card } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import MathQuickInput from '@/components/MathQuickInput';
 import { ArrowLeft, CheckCircle2, XCircle, Lock } from 'lucide-react';
 import { Footer } from '@/components/Footer';
@@ -30,7 +30,7 @@ import {
 } from '@/utils/inProgressQuizStorage';
 
 const Quiz = () => {
-  const frqInputRef = useRef<HTMLInputElement>(null);
+  const frqInputRef = useRef<HTMLTextAreaElement>(null);
   const { subject, unitId, quizType } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
@@ -713,19 +713,18 @@ const Quiz = () => {
               ))}
             </RadioGroup>
           ) : (
-            <div className="space-y-4">
-              <Input
+          <div className="space-y-4">
+              <Textarea
                 ref={frqInputRef}
-                type="text"
                 value={currentAnswer}
                 onChange={(e) => setCurrentAnswer(e.target.value)}
                 disabled={isSubmitted}
                 placeholder="Enter your answer"
-                className="text-lg"
+                className="text-lg min-h-[60px] resize-y break-words overflow-wrap-anywhere"
               />
               {!isSubmitted && (
                 <MathQuickInput
-                  inputRef={frqInputRef}
+                  textareaRef={frqInputRef}
                   value={currentAnswer}
                   onChange={setCurrentAnswer}
                   useUnicode={true}
