@@ -2,7 +2,7 @@
 
 ## Adding External Study Resources
 
-External study resource links appear on both the **main Index page** and the **"Other" category page**. Edit `src/data/external-study-resources.ts`:
+External study resource links appear on the **main Index page** (above the Credits section). Edit `src/data/external-study-resources.ts`:
 
 ```typescript
 export const externalStudyResources: ExternalResource[] = [

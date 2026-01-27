@@ -29,7 +29,6 @@ import JSZip from 'jszip';
 import { Footer } from '@/components/Footer';
 import { StorageUsageBar } from '@/components/StorageUsageBar';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
-import { externalStudyResources } from '@/data/external-study-resources';
 import {
   Select,
   SelectContent,
@@ -541,34 +540,6 @@ const OtherCategory = () => {
             </div>
           )}
 
-          {/* External Study Resources */}
-          {externalStudyResources.length > 0 && (
-            <Card className="p-6 mt-8 border-2 border-science/20 bg-science/5">
-              <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                <ExternalLink className="h-5 w-5 text-science" />
-                Study Resources
-              </h3>
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                {externalStudyResources.map((resource, index) => (
-                  <a
-                    key={index}
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-4 bg-background rounded-lg border hover:border-science hover:shadow-md transition-all group"
-                  >
-                    <div className="flex items-center gap-2 font-medium text-foreground group-hover:text-science">
-                      <ExternalLink className="h-4 w-4" />
-                      {resource.title}
-                    </div>
-                    {resource.description && (
-                      <p className="text-sm text-muted-foreground mt-1">{resource.description}</p>
-                    )}
-                  </a>
-                ))}
-              </div>
-            </Card>
-          )}
 
           {/* Custom Units Info & Warnings */}
           <Card className="p-6 mt-8 border-2 border-other/20 bg-other/5">
