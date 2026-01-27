@@ -2,7 +2,7 @@
 
 ## Adding External Study Resources
 
-External study resource links appear on the "Other" category page. Edit `src/data/external-study-resources.ts`:
+External study resource links appear on both the **main Index page** and the **"Other" category page**. Edit `src/data/external-study-resources.ts`:
 
 ```typescript
 export const externalStudyResources: ExternalResource[] = [
@@ -12,9 +12,9 @@ export const externalStudyResources: ExternalResource[] = [
     description: 'Free courses on math, science, and more'
   },
   {
-    title: 'Quizlet',
-    url: 'https://quizlet.com',
-    description: 'Flashcards and study sets'
+    title: 'AP FRQs',
+    url: 'https://apfrqs.com/',
+    description: 'FRQs for every AP'
   },
 ];
 ```

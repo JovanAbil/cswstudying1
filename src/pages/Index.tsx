@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '@/components/ui/card';
-import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown, FolderPlus } from 'lucide-react';
+import { Calculator, BookOpen, FlaskConical, Landmark, Sparkles, ArrowRight, Keyboard, ArrowDown, FolderPlus, ExternalLink } from 'lucide-react';
+import { externalStudyResources } from '@/data/external-study-resources';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
 import { CreditsSection } from '@/components/CreditsSection';
@@ -212,8 +213,48 @@ const Index = () => {
             <p className="text-muted-foreground mb-6">
               Create your own question banks for any subject! Navigate to the <span className="font-medium text-foreground">Other</span> category to create custom units and topics. Check the warnings and instructions there for important information about browser storage limitations.
             </p>
-          </Card>
+        </Card>
         </div>
+
+        {/* External Study Resources Section */}
+        {externalStudyResources.length > 0 && (
+          <div className="mt-16 max-w-4xl mx-auto">
+            <Card className="p-8 border-2 border-primary/20 bg-primary/5">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-3 bg-primary/20 rounded-lg">
+                  <ExternalLink className="h-6 w-6 text-primary" />
+                </div>
+                <h2 className="text-2xl font-display font-bold">Study Resources</h2>
+              </div>
+              <p className="text-muted-foreground mb-6">
+                Helpful external resources for studying and practice:
+              </p>
+              <div className="grid md:grid-cols-2 gap-4">
+                {externalStudyResources.map((resource, index) => (
+                  <a
+                    key={index}
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-start gap-3 p-4 bg-background rounded-lg border hover:border-primary/50 hover:bg-primary/5 transition-colors group"
+                  >
+                    <ExternalLink className="h-5 w-5 text-primary mt-0.5 group-hover:scale-110 transition-transform" />
+                    <div>
+                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {resource.title}
+                      </h3>
+                      {resource.description && (
+                        <p className="text-sm text-muted-foreground mt-1">
+                          {resource.description}
+                        </p>
+                      )}
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </Card>
+          </div>
+        )}
 
         {/* Credits Section */}
         <CreditsSection />
