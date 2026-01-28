@@ -120,7 +120,13 @@ const toVariableName = (name: string): string => {
 };
 
 // Generate TypeScript content for a topic (with optional image path rewriting for unit export)
-export const generateTopicFileContent = (topic: CustomTopic, unitName: string, rewriteImagePaths: boolean = false): string => {
+// imagePathMap: maps base64 data URLs to their deduplicated file paths (for shared images)
+export const generateTopicFileContent = (
+  topic: CustomTopic, 
+  unitName: string, 
+  rewriteImagePaths: boolean = false,
+  imagePathMap?: Map<string, string>
+): string => {
   const variableName = `${toVariableName(topic.name)}Questions`;
   const topicPrefix = toSafeName(topic.name);
   
@@ -128,6 +134,14 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string, r
     const newId = `${topicPrefix}-${index + 1}`;
     return { ...q, id: newId };
   });
+
+  const getImagePath = (imageData: string, defaultPath: string): string => {
+    // If we have a shared image map, use the deduplicated path
+    if (imagePathMap && imagePathMap.has(imageData)) {
+      return imagePathMap.get(imageData)!;
+    }
+    return defaultPath;
+  };
 
   const formatQuestion = (q: Question, indent: string, qIndex: number): string => {
     const lines: string[] = [];
@@ -146,9 +160,10 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string, r
       // Process options with image path rewriting
       const processedOptions = options.map((opt, optIndex) => {
         if (rewriteImagePaths && opt.image && opt.image.startsWith('data:')) {
+          const defaultPath = `/images/${toSafeName(unitName)}/${topicPrefix}-q${qIndex + 1}-opt${optIndex + 1}.png`;
           return {
             ...opt,
-            image: `/images/${toSafeName(unitName)}/${topicPrefix}-q${qIndex + 1}-opt${optIndex + 1}.png`
+            image: getImagePath(opt.image, defaultPath)
           };
         }
         return opt;
@@ -162,8 +177,10 @@ export const generateTopicFileContent = (topic: CustomTopic, unitName: string, r
     
     if (q.image) {
       if (rewriteImagePaths && q.image.startsWith('data:')) {
-        // Rewrite to proper public path for unit export
-        lines.push(`${indent}  image: "/images/${toSafeName(unitName)}/${topicPrefix}-q${qIndex + 1}.png",`);
+        // Use deduplicated path from map or generate default
+        const defaultPath = `/images/${toSafeName(unitName)}/${topicPrefix}-q${qIndex + 1}.png`;
+        const imagePath = getImagePath(q.image, defaultPath);
+        lines.push(`${indent}  image: "${imagePath}",`);
       } else if (q.image.startsWith('data:')) {
         // For simple topic download, keep base64 with a note
         lines.push(`${indent}  // Note: Base64 image embedded - consider moving to public folder`);
@@ -266,49 +283,60 @@ export const downloadUnit = async (unit: CustomUnit) => {
   
   if (!publicImagesFolder || !srcDataFolder) return;
   
-  // Track if we have any images
-  let hasImages = false;
+  // Track unique images to avoid duplication (key: base64 data, value: file path)
+  const imagePathMap = new Map<string, string>();
+  let imageCounter = 0;
   
-  // Process each topic - extract images first (both question images and MCQ option images)
+  // First pass: collect all unique images and assign paths
   for (const topic of unit.topics) {
-    const topicPrefix = toSafeName(topic.name);
-    
-    topic.questions.forEach((q, qIndex) => {
-      // Extract question-level image
-      if (q.image && q.image.startsWith('data:')) {
-        hasImages = true;
+    topic.questions.forEach((q) => {
+      // Check question-level image
+      if (q.image && q.image.startsWith('data:') && !imagePathMap.has(q.image)) {
+        imageCounter++;
         const ext = getImageExtension(q.image);
-        const filename = `${topicPrefix}-q${qIndex + 1}.${ext}`;
-        const imageData = base64ToBlob(q.image);
-        publicImagesFolder.file(filename, imageData);
+        const filename = `shared-img-${imageCounter}.${ext}`;
+        imagePathMap.set(q.image, `/images/${folderName}/${filename}`);
       }
       
-      // Extract MCQ option images
+      // Check MCQ option images
       if (q.type === 'multiple-choice' && q.options) {
-        q.options.forEach((opt, optIndex) => {
-          if (opt.image && opt.image.startsWith('data:')) {
-            hasImages = true;
+        q.options.forEach((opt) => {
+          if (opt.image && opt.image.startsWith('data:') && !imagePathMap.has(opt.image)) {
+            imageCounter++;
             const ext = getImageExtension(opt.image);
-            const filename = `${topicPrefix}-q${qIndex + 1}-opt${optIndex + 1}.${ext}`;
-            const imageData = base64ToBlob(opt.image);
-            publicImagesFolder.file(filename, imageData);
+            const filename = `shared-img-${imageCounter}.${ext}`;
+            imagePathMap.set(opt.image, `/images/${folderName}/${filename}`);
           }
         });
       }
     });
   }
   
+  const hasImages = imagePathMap.size > 0;
+  
+  // Second pass: write unique images to ZIP
+  imagePathMap.forEach((filePath, base64Data) => {
+    // Extract filename from path (e.g., "/images/unit/shared-img-1.png" -> "shared-img-1.png")
+    const filename = filePath.split('/').pop()!;
+    const imageData = base64ToBlob(base64Data);
+    publicImagesFolder.file(filename, imageData);
+  });
+  
   // Add metadata file to src/data/(unit)/
   srcDataFolder.file('index.ts', generateUnitMetadata(unit));
   
-  // Add each topic file with rewritten image paths
+  // Add each topic file with rewritten image paths using the deduplication map
   for (const topic of unit.topics) {
-    const content = generateTopicFileContent(topic, unit.name, true); // true = rewrite image paths
+    const content = generateTopicFileContent(topic, unit.name, true, imagePathMap);
     const filename = `${toSafeName(topic.name)}-questions.ts`;
     srcDataFolder.file(filename, content);
   }
   
   // Add a README for clarity
+  const sharedImageNote = imagePathMap.size > 0 
+    ? `\n\n**Note:** Images are deduplicated - ${imagePathMap.size} unique image(s) are shared across ${unit.topics.reduce((sum, t) => sum + t.questions.length, 0)} questions.`
+    : '';
+  
   const readme = `# ${unit.name}
 
 ## Folder Structure
@@ -321,7 +349,7 @@ This unit export contains:
 
 ### public/images/${folderName}/
 - Image files referenced by questions
-${!hasImages ? '\n(No images in this unit)' : ''}
+${!hasImages ? '\n(No images in this unit)' : sharedImageNote}
 
 ## How to Import
 

@@ -25,11 +25,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, Plus, Minus, Save, Trash2, Calculator, Image, GripVertical, Pencil, Copy } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, Save, Trash2, Calculator, Image, GripVertical, Pencil, Copy, Link2 } from 'lucide-react';
 import { useCustomUnits, CustomTopic, TestType } from '@/hooks/useCustomUnits';
 import { Question, MultipleChoiceQuestion, FreeResponseQuestion } from '@/types/quiz';
 import MathBuilderSidebar from '@/components/MathBuilderSidebar';
 import MathQuickInput from '@/components/MathQuickInput';
+import SharedImageDialog from '@/components/SharedImageDialog';
 import { useToast } from '@/hooks/use-toast';
 import { Footer } from '@/components/Footer';
 import { AdPlaceholder } from '@/components/AdPlaceholder';
@@ -76,6 +77,10 @@ const CustomTopicEditor = () => {
   const [editingQuestion, setEditingQuestion] = useState<EditingQuestion | null>(null);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [lastAutosave, setLastAutosave] = useState<Date | null>(null);
+
+  // Shared image dialog state
+  const [showSharedImageDialog, setShowSharedImageDialog] = useState(false);
+  const [pendingSharedImage, setPendingSharedImage] = useState<string>('');
 
   // Load existing topic data - read directly from localStorage to avoid stale closures
   useEffect(() => {
@@ -233,11 +238,35 @@ const CustomTopicEditor = () => {
 
     const reader = new FileReader();
     reader.onload = (event) => {
+      const imageData = event.target?.result as string;
       if (editingQuestion) {
-        setEditingQuestion({ ...editingQuestion, image: event.target?.result as string });
+        setEditingQuestion({ ...editingQuestion, image: imageData });
+        // Store image and show dialog if there are other questions
+        if (questions.length > 0) {
+          setPendingSharedImage(imageData);
+          setShowSharedImageDialog(true);
+        }
       }
     };
     reader.readAsDataURL(file);
+  };
+
+  // Apply shared image to selected questions
+  const handleApplySharedImage = (questionIndices: number[]) => {
+    if (!pendingSharedImage || questionIndices.length === 0) return;
+
+    const newQuestions = [...questions];
+    questionIndices.forEach(idx => {
+      newQuestions[idx] = { ...newQuestions[idx], image: pendingSharedImage };
+    });
+    setQuestions(newQuestions);
+
+    toast({
+      title: 'Image linked!',
+      description: `Image shared with ${questionIndices.length} other question${questionIndices.length > 1 ? 's' : ''}`,
+    });
+
+    setPendingSharedImage('');
   };
 
   const addOption = () => {
@@ -648,6 +677,20 @@ const CustomTopicEditor = () => {
                   {editingQuestion.image && (
                     <div className="flex items-center gap-2">
                       <img src={editingQuestion.image} alt="Preview" className="h-16 w-16 object-cover rounded" />
+                      {questions.length > 0 && (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setPendingSharedImage(editingQuestion.image);
+                            setShowSharedImageDialog(true);
+                          }}
+                          title="Share this image with other questions"
+                        >
+                          <Link2 className="h-4 w-4 mr-1" />
+                          Share
+                        </Button>
+                      )}
                       <Button variant="ghost" size="icon" onClick={() => setEditingQuestion({ ...editingQuestion, image: '' })}>
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -855,6 +898,19 @@ const CustomTopicEditor = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      {/* Shared Image Dialog */}
+      <SharedImageDialog
+        open={showSharedImageDialog}
+        onClose={() => {
+          setShowSharedImageDialog(false);
+          setPendingSharedImage('');
+        }}
+        imageUrl={pendingSharedImage}
+        questions={questions}
+        currentQuestionIndex={editingIndex}
+        onApplySharedImage={handleApplySharedImage}
+      />
 
       <div className="container mx-auto px-4 pb-8">
         <AdPlaceholder position="bottom" />
