@@ -274,6 +274,48 @@ To display a literal dollar sign without triggering LaTeX, escape it with a back
 
 ---
 
+## Import/Export Handling
+
+When questions are imported/exported via the custom units system, LaTeX strings go through JSON serialization. The system handles this automatically, but here's what happens:
+
+### How Backslashes Work in JSON
+
+In TypeScript/JSON strings, backslashes must be escaped:
+- `\theta` in LaTeX → `\\theta` in TypeScript/JSON
+- `\frac{1}{2}` in LaTeX → `\\frac{1}{2}` in TypeScript/JSON
+- `\\` (literal backslash) → `\\\\` in TypeScript/JSON
+
+### The System Handles This Automatically
+
+The `customUnitsExport.ts` utility:
+1. **Export**: Uses `JSON.stringify()` which automatically escapes backslashes
+2. **Import**: Uses a smart `unescapeString()` function that correctly restores:
+   - `\\n` → newline character (not `\n` text)
+   - `\\theta` → `\theta` (LaTeX command preserved)
+   - `\\\\` → `\` (literal backslash)
+
+### Troubleshooting Import/Export Issues
+
+If LaTeX breaks after import (e.g., `\theta` becomes `\ heta`):
+
+**Problem**: The unescaping logic processed `\\t` as a tab character before handling `\\\\`.
+
+**Solution**: The fix ensures double-backslashes are handled FIRST using a placeholder:
+```typescript
+// Step 1: Replace \\\\ with placeholder (protects LaTeX)
+// Step 2: Process escape sequences (\\n → newline)
+// Step 3: Restore placeholder as single backslash
+```
+
+### Manual Verification
+
+When viewing exported `.ts` files:
+- `\\theta` is CORRECT (will render as θ)
+- `\theta` is WRONG (will cause parsing issues)
+- `\\ heta` is WRONG (backslash-t was incorrectly interpreted as tab)
+
+---
+
 ## Troubleshooting
 
 **Problem:** Math not rendering, showing raw text
@@ -287,3 +329,6 @@ To display a literal dollar sign without triggering LaTeX, escape it with a back
 
 **Problem:** Limits showing as plain text
 - **Fix:** Use `$\\lim_{x \\to a}$` syntax
+
+**Problem:** LaTeX breaks after import/export (e.g., `\theta` → `\ heta`)
+- **Fix:** This was a bug in the unescaping order - update to latest `customUnitsExport.ts`

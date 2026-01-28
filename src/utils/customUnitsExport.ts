@@ -346,15 +346,29 @@ import { topicNameQuestions } from '@/data/${folderName}/topic-name-questions';
   URL.revokeObjectURL(url);
 };
 
-// Helper function to unescape string literals (convert \n to actual newlines, etc.)
+// Helper function to unescape string literals from JSON/TS string format
+// CRITICAL: Order matters! We must handle double-backslash FIRST to preserve LaTeX
+// For example: "\\theta" in JSON represents the literal string "\theta"
+// If we process \\t before \\\\, we'd incorrectly convert it to a tab character
 const unescapeString = (str: string): string => {
-  return str
+  // First pass: temporarily replace double-backslashes with a placeholder
+  // This prevents \\n from being treated as \n, \\t as \t, etc.
+  const PLACEHOLDER = '\x00DOUBLE_BACKSLASH\x00';
+  let result = str.replace(/\\\\/g, PLACEHOLDER);
+  
+  // Second pass: unescape actual escape sequences
+  result = result
     .replace(/\\n/g, '\n')
     .replace(/\\r/g, '\r')
     .replace(/\\t/g, '\t')
     .replace(/\\"/g, '"')
-    .replace(/\\'/g, "'")
-    .replace(/\\\\/g, '\\');
+    .replace(/\\\'/g, "'");
+  
+  // Third pass: restore double-backslashes as single backslashes
+  // In JSON/TS: \\\\ (4 chars) represents \\ (2 chars) which is a literal single backslash
+  result = result.replace(new RegExp(PLACEHOLDER, 'g'), '\\');
+  
+  return result;
 };
 
 // Helper function to extract string value from a field, handling nested braces in LaTeX
