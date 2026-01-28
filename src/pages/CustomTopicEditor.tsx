@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ArrowLeft, Plus, Minus, Save, Trash2, Calculator, Image, GripVertical, Pencil } from 'lucide-react';
+import { ArrowLeft, Plus, Minus, Save, Trash2, Calculator, Image, GripVertical, Pencil, Copy } from 'lucide-react';
 import { useCustomUnits, CustomTopic, TestType } from '@/hooks/useCustomUnits';
 import { Question, MultipleChoiceQuestion, FreeResponseQuestion } from '@/types/quiz';
 import MathBuilderSidebar from '@/components/MathBuilderSidebar';
@@ -382,6 +382,24 @@ const CustomTopicEditor = () => {
     }
   };
 
+  const duplicateQuestion = (index: number) => {
+    const originalQ = questions[index];
+    const newId = `custom-q-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    
+    // Deep clone the question with a new ID
+    const duplicatedQuestion: Question = {
+      ...JSON.parse(JSON.stringify(originalQ)),
+      id: newId,
+    };
+    
+    // Insert after the original question
+    const newQuestions = [...questions];
+    newQuestions.splice(index + 1, 0, duplicatedQuestion);
+    setQuestions(newQuestions);
+    
+    toast({ title: 'Question duplicated!' });
+  };
+
   const handleMathInsert = (latex: string) => {
     if (!activeTextField || !textFieldRefs.current[activeTextField]) return;
     
@@ -565,6 +583,9 @@ const CustomTopicEditor = () => {
             {questions.map((q, index) => (
               <Card key={q.id} className="p-4 flex items-center justify-between">
                 <div className="flex items-center gap-3 flex-1 min-w-0">
+                  <span className="text-sm font-bold text-muted-foreground w-6 text-center flex-shrink-0">
+                    {index + 1}
+                  </span>
                   <GripVertical className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                   <span className="text-xs font-medium px-2 py-1 rounded bg-muted flex-shrink-0">
                     {q.type === 'multiple-choice' ? 'MCQ' : 'FRQ'}
@@ -576,11 +597,14 @@ const CustomTopicEditor = () => {
                   )}
                   <span className="truncate text-sm">{q.question}</span>
                 </div>
-                <div className="flex gap-2 flex-shrink-0">
-                  <Button variant="ghost" size="icon" onClick={() => editQuestion(index)}>
+                <div className="flex gap-1 flex-shrink-0">
+                  <Button variant="ghost" size="icon" onClick={() => duplicateQuestion(index)} title="Duplicate question">
+                    <Copy className="h-4 w-4" />
+                  </Button>
+                  <Button variant="ghost" size="icon" onClick={() => editQuestion(index)} title="Edit question">
                     <Pencil className="h-4 w-4" />
                   </Button>
-                  <Button variant="ghost" size="icon" onClick={() => deleteQuestion(index)}>
+                  <Button variant="ghost" size="icon" onClick={() => deleteQuestion(index)} title="Delete question">
                     <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
                 </div>
@@ -594,7 +618,7 @@ const CustomTopicEditor = () => {
           <Card className="p-6 mb-6 border-primary">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold">
-                {editingIndex !== null ? 'Edit' : 'New'} {editingQuestion.type === 'mcq' ? 'Multiple Choice' : 'Free Response'} Question
+                {editingIndex !== null ? `Edit Question #${editingIndex + 1}` : `New Question #${questions.length + 1}`} ({editingQuestion.type === 'mcq' ? 'Multiple Choice' : 'Free Response'})
               </h3>
               {mathEnabled && (
                 <Button variant="outline" size="sm" onClick={() => setShowMathSidebar(true)}>
